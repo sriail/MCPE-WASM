@@ -1,0 +1,411 @@
+{
+  "ability": {
+    "versions": [
+      {
+        "requires_edu": true,
+        "description": "commands.ability.description",
+        "permission": "op",
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "player",
+                  "type": "target"
+                },
+                {
+                  "name": "ability",
+                  "type": "stringenum",
+                  "enum_values": [
+                    "worldbuilder",
+                    "mayfly"
+                  ]
+                },
+                {
+                  "name": "value",
+                  "type": "bool"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "commands.ability.success"
+              ],
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": "bool"
+                },
+                {
+                  "name": "player",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "gamerule": {
+    "versions": [
+      {
+        "requires_edu": true,
+        "description": "commands.gamerule.description",
+        "permission": "op",
+        "overloads": {
+          "setter": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "rule",
+                  "type": "stringenum",
+                  "enum_type": "gameRuleTypes"
+                },
+                {
+                  "name": "value",
+                  "type": "bool"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+              ],
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "name": "value",
+                  "type": "bool"
+                }
+              ]
+            }
+          },
+          "getter": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "rule",
+                  "type": "stringenum",
+                  "enum_type": "gameRuleTypes",
+                  "optional": true
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "{0}"
+              ],
+              "parameters": [
+                {
+                  "name": "displayString",
+                  "type": "string"
+                },
+                {
+                  "name": "details",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "querytarget": {
+    "versions": [
+      {
+        "requires_edu":  true,
+        "description": "commands.querytarget.description",
+        "permission": "host",
+        "is_hidden": true,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "victim",
+                  "type": "target"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "commands.querytarget.success"
+              ],
+              "parameters": [
+                {
+                  "name": "details",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "getchunkdata": {
+    "versions": [
+      {
+        "requires_edu":  true,
+        "description": "commands.getchunkdata.description",
+        "permission": "host",
+        "is_hidden": true,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "dimension",
+                  "type": "stringenum",
+                  "enum_type": "dimensionTypes"
+                },
+                {
+                  "name": "chunkX",
+                  "type": "int"
+                },
+                {
+                  "name": "chunkZ",
+                  "type": "int"
+                },
+                {
+                  "name": "height",
+                  "type": "int"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "commands.getchunkdata.success"
+              ],
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "getchunks": {
+    "versions": [
+      {
+        "requires_edu":  true,
+        "description": "commands.getchunks.description",
+        "permission": "host",
+        "is_hidden": true,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "dimension",
+                  "type": "stringenum",
+                  "enum_type": "dimensionTypes"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "commands.getchunks.success"
+              ],
+              "parameters": [
+                {
+                  "name": "data",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "getspawnpoint": {
+    "versions": [
+      {
+        "requires_edu":  true,
+        "description": "commands.getspawnpoint.description",
+        "permission": "host",
+        "is_hidden": true,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "player",
+                  "type": "target"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "{0}"
+              ],
+              "parameters": [
+                {
+                  "name": "details",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "clearfixedinv": {
+    "versions": [
+      {
+        "requires_edu":  true,
+        "description": "commands.clearfixedinv.description",
+        "permission": "op",
+        "version": 1,
+
+        "overloads": {
+          "default": {
+            "input": {
+            },
+            "output": {
+              "format_strings": [
+                "commands.clearfixedinv.success"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "setfixedinvslot": {
+    "versions": [
+      {
+        "requires_edu": true,
+        "description": "commands.setfixedinvslot.description",
+        "permission": "op",
+        "version": 1,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "fixedinvslotnum",
+                  "type": "int"
+                },
+                {
+                  "name": "itemName",
+                  "type": "stringenum",
+                  "enum_type": "itemType"
+                },
+                {
+                  "name": "data",
+                  "type": "int",
+                  "optional": true
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "commands.setfixedinvslot.success"
+              ],
+              "parameters": [
+                {
+                  "name": "fixedinvslotnum",
+                  "type": "int"
+                },
+                {
+                  "name": "itemName",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "globalpause": {
+    "versions": [
+      {
+        "requires_edu": true,
+        "is_hidden": true,
+        "description": "commands.globalpause.description",
+        "permission": "host",
+        "version": 1,
+
+        "overloads": {
+          "setter": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "isPaused",
+                  "type": "bool"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+                "commands.globalpause.success"
+              ]
+            }
+          },
+          "getter": {
+            "input": {
+              "parameters": []
+            },
+            "output": {
+              "format_strings": [
+                "commands.globalpause.success"
+              ],
+              "parameters": [
+                {
+                  "name": "isPaused",
+                  "type": "bool"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "executeasself": {
+    "versions": [
+      {
+        "description": "commands.execute.description",
+        "permission": "any",
+        "is_hidden": true,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+                {
+                  "name": "command",
+                  "type": "rawtext"
+                }
+              ]
+            },
+            "output": {
+              "format_strings": [
+              ],
+              "parameters": [
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

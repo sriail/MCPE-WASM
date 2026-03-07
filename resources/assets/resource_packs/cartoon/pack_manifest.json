@@ -1,0 +1,35 @@
+{
+  "header": {
+    "pack_id": "78501ecb-b433-4f2b-a609-1ce062bf71c5",
+    "name": "resourcePack.cartoon.name",
+    "packs_version": "0.0.1",
+    "store_offer_name": "Cartoon",
+    "description": "resourcePack.cartoon.description",
+    "key_art_path": "resourcepacks/cartoon/keyart/MC_Texture_Cartoon_800x450.jpg",
+    "screenshots": [
+      {
+        "path": "resourcepacks/cartoon/keyart/cartoon1.jpg"
+      },
+      {
+        "path": "resourcepacks/cartoon/keyart/cartoon2.jpg"
+      },
+      {
+        "path": "resourcepacks/cartoon/keyart/cartoon3.jpg"
+      },
+      {
+        "path": "resourcepacks/cartoon/keyart/cartoon4.jpg"
+      },
+      {
+        "path": "resourcepacks/cartoon/keyart/cartoon5.jpg"
+      }
+    ],
+    "modules": [
+      {
+        "description": "resourcePack.cartoon.description",
+        "version": "0.0.1",
+        "uuid": "a441180c-ae8f-4e02-a852-87f6f392cfd7",
+        "type": "resources"
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "header": {
+    "pack_id": "951491d0-28fe-46c8-aefb-d61c4dd8cb25",
+    "name": "resourcePack.natural.name",
+    "packs_version": "0.0.1",
+    "description": "resourcePack.natural.description",
+    "modules": [
+      {
+        "description": "resourcePack.natural.description",
+        "version": "0.0.1",
+        "uuid": "e8d925a4-3aad-44fe-adda-0320e6148293",
+        "type": "resources"
+      }
+    ]
+  }
+}

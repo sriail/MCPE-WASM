@@ -1,0 +1,16 @@
+{
+  "header": {
+    "pack_id": "c568f8e5-e1c9-4401-b932-cdd0bf53a9bd",
+    "name": "resourcePack.fantasy.name",
+    "packs_version": "0.0.1",
+    "description": "resourcePack.fantasy.description",
+    "modules": [
+      {
+        "description": "resourcePack.fantasy.description",
+        "version": "0.0.1",
+        "uuid": "7ce7f821-e9ec-47e2-a0fb-4b2f395bb8a8",
+        "type": "resources"
+      }
+    ]
+  }
+}

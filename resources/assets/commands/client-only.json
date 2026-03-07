@@ -1,0 +1,64 @@
+{
+  "closewebsocket": {
+    "versions": [
+      {
+        "description": "commands.closewebsocket.description",
+        "permission": "any",
+        "is_hidden": true,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [ ]
+            },
+            "output": {
+              "format_strings": [ ],
+              "parameters": [ ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "geteduclientinfo": {
+    "versions": [
+      {
+        "requires_edu":  true,
+        "description": "commands.geteduclientinfo.description",
+        "permission": "any",
+        "is_hidden": true,
+
+        "overloads": {
+          "default": {
+            "input": {
+              "parameters": [
+              ]
+            },
+            "output": {
+              "format_strings": [
+              ],
+              "parameters": [
+                {
+                  "name": "tenantId",
+                  "type": "string"
+                },
+                {
+                  "name": "isHost",
+                  "type": "bool"
+                },
+                {
+                  "name": "hostuuid",
+                  "type": "string"
+                },
+                {
+                  "name": "companionProtocolVersion",
+                  "type": "int"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

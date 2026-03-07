@@ -1,0 +1,16 @@
+{
+  "header": {
+    "pack_id": "c18e65aa-7b21-4637-9b63-8ad63622ef01",
+    "name": "resourcePack.skin.name",
+    "packs_version": "0.1",
+    "description": "resourcePack.skin.description",
+    "modules": [
+      {
+        "description": "resourcePack.skin.description",
+        "version": "0.0.1",
+        "uuid": "d0823c95-37e9-4ade-8663-6cd39996fac5",
+        "type": "resources"
+      }
+    ]
+  }
+}
