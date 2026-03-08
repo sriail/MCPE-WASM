@@ -776,7 +776,9 @@ bool Player::hurt(Entity* source, int dmg) {
 
    if (dmg == 0) return false;
 
-	foodData.addExhaustion(0.3f);
+	// Add exhaustion only for direct damage (not starvation)
+	if (source != NULL)
+		foodData.addExhaustion(0.3f);
 
  //   Entity* attacker = source;
  //   //if (attacker instanceof Arrow) {
