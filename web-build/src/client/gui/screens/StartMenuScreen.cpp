@@ -24,10 +24,10 @@
 
 // Some kind of default settings, might be overridden in ::init
 StartMenuScreen::StartMenuScreen()
-:	bHost(    2, 0, 0, 160, 24, "Start Game"),
-	bJoin(    3, 0, 0, 160, 24, "Join Game"),
-	bOptions( 4, 0, 0,  78, 22, "Options"),
-	bBuy(     5, 0, 0, 78, 22, "Buy"),
+:	bHost(    2, 0, 0, 200, 20, "Start Game"),
+	bJoin(    3, 0, 0, 200, 20, "Join Game"),
+	bOptions( 4, 0, 0, 200, 20, "Options"),
+	bBuy(     5, 0, 0, 200, 20, "Buy"),
 	bTest(    999, 0, 0, 78, 22, "Create")
 {
 }
@@ -57,25 +57,7 @@ void StartMenuScreen::init()
 
 	copyright = "\xffMojang AB";//. Do not distribute!";
 
-	#ifdef PRE_ANDROID23
-		std::string versionString = Common::getGameVersionString("j");
-	#else
-		std::string versionString = Common::getGameVersionString();
-	#endif
-
-	#ifdef DEMO_MODE
-	#ifdef __APPLE__
-		version = versionString + " (Lite)";
-	#else
-		version = versionString + " (Demo)";
-	#endif
-	#else
-		#ifdef RPI
-			version = "v0.1.1 alpha";//(MCPE " + versionString + " compatible)";
-		#else
-			version = versionString;
-		#endif
-	#endif
+	version = "MCPE-WASM v1.0";
 
 	bJoin.active = bHost.active = bOptions.active = false;
 }
@@ -83,26 +65,19 @@ void StartMenuScreen::init()
 void StartMenuScreen::setupPositions() {
 	int yBase = height / 2 + 25;
 
-	//#ifdef ANDROID
-	bHost.y =	 yBase - 28;
-#ifdef RPI
-	bJoin.y =	 yBase + 4;
-#else
-	bJoin.y =	 yBase;
-#endif
-
-	bOptions.y = yBase + 28 + 2;
+	bHost.y =    yBase - 28;
+	bJoin.y =    yBase;
+	bOptions.y = yBase + 24 + 4;
 	bTest.y = bBuy.y = bOptions.y;
-	//#endif
 
 	// Center buttons
 	bHost.x = (width - bHost.width) / 2;
 	bJoin.x = (width - bJoin.width) / 2;
-	bOptions.x = (width - bJoin.width) / 2;
+	bOptions.x = (width - bOptions.width) / 2;
 	bTest.x = bBuy.x = bOptions.x + bOptions.width + 4;
 
 	copyrightPosX = width - minecraft->font->width(copyright) - 1;
-	versionPosX = (width - minecraft->font->width(version)) / 2;// - minecraft->font->width(version) - 2;
+	versionPosX = (width - minecraft->font->width(version)) / 2;
 }
 
 void StartMenuScreen::tick() {

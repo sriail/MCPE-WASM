@@ -5,6 +5,7 @@
 #include "ExternalFileLevelStorage.h"
 #include "FolderMethods.h"
 #include "../chunk/LevelChunk.h"
+#include "../chunk/ChunkCache.h"
 #include "../Level.h"
 #include "../LevelConstants.h"
 #include "../tile/TreeTile.h"
@@ -291,15 +292,14 @@ void ExternalFileLevelStorage::tick()
 	tickCount++;
 	if ((tickCount % 50) == 0 && level)
 	{
-		// look for chunks that needs to be saved
-		for (int z = 0; z < CHUNK_CACHE_WIDTH; z++)
-		{
-			for (int x = 0; x < CHUNK_CACHE_WIDTH; x++)
-			{
-				LevelChunk* chunk = level->getChunk(x, z);
-				if (chunk && chunk->unsaved)
+		// look for chunks that needs to be saved using the dynamic chunk cache
+		ChunkCache* cache = dynamic_cast<ChunkCache*>(level->getChunkSource());
+		if (cache) {
+			for (auto& kv : cache->chunks) {
+				LevelChunk* chunk = kv.second;
+				if (chunk && chunk != cache->emptyChunk && chunk->unsaved)
 				{
-					int pos = x + z * CHUNK_CACHE_WIDTH;
+					long long pos = kv.first;
 					UnsavedChunkList::iterator prev = unsavedChunkList.begin();
 					for ( ; prev != unsavedChunkList.end(); ++prev)
 					{
@@ -318,7 +318,7 @@ void ExternalFileLevelStorage::tick()
 						unsaved.chunk = chunk;
 						unsavedChunkList.push_back(unsaved);
 					}
-					chunk->unsaved = false; // not actually saved, but in our working list at least
+					chunk->unsaved = false;
 				}
 			}
 		}

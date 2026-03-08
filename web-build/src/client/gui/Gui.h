@@ -53,6 +53,7 @@ public:
 
 	void renderBubbles();
 	void renderHearts();
+	void renderHungerBar();
 	void renderDebugInfo();
 
 	void renderProgressIndicator( const bool isTouchInterface, const int screenWidth, const int screenHeight, float a );

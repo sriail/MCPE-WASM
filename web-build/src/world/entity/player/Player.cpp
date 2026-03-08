@@ -374,7 +374,8 @@ void Player::travel(float xa, float ya) {
 		return;
 	}
 
-	// LCE movement parity (player-only; mobs use Mob::travel)
+	float prevX = x;
+	float prevZ = z;
 	if (isInWater()) {
 		float yo = y;
 		moveRelative(xa, ya, 0.02f);
@@ -435,10 +436,29 @@ void Player::travel(float xa, float ya) {
 		xd *= friction;
 		zd *= friction;
 	}
+
+	// Add exhaustion based on horizontal movement distance
+	if (!abilities.invulnerable) {
+		float dx = x - prevX;
+		float dz = z - prevZ;
+		float dist = Mth::sqrt(dx * dx + dz * dz);
+		if (dist > 0) {
+			if (isSprinting())
+				foodData.addExhaustion(0.1f * dist);
+			else
+				foodData.addExhaustion(0.01f * dist);
+		}
+	}
 }
 
 void Player::jumpFromGround() {
 	super::jumpFromGround();
+	if (!abilities.invulnerable) {
+		if (isSprinting())
+			foodData.addExhaustion(0.8f);
+		else
+			foodData.addExhaustion(0.2f);
+	}
 	if (isSprinting()) {
 		float rr = yRot * Mth::DEGRAD;
 		xd -= Mth::sin(rr) * 0.2f;
@@ -756,6 +776,8 @@ bool Player::hurt(Entity* source, int dmg) {
 
    if (dmg == 0) return false;
 
+	foodData.addExhaustion(0.3f);
+
  //   Entity* attacker = source;
  //   //if (attacker instanceof Arrow) {
  //   //    if (((Arrow) attacker).owner != NULL) {
@@ -792,6 +814,8 @@ void Player::attack(Entity* entity) {
 	int dmg = inventory->getAttackDamage(entity);
     if (dmg > 0) {
         entity->hurt(this, dmg);
+		if (!abilities.invulnerable)
+			foodData.addExhaustion(0.3f);
         ItemInstance* item = inventory->getSelected();
         if (item != NULL && entity->isMob() && abilities.instabuild != true) {
             item->hurtEnemy((Mob*) entity);

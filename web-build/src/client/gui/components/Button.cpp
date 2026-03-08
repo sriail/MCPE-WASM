@@ -84,7 +84,7 @@ void Button::renderFace(Minecraft* mc, int xm, int ym) {
 
 void Button::renderBg( Minecraft* minecraft, int xm, int ym )
 {
-	minecraft->textures->loadAndBindTexture("gui/gui.png");
+	minecraft->textures->loadAndBindTexture("textures/gui/gui.png");
 	glColor4f2(1, 1, 1, 1);
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);

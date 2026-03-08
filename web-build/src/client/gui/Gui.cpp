@@ -92,6 +92,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		t.colorABGR(0xffffffff);
 		renderHearts();
 		renderBubbles();
+		renderHungerBar();
 		t.draw();
 	}
 
@@ -647,7 +648,30 @@ void Gui::renderBubbles() {
 	}
 }
 
-static OffsetPosTranslator posTranslator;
+void Gui::renderHungerBar() {
+	const int screenWidth = (int)(minecraft->width * InvGuiScale);
+	const int screenHeight = (int)(minecraft->height * InvGuiScale);
+	// Position: right side of health bar, mirrored
+	int xBase = screenWidth / 2 + 82;
+	int yo = 2;
+	float food = minecraft->player->foodData.getFoodLevel();
+	// Render 10 drumstick icons (each icon = 2 food units)
+	for (int i = 0; i < 10; i++) {
+		int xo = xBase - i * 8;
+		float units = food - i * 2;
+		// background drumstick
+		blit(xo, yo, 16, 27, 9, 9);
+		if (units >= 2.0f) {
+			// full drumstick
+			blit(xo, yo, 52, 27, 9, 9);
+		} else if (units >= 1.0f) {
+			// half drumstick
+			blit(xo, yo, 61, 27, 9, 9);
+		}
+	}
+}
+
+
 void Gui::onLevelGenerated() {
 	if (Level* level = minecraft->level) {
 		Pos p = level->getSharedSpawnPos();
