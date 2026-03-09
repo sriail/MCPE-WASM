@@ -84,14 +84,17 @@ foreach ($srcFile in $SOURCES) {
         $rspContent = @("-c", "`"$srcFile`"", "-o", "`"$objFile`"") + $COMPILE_FLAGS
         $rspContent | Set-Content -Path $rspFile -Encoding Ascii
 
-        # Use cmd to run Python+emcc.py so PowerShell never sees compiler stderr (emcc.ps1 has ErrorActionPreference='Stop')
-        $emccPy = Join-Path $env:EMSDK "upstream\emscripten\emcc.py"
-        $tmpOut = [System.IO.Path]::GetTempFileName()
+        # Use Start-Process to run Python+emcc.py cross-platform (works on Linux and Windows)
+        $emccPy = Join-Path $env:EMSDK "upstream" "emscripten" "emcc.py"
         $rspFull = (Resolve-Path $rspFile).Path
-        cmd /c "`"$env:EMSDK_PYTHON`" -E `"$emccPy`" @`"$rspFull`" > `"$tmpOut`" 2>&1"
-        $output = Get-Content $tmpOut -Raw
-        Remove-Item $tmpOut -Force -ErrorAction SilentlyContinue
-        if ($LASTEXITCODE -ne 0) {
+        $tmpOut = [System.IO.Path]::GetTempFileName()
+        $tmpErr = "$tmpOut.err"
+        $proc = Start-Process -FilePath $env:EMSDK_PYTHON -ArgumentList @("-E", $emccPy, "@$rspFull") -NoNewWindow -Wait -RedirectStandardOutput $tmpOut -RedirectStandardError $tmpErr -PassThru
+        $output = ""
+        if (Test-Path $tmpOut) { $output += Get-Content $tmpOut -Raw -ErrorAction SilentlyContinue }
+        if (Test-Path $tmpErr) { $output += Get-Content $tmpErr -Raw -ErrorAction SilentlyContinue }
+        Remove-Item $tmpOut, $tmpErr -Force -ErrorAction SilentlyContinue
+        if ($proc.ExitCode -ne 0) {
             $errors += @{ "file" = $srcFile; "output" = $output }
         }
     }
@@ -110,7 +113,7 @@ $objFiles = Get-ChildItem -Path $objDir -Filter "*.o" | ForEach-Object { $_.Full
 $linkRsp = "link.rsp"
 $linkContent = $objFiles + "-o" + "index.html" + $LINK_FLAGS
 $linkContent | Set-Content -Path $linkRsp -Encoding Ascii
-cmd /c "emcc @$linkRsp"
+& emcc "@$linkRsp"
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Build failed with exit code $LASTEXITCODE"
