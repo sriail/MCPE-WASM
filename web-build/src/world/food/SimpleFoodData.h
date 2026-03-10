@@ -15,8 +15,18 @@ public:
     void eat(FoodItem* item);
 
     void tick(Player* player);
+
+    // Add exhaustion from actions (walking, sprinting, jumping)
+    void addExhaustion(float exhaustion);
+
+    int getFoodLevel() const { return foodLevel; }
 private:
 	int foodLevel;
+    float saturationLevel;
+    float exhaustionLevel;
+    int tickCount;
+    int healTick;
+    int starveTick;
 };
 
 #endif /*NET_MINECRAFT_WORLD_FOOD__SimpleFoodData_H__*/

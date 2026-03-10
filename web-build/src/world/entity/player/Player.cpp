@@ -444,6 +444,10 @@ void Player::jumpFromGround() {
 		xd -= Mth::sin(rr) * 0.2f;
 		zd += Mth::cos(rr) * 0.2f;
 	}
+	if (!level->isClientSide) {
+		// Sprint-jumping costs more hunger than a normal jump
+		foodData.addExhaustion(isSprinting() ? 0.8f : 0.2f);
+	}
 }
 
 /*protected*/
@@ -509,6 +513,18 @@ void Player::aiStep() {
     if (onGround || health <= 0) tTilt = 0;
     bob += (tBob - bob) * 0.4f;
     tilt += (tTilt - tilt) * 0.8f;
+
+    // Add hunger exhaustion from horizontal movement (server-side only)
+    if (!level->isClientSide) {
+        float movedDist = walkDist - walkDistO;
+        if (movedDist > 0.0f && onGround) {
+            if (isSprinting()) {
+                foodData.addExhaustion(movedDist * 0.1f);
+            } else {
+                foodData.addExhaustion(movedDist * 0.01f);
+            }
+        }
+    }
 
     if (health > 0) {
         EntityList& entities = level->getEntities(this, bb.grow(1, 0, 1));

@@ -23,6 +23,7 @@
 #include "../../world/PosTranslator.h"
 #include "../renderer/gles.h"
 #include "../../platform/time.h"
+#include "../../world/food/FoodConstants.h"
 
 float Gui::InvGuiScale = 1.0f / 3.0f;
 float Gui::GuiScale = 1.0f / Gui::InvGuiScale;
@@ -92,6 +93,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		t.colorABGR(0xffffffff);
 		renderHearts();
 		renderBubbles();
+		renderHunger();
 		t.draw();
 	}
 
@@ -643,6 +645,32 @@ void Gui::renderBubbles() {
 			int xo =  i * 8 + 2;
 			if (i < count) blit(xo, yo, 16, 9 * 2, 9, 9);
 			else blit(xo, yo, 16 + 9, 9 * 2, 9, 9);
+		}
+	}
+}
+
+void Gui::renderHunger() {
+	const int screenWidth = (int)(minecraft->width * InvGuiScale);
+
+	int food = minecraft->player->foodData.getFoodLevel();
+	int yo = 2;
+
+	// Render 10 food shanks from right to left (mirroring health bar on the right side)
+	for (int i = 0; i < FoodConstants::MAX_FOOD / 2; i++) {
+		int ip2 = i + i + 1;
+		// Render from right side: icon i=0 is rightmost
+		int xo = screenWidth - 2 - (i + 1) * 8;
+
+		// Draw empty food background (row 3 = y*27, col at x=16)
+		blit(xo, yo, 16, 9 * 3, 9, 9);
+
+		// Draw full or half food icon on top
+		if (ip2 < food) {
+			// Full shank
+			blit(xo, yo, 16 + 4 * 9, 9 * 3, 9, 9);
+		} else if (ip2 == food) {
+			// Half shank
+			blit(xo, yo, 16 + 5 * 9, 9 * 3, 9, 9);
 		}
 	}
 }
