@@ -8,11 +8,6 @@ if (!(Get-Command emcc -ErrorAction SilentlyContinue)) {
     exit 1
 }
 
-$EMCC_CMD = (Get-Command emcc).Source
-$EMSDK = $env:EMSDK
-$EM_CONFIG = $env:EM_CONFIG
-$EM_CACHE = $env:EM_CACHE
-
 # Emscripten flags
 $COMPILE_FLAGS = @(
     "-O2",
@@ -71,7 +66,6 @@ foreach ($srcFile in $SOURCES) {
     $srcFile = $srcFile.Replace("\", "/")
     $relName = $srcFile.Substring($basePathFwd.Length + 1).Replace("/", "_")
     $objFile = ("obj/" + $relName + ".o").Replace("\", "/")
-    $rspFile = ("obj/" + $relName + ".rsp").Replace("\", "/")
 
     $needsRebuild = $true
     if (Test-Path $objFile) {
@@ -81,36 +75,24 @@ foreach ($srcFile in $SOURCES) {
     }
 
     if ($needsRebuild) {
-        $rspContent = @("-c", "`"$srcFile`"", "-o", "`"$objFile`"") + $COMPILE_FLAGS
-        $rspContent | Set-Content -Path $rspFile -Encoding Ascii
-
-        # Use cmd to run Python+emcc.py so PowerShell never sees compiler stderr (emcc.ps1 has ErrorActionPreference='Stop')
-        $emccPy = Join-Path $env:EMSDK "upstream\emscripten\emcc.py"
-        $tmpOut = [System.IO.Path]::GetTempFileName()
-        $rspFull = (Resolve-Path $rspFile).Path
-        cmd /c "`"$env:EMSDK_PYTHON`" -E `"$emccPy`" @`"$rspFull`" > `"$tmpOut`" 2>&1"
-        $output = Get-Content $tmpOut -Raw
-        Remove-Item $tmpOut -Force -ErrorAction SilentlyContinue
+        # Invoke emcc directly (no cmd wrapper needed on PowerShell 7+ / cross-platform pwsh)
+        $allArgs = @("-c", $srcFile, "-o", $objFile) + $COMPILE_FLAGS
+        & emcc @allArgs 2>&1
         if ($LASTEXITCODE -ne 0) {
-            $errors += @{ "file" = $srcFile; "output" = $output }
+            $errors += $srcFile
         }
     }
 }
 if ($errors) {
     Write-Host "Compilation failed for one or more files:" -ForegroundColor Red
-    foreach ($err in $errors) {
-        Write-Host "--- $($err.file) ---" -ForegroundColor Yellow
-        Write-Host $err.output
-    }
+    foreach ($f in $errors) { Write-Host "  $f" -ForegroundColor Yellow }
     exit 1
 }
 
 Write-Host "Linking Emscripten target..."
 $objFiles = Get-ChildItem -Path $objDir -Filter "*.o" | ForEach-Object { $_.FullName.Replace("\", "/") }
-$linkRsp = "link.rsp"
-$linkContent = $objFiles + "-o" + "index.html" + $LINK_FLAGS
-$linkContent | Set-Content -Path $linkRsp -Encoding Ascii
-cmd /c "emcc @$linkRsp"
+$allLinkArgs = $objFiles + @("-o", "index.html") + $LINK_FLAGS
+& emcc @allLinkArgs
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Build failed with exit code $LASTEXITCODE"

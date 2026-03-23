@@ -44,17 +44,15 @@ PauseScreen::~PauseScreen() {
 
 void PauseScreen::init() {
 	if (minecraft->useTouchscreen()) {
-		bContinue = new Touch::TButton(1, "Back to game");
-		bQuit = new Touch::TButton(2, "Quit to title");
+		bContinue = new Touch::TButton(1, "Resume");
+		bQuit = new Touch::TButton(2, "Save and Quit");
 		bQuitAndSaveLocally = new Touch::TButton(3, "Quit and copy map");
 		bServerVisibility = new Touch::TButton(4, "");
-//		bThirdPerson = new Touch::TButton(5, "Toggle 3:rd person view");
 	} else {
-		bContinue = new Button(1, "Back to game");
-		bQuit = new Button(2, "Quit to title");
+		bContinue = new Button(1, "Resume");
+		bQuit = new Button(2, "Save and Quit");
 		bQuitAndSaveLocally = new Button(3, "Quit and copy map");
 		bServerVisibility = new Button(4, "");
-//		bThirdPerson = new Button(5, "Toggle 3:rd person view");
 	}
 
 	buttons.push_back(bContinue);
@@ -141,7 +139,7 @@ void PauseScreen::render(int xm, int ym, float a) {
 	//	drawString(font, "Saving level..", 8, height - 16, br << 16 | br << 8 | br);
 	//}
 
-	drawCenteredString(font, "Game menu", width / 2, 24, 0xffffff);
+	drawCenteredString(font, "Game Menu", width / 2, 24, 0xffffff);
 
 	super::render(xm, ym, a);
 }

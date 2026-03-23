@@ -20,7 +20,8 @@ public:
     :   super(id),
         nutrition(nutrition),
         _isMeat(isMeat),
-        saturationModifier(saturationMod)
+        saturationModifier(saturationMod),
+        canAlwaysEat(false)
     {
 	}
 
@@ -44,7 +45,7 @@ public:
     }
 
 	ItemInstance* use(ItemInstance* instance, Level* level, Player* player) {
-		if (!player->abilities.invulnerable && player->isHurt()) {
+		if (!player->abilities.invulnerable && (canAlwaysEat || player->foodData.getFoodLevel() < 20.0f)) {
 			player->startUsingItem(*instance, getUseDuration(instance));
 		}
 		return instance;
@@ -54,11 +55,9 @@ public:
         return nutrition;
     }
 
-	/*
-    float getSaturationModifier() {
+	float getSaturationModifier() {
         return saturationModifier;
     }
-	*/
 
     bool isMeat() {
         return _isMeat;

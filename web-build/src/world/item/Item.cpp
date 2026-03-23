@@ -169,7 +169,7 @@ void Item::initItems() {
 	Item::pickAxe_iron = (new PickaxeItem(1, Tier::IRON))->setIcon(2, 6)->setCategory(ItemCategory::Tools)->setDescriptionId("pickaxeIron");
 	Item::hatchet_iron = (new HatchetItem(2, Tier::IRON))->setIcon(2, 7)->setCategory(ItemCategory::Tools)->setDescriptionId("hatchetIron");
 	Item::flintAndSteel = (new FlintAndSteelItem(3))->setIcon(5, 0)->setCategory(ItemCategory::Tools)->setDescriptionId("flintAndSteel");
-	Item::apple = (new FoodItem(4, 4, false))->setIcon(10, 0)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("apple");
+	Item::apple = (new FoodItem(4, 4, false, 1.2f))->setIcon(10, 0)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("apple");
 	Item::bow = (new BowItem(5))->setIcon(5, 1)->setCategory(ItemCategory::Tools)->setDescriptionId("bow");
 	Item::arrow = (new Item(6))->setIcon(5, 2)->setCategory(ItemCategory::Tools)->setDescriptionId("arrow");
 	Item::coal = (new CoalItem(7))->setIcon(7, 0)->setCategory(ItemCategory::Tools)->setDescriptionId("coal");
@@ -206,7 +206,7 @@ void Item::initItems() {
 	Item::hoe_gold = (new HoeItem(38, Tier::GOLD))->setIcon(4, 8)->setCategory(ItemCategory::Tools)->setDescriptionId("hoeGold");
 	Item::seeds_wheat = (new SeedItem(39, Tile::crops->id, Tile::farmland->id))->setIcon(9, 0)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("seeds");
 	Item::wheat = (new Item(40))->setIcon(9, 1)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("wheat");
-	Item::bread = (new FoodItem(41, 5, false))->setIcon(9, 2)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("bread");
+	Item::bread = (new FoodItem(41, 5, false, 1.2f))->setIcon(9, 2)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("bread");
 
 	Item::helmet_cloth     = (new ArmorItem(42, ArmorItem::CLOTH, 0, ArmorItem::SLOT_HEAD))->setIcon(0, 0)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("helmetCloth");
 	Item::chestplate_cloth = (new ArmorItem(43, ArmorItem::CLOTH, 0, ArmorItem::SLOT_TORSO))->setIcon(0, 1)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("chestplateCloth");
@@ -234,8 +234,8 @@ void Item::initItems() {
 	Item::boots_gold       = (new ArmorItem(61, ArmorItem::GOLD, 4, ArmorItem::SLOT_FEET))->setIcon(4, 3)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("bootsGold");
 
 	Item::flint = (new Item(62))->setIcon(6, 0)->setCategory(ItemCategory::Tools)->setDescriptionId("flint");
-	Item::porkChop_raw = (new FoodItem(63, 3, true))->setIcon(7, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("porkchopRaw");
-	Item::porkChop_cooked = (new FoodItem(64, 8, true))->setIcon(8, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("porkchopCooked");
+	Item::porkChop_raw = (new FoodItem(63, 3, true, 0.3f))->setIcon(7, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("porkchopRaw");
+	Item::porkChop_cooked = (new FoodItem(64, 8, true, 0.8f))->setIcon(8, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("porkchopCooked");
 	Item::painting = (new HangingEntityItem(65, EntityTypes::IdPainting))->setIcon(10, 1)->setCategory(ItemCategory::Decorations)->setDescriptionId("painting");
 	//Item::apple_gold = (new FoodItem(66, 42, false))->setIcon(11, 0)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("appleGold");
 	Item::sign = (new SignItem(67))->setIcon(10, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("sign");
@@ -275,10 +275,10 @@ void Item::initItems() {
 	Item::shears = (ShearsItem*)(new ShearsItem(103))->setIcon(13, 5)->setCategory(ItemCategory::Tools)->setDescriptionId("shears");
 	Item::melon = (new FoodItem(104, 2, false))->setIcon(13, 6)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("melon");
 	Item::seeds_melon = (new SeedItem(106, Tile::melonStem->id, Tile::farmland->id))->setIcon(14, 3)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("seedsMelon");
-	Item::beef_raw = (new FoodItem(107, 3, /*FoodConstants.FOOD_SATURATION_LOW,*/ true))->setIcon(9, 6)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("beefRaw");
-	Item::beef_cooked = (new FoodItem(108, 8, /*FoodConstants.FOOD_SATURATION_GOOD,*/ true))->setIcon(10, 6)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("beefCooked");
-	Item::chicken_raw = (new FoodItem(109, 2, /*FoodConstants.FOOD_SATURATION_LOW,*/ true))->setIcon(9, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("chickenRaw");
-	Item::chicken_cooked = (new FoodItem(110, 6, /*FoodConstants.FOOD_SATURATION_NORMAL,*/ true))->setIcon(10, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("chickenCooked");
+	Item::beef_raw = (new FoodItem(107, 3, true, 0.3f))->setIcon(9, 6)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("beefRaw");
+	Item::beef_cooked = (new FoodItem(108, 8, true, 0.8f))->setIcon(10, 6)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("beefCooked");
+	Item::chicken_raw = (new FoodItem(109, 2, true, 0.3f))->setIcon(9, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("chickenRaw");
+	Item::chicken_cooked = (new FoodItem(110, 6, true, 0.6f))->setIcon(10, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("chickenCooked");
 
 	Item::netherbrick = (new Item(149))->setIcon(5, 9)->setDescriptionId("netherbrickItem")->setCategory(ItemCategory::Structures);
 	Item::netherQuartz = (new Item(150))->setIcon(5, 10)->setDescriptionId("netherquartz")->setCategory(ItemCategory::Mechanisms);

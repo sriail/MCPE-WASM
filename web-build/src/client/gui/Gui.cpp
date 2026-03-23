@@ -28,7 +28,7 @@ float Gui::InvGuiScale = 1.0f / 3.0f;
 float Gui::GuiScale = 1.0f / Gui::InvGuiScale;
 const float Gui::DropTicks = 40.0f;
 
-//#include <android/log.h>
+// #include <android/log.h>
 
 Gui::Gui(Minecraft* minecraft)
 :	minecraft(minecraft),
@@ -47,10 +47,10 @@ Gui::Gui(Minecraft* minecraft)
 	MAX_MESSAGE_WIDTH(240),
 	itemNameOverlayTime(2)
 {
-	//glGenBuffers2(1, &_inventoryRc.vboId);
+	// glGenBuffers2(1, &_inventoryRc.vboId);
 	glGenBuffers2(1, &rcFeedbackInner.vboId);
 	glGenBuffers2(1, &rcFeedbackOuter.vboId);
-	//Gui::InvGuiScale = 1.0f / (int) (3 * Minecraft::width / 854);
+	// Gui::InvGuiScale = 1.0f / (int) (3 * Minecraft::width / 854);
 }
 
 Gui::~Gui()
@@ -58,7 +58,7 @@ Gui::~Gui()
 	if (_slotFont)
 		delete _slotFont;
 
-	//glDeleteBuffers(1, &_inventoryRc.vboId);
+	// glDeleteBuffers(1, &_inventoryRc.vboId);
 	glDeleteBuffers(1, &rcFeedbackInner.vboId);
 	glDeleteBuffers(1, &rcFeedbackOuter.vboId);
 }
@@ -68,7 +68,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 	if (!minecraft->level || !minecraft->player)
 		return;
 
-	//minecraft->gameRenderer->setupGuiScreen();
+	// minecraft->gameRenderer->setupGuiScreen();
 	Font* font = minecraft->font;
 
 	const bool isTouchInterface = minecraft->useTouchscreen();
@@ -92,6 +92,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		t.colorABGR(0xffffffff);
 		renderHearts();
 		renderBubbles();
+		renderHungerBar();
 		t.draw();
 	}
 
@@ -107,9 +108,8 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 
 	renderToolBar(a, ySlot, screenWidth);
 
-
-	//font->drawShadow(APP_NAME, 2, 2, 0xffffffff);
-	//font->drawShadow("This is a demo, not the finished product", 2, 10 + 2, 0xffffffff);
+	// font->drawShadow(APP_NAME, 2, 2, 0xffffffff);
+	// font->drawShadow("This is a demo, not the finished product", 2, 10 + 2, 0xffffffff);
 	#ifdef APPLE_DEMO_PROMOTION
 		font->drawShadow("Demo version", 2, 0 + 2, 0xffffffff);
 	#endif /*APPLE_DEMO_PROMOTION*/
@@ -141,9 +141,9 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 	int textWidth = font->width(fpsStr);
 	font->drawShadow(fpsStr, screenWidth - textWidth - 2, screenHeight - 10, 0xffffffff);
 
-//        glPopMatrix2();
+// glPopMatrix2();
 //
-//        glEnable(GL_ALPHA_TEST);
+// glEnable(GL_ALPHA_TEST);
     glDisable(GL_BLEND);
 	glEnable2(GL_ALPHA_TEST);
 }
@@ -182,7 +182,7 @@ void Gui::flashSlot(int slotId) {
 void Gui::getSlotPos(int slot, int& posX, int& posY) {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
 	int screenHeight = (int)(minecraft->height * InvGuiScale);
-	posX = screenWidth / 2 - getNumSlots() * 10 + slot * 20, 
+	posX = screenWidth / 2 - getNumSlots() * 10 + slot * 20,
 	posY = screenHeight - 22;
 }
 
@@ -201,7 +201,7 @@ RectangleArea Gui::getRectangleArea(int extendSide) {
 }
 
 void Gui::handleClick(int button, int x, int y) {
-	if (button != MouseAction::ACTION_LEFT)	return;
+	if (button != MouseAction::ACTION_LEFT) return;
 
 	int slot = getSlotIdAt(x, y);
 	if (slot != -1)
@@ -282,8 +282,8 @@ void Gui::setNowPlaying(const std::string& string) {
 }
 
 void Gui::displayClientMessage(const std::string& messageId) {
-	//Language language = Language.getInstance();
-	//std::string languageString = language.getElement(messageId);
+	// Language language = Language.getInstance();
+	// std::string languageString = language.getElement(messageId);
 	addMessage(std::string("Client message: ") + messageId);
 }
 
@@ -315,7 +315,7 @@ void Gui::renderVignette(float br, int w, int h) {
 void Gui::renderSlot(int slot, int x, int y, float a) {
 	ItemInstance* item = minecraft->player->inventory->getItem(slot);
 	if (!item) {
-		//LOGW("Warning: item @ Gui::renderSlot is NULL\n");
+		// LOGW("Warning: item @ Gui::renderSlot is NULL\n");
 		return;
 	}
 
@@ -325,7 +325,7 @@ void Gui::renderSlot(int slot, int x, int y, float a) {
 
 void Gui::renderSlotText( const ItemInstance* item, float x, float y, bool hasFinite, bool shadow )
 {
-	//if (!item || item->getItem()->getMaxStackSize() <= 1) {
+	// if (!item || item->getItem()->getMaxStackSize() <= 1) {
 	if (item->count <= 1) {
 		return;
 	}
@@ -338,7 +338,7 @@ void Gui::renderSlotText( const ItemInstance* item, float x, float y, bool hasFi
 	else
 		buffer[0] = (char)157;
 
-	//LOGI("slot: %d - %s\n", slot, buffer);
+	// LOGI("slot: %d - %s\n", slot, buffer);
 	if (shadow)
 		minecraft->font->drawShadow(buffer, x, y, item->count>0?0xffcccccc:0x60cccccc);
 	else
@@ -354,7 +354,7 @@ void Gui::onGraphicsReset() {
 }
 
 void Gui::texturesLoaded( Textures* textures ) {
-	//_slotFont = new Font(&minecraft->options, "gui/gui_blocks.png", textures, 0, 504, 10, 1, '0');
+	// _slotFont = new Font(&minecraft->options, "gui/gui_blocks.png", textures, 0, 504, 10, 1, '0');
 }
 
 void Gui::onConfigChanged( const Config& c ) {
@@ -364,14 +364,14 @@ void Gui::onConfigChanged( const Config& c ) {
 	//
 	// Create outer feedback circle
 	//
-#ifdef ANDROID
+	#ifdef ANDROID
 	const float mm = 12;
-#else
+	#else
 	const float mm = 12;
-#endif
+	#endif
 	const float maxRadius = minecraft->pixelCalcUi.millimetersToPixels(mm);
 	const float radius = Mth::Min(80.0f/2, maxRadius);
-	//LOGI("radius, maxradius: %f, %f\n", radius, maxRadius);
+	// LOGI("radius, maxradius: %f, %f\n", radius, maxRadius);
 	const float radiusInner = radius * 0.95f;
 
 	const int steps = 24;
@@ -410,7 +410,7 @@ void Gui::onConfigChanged( const Config& c ) {
 		float xx = radiusInner * Mth::cos(a);
 		float yy = radiusInner * Mth::sin(a);
 		t.vertex(xx, yy, 0);
-		//LOGI("x,y: %f, %f\n", xx, yy);
+		// LOGI("x,y: %f, %f\n", xx, yy);
 	}
 	rcFeedbackInner = t.end(true, rcFeedbackInner.vboId);
 
@@ -515,8 +515,8 @@ void Gui::setScissorRect( const IntRectangle& bbox )
 }
 
 float Gui::cubeSmoothStep(float percentage, float min, float max) {
-	//percentage = percentage * percentage;
-	//return (min * percentage) + (max * (1 - percentage));
+	// percentage = percentage * percentage;
+	// return (min * percentage) + (max * (1 - percentage));
 	return (percentage) * (percentage) * (3 - 2 * (percentage));
 }
 
@@ -544,7 +544,7 @@ void Gui::renderProgressIndicator( const bool isTouchInterface, const int screen
 	} else if(!bowEquipped) {
 		const float tprogress = minecraft->gameMode->destroyProgress;
 		const float alpha = Mth::clamp(minecraft->inputHolder->alpha, 0.0f, 1.0f);
-		//LOGI("alpha: %f\n", alpha);
+		// LOGI("alpha: %f\n", alpha);
 
 		if (tprogress <= 0 && minecraft->inputHolder->alpha >= 0) {
 			glDisable2(GL_TEXTURE_2D);
@@ -555,7 +555,7 @@ void Gui::renderProgressIndicator( const bool isTouchInterface, const int screen
 			else
 				glColor4f2(1, 1, 1, Mth::Min(0.4f, alpha*0.4f));
 
-			//LOGI("alpha2: %f\n", alpha);
+			// LOGI("alpha2: %f\n", alpha);
 			const float x = InvGuiScale * minecraft->inputHolder->mousex;
 			const float y = InvGuiScale * minecraft->inputHolder->mousey;
 			glTranslatef2(x, y, 0);
@@ -568,8 +568,8 @@ void Gui::renderProgressIndicator( const bool isTouchInterface, const int screen
 			const float oProgress = minecraft->gameMode->oDestroyProgress;
 			const float progress = 0.5f * (oProgress + (tprogress - oProgress) * a);
 
-			//static Stopwatch w;
-			//w.start();
+			// static Stopwatch w;
+			// w.start();
 
 			glDisable2(GL_TEXTURE_2D);
 			glColor4f2(1, 1, 1, 0.8f * alpha);
@@ -582,7 +582,7 @@ void Gui::renderProgressIndicator( const bool isTouchInterface, const int screen
 			glTranslatef2(x, y, 0);
 			drawArrayVT(rcFeedbackOuter.vboId, rcFeedbackOuter.vertexCount, 24, GL_TRIANGLES);
 			glScalef2(0.5f + progress, 0.5f + progress, 1);
-			//glDisable2(GL_CULL_FACE);
+			// glDisable2(GL_CULL_FACE);
 			glColor4f2(1, 1, 1, 1);
 			glBlendFunc2(GL_ONE_MINUS_DST_COLOR, GL_ONE_MINUS_SRC_COLOR);
 			drawArrayVT(rcFeedbackInner.vboId, rcFeedbackInner.vertexCount, 24, GL_TRIANGLE_FAN);
@@ -591,8 +591,8 @@ void Gui::renderProgressIndicator( const bool isTouchInterface, const int screen
 			glDisable(GL_BLEND);
 			glEnable2(GL_TEXTURE_2D);
 
-			//w.stop();
-			//w.printEvery(100, "feedback-r ");
+			// w.stop();
+			// w.printEvery(100, "feedback-r ");
 		}
 	}
 }
@@ -604,7 +604,7 @@ void Gui::renderHearts() {
 	int oh = minecraft->player->lastHealth;
 	random.setSeed(tickCount * 312871);
 
-	int xx = 2;//screenWidth / 2 - getNumSlots() * 10;
+	int xx = 2; // screenWidth / 2 - getNumSlots() * 10;
 
 	int armor = minecraft->player->getArmorValue();
 	for (int i = 0; i < Player::MAX_HEALTH / 2; i++) {
@@ -612,10 +612,10 @@ void Gui::renderHearts() {
 		int ip2 = i + i + 1;
 
 		if (armor > 0) {
-		    int xo = xx + 80 + i * 8 + 4;
-		    if (ip2 < armor) blit(xo, yo, 16 + 2 * 9, 9 * 1, 9, 9);
-		    else if (ip2 == armor) blit(xo, yo, 16 + 4 * 9, 9 * 1, 9, 9);
-		    else if (ip2 > armor) blit(xo, yo, 16 + 0 * 9, 9 * 1, 9, 9);
+			int xo = xx + 80 + i * 8 + 4;
+			if (ip2 < armor) blit(xo, yo, 16 + 2 * 9, 9 * 1, 9, 9);
+			else if (ip2 == armor) blit(xo, yo, 16 + 4 * 9, 9 * 1, 9, 9);
+			else if (ip2 > armor) blit(xo, yo, 16 + 0 * 9, 9 * 1, 9, 9);
 		}
 
 		int bg = 0;
@@ -643,6 +643,29 @@ void Gui::renderBubbles() {
 			int xo =  i * 8 + 2;
 			if (i < count) blit(xo, yo, 16, 9 * 2, 9, 9);
 			else blit(xo, yo, 16 + 9, 9 * 2, 9, 9);
+		}
+	}
+}
+
+void Gui::renderHungerBar() {
+	const int screenWidth = (int)(minecraft->width * InvGuiScale);
+	const int screenHeight = (int)(minecraft->height * InvGuiScale);
+	// Position: right side of health bar, mirrored
+	int xBase = screenWidth / 2 + 82;
+	int yo = 2;
+	float food = minecraft->player->foodData.getFoodLevel();
+	// Render 10 drumstick icons (each icon = 2 food units)
+	for (int i = 0; i < 10; i++) {
+		int xo = xBase - i * 8;
+		float units = food - i * 2;
+		// background drumstick
+		blit(xo, yo, 16, 27, 9, 9);
+		if (units >= 2.0f) {
+			// full drumstick
+			blit(xo, yo, 52, 27, 9, 9);
+		} else if (units >= 1.0f) {
+			// half drumstick
+			blit(xo, yo, 61, 27, 9, 9);
 		}
 	}
 }
@@ -701,18 +724,18 @@ void Gui::renderOnSelectItemNameText( const int screenWidth, Font* font, int ySl
 }
 
 void Gui::renderChatMessages( const int screenHeight, unsigned int max, bool isChatting, Font* font ) {
-	//        if (minecraft.screen instanceof ChatScreen) {
-	//            max = 20;
-	//            isChatting = true;
-	//        }
+	// if (minecraft.screen instanceof ChatScreen) {
+	//     max = 20;
+	//     isChatting = true;
+	// }
 	//
-	//        glEnable(GL_BLEND);
-	//        glBlendFunc2(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//        glDisable(GL_ALPHA_TEST);
+	// glEnable(GL_BLEND);
+	// glBlendFunc2(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	// glDisable(GL_ALPHA_TEST);
 	//
-	//        glPushMatrix2();
-	//        glTranslatef2(0, screenHeight - 48, 0);
-	//        // glScalef2(1.0f / ssc.scale, 1.0f / ssc.scale, 1);
+	// glPushMatrix2();
+	// glTranslatef2(0, screenHeight - 48, 0);
+	// glScalef2(1.0f / ssc.scale, 1.0f / ssc.scale, 1);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	int baseY = screenHeight - 48;
 	for (unsigned int i = 0; i < guiMessages.size() && i < max; i++) {
@@ -773,14 +796,14 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 		else {
 			int x = screenWidth / 2 - getNumSlots() * 10 + _flashSlotId * 20 + 2;
 			int color = 0xffffff + (((int)(/*0x80 * since +*/ 0x51 - 0x50 * Mth::cos(10 * 6.28f * since))) << 24);
-			//LOGI("Color: %.8x\n", color);
+			// LOGI("Color: %.8x\n", color);
 			fill(x, ySlot, x+16, ySlot+16, color);
 		}
 	}
 	glColor4f2(1, 1, 1, 1);
 
-	//static Stopwatch w;
-	//w.start();
+	// static Stopwatch w;
+	// w.start();
 
 	Tesselator& t = Tesselator::instance;
 	t.beginOverride();
@@ -791,14 +814,14 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 		x += 20;
 	}
 	_inventoryNeedsUpdate = false;
-	//_inventoryRc = t.end(_inventoryRc.vboId);
+	// _inventoryRc = t.end(_inventoryRc.vboId);
 
-	//drawArrayVTC(_inventoryRc.vboId, _inventoryRc.vertexCount);
+	// drawArrayVTC(_inventoryRc.vboId, _inventoryRc.vertexCount);
 
-	//renderSlotWatch.stop();
-	//renderSlotWatch.printEvery(100, "Render slots:");
+	// renderSlotWatch.stop();
+	// renderSlotWatch.printEvery(100, "Render slots:");
 
-	//int x = screenWidth / 2 + getNumSlots() * 10 + (getNumSlots()-1) * 20 + 2;
+	// int x = screenWidth / 2 + getNumSlots() * 10 + (getNumSlots()-1) * 20 + 2;
 	blit(screenWidth / 2 + 10 * getNumSlots() - 20 + 4, ySlot + 6, 242, 252, 14, 4, 14, 4);
 
 	minecraft->textures->loadAndBindTexture("gui/gui_blocks.png");
@@ -817,11 +840,11 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 
-	//w.stop();
-	//w.printEvery(100, "gui-slots");
+	// w.stop();
+	// w.printEvery(100, "gui-slots");
 
 	// Draw count
-	//Tesselator& t = Tesselator::instance;
+	// Tesselator& t = Tesselator::instance;
 	glPushMatrix2();
 	glScalef2(InvGuiScale + InvGuiScale, InvGuiScale + InvGuiScale, 1);
 	const float k = 0.5f * GuiScale;
@@ -841,4 +864,3 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 
 	glPopMatrix2();
 }
-
