@@ -8,8 +8,8 @@
 #include "../entity/player/Player.h"
 #include "../../SharedConstants.h"
 #include "../../network/packet/SetHealthPacket.h"
+#include "../food/FoodConstants.h"
 //#include "../effect/MobEffectInstance.h"
-//#include "../food/FoodConstants.h"
 
 class FoodItem: public Item
 {
@@ -20,7 +20,8 @@ public:
     :   super(id),
         nutrition(nutrition),
         _isMeat(isMeat),
-        saturationModifier(saturationMod)
+        saturationModifier(saturationMod),
+        canAlwaysEat(false)
     {
 	}
 
@@ -44,7 +45,8 @@ public:
     }
 
 	ItemInstance* use(ItemInstance* instance, Level* level, Player* player) {
-		if (!player->abilities.invulnerable && player->isHurt()) {
+		bool isHungry = player->foodData.getFoodLevel() < FoodConstants::MAX_FOOD;
+		if (!player->abilities.invulnerable && (player->isHurt() || isHungry) || canAlwaysEat) {
 			player->startUsingItem(*instance, getUseDuration(instance));
 		}
 		return instance;
@@ -59,6 +61,10 @@ public:
         return saturationModifier;
     }
 	*/
+
+    float getSaturationModifier() const {
+        return saturationModifier;
+    }
 
     bool isMeat() {
         return _isMeat;

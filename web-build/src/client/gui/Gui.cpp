@@ -21,6 +21,7 @@
 #include "../../platform/input/Keyboard.h"
 #include "../../world/level/Level.h"
 #include "../../world/PosTranslator.h"
+#include "../../world/food/FoodConstants.h"
 #include "../renderer/gles.h"
 #include "../../platform/time.h"
 
@@ -92,6 +93,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		t.colorABGR(0xffffffff);
 		renderHearts();
 		renderBubbles();
+		renderFood();
 		t.draw();
 	}
 
@@ -646,6 +648,39 @@ void Gui::renderBubbles() {
 		}
 	}
 }
+
+void Gui::renderFood() {
+	// Render the hunger/food bar to the right of the health hearts.
+	// Food icons are at row 3 (y=27) of the icons.png spritesheet (vanilla APK texture).
+	// Sprite layout mirrors hearts: background at (16, 27), full icon at (52, 27), half at (61, 27).
+	static const int ICON_BG_SX       = 16;            // x of empty food background in icons.png
+	static const int ICON_FULL_SX     = 16 + 4 * 9;   // x of full drumstick icon (=52)
+	static const int ICON_HALF_SX     = 16 + 5 * 9;   // x of half drumstick icon (=61)
+	static const int ICON_ROW_SY      = 9 * 3;         // y of food icon row (=27)
+	static const int ICON_SIZE        = 9;             // icon sprite size in pixels
+	static const int ICON_SPACING     = 8;             // pixels between icon origins
+	static const int FOOD_BAR_START_X = 90;            // x start (right of health hearts at x=2..82)
+	static const int FOOD_BAR_Y       = 2;             // y matches health hearts
+
+	int foodLevel = minecraft->player->foodData.getFoodLevel();
+
+	for (int i = 0; i < FoodConstants::MAX_FOOD / 2; i++) {
+		int xo = FOOD_BAR_START_X + i * ICON_SPACING;
+		// foodThreshold: food value represented by the left half of this icon slot
+		int foodThreshold = i * 2 + 1;
+
+		// Background: empty food slot
+		blit(xo, FOOD_BAR_Y, ICON_BG_SX, ICON_ROW_SY, ICON_SIZE, ICON_SIZE);
+
+		// Overlay with food fill level
+		if (foodThreshold < foodLevel) {
+			blit(xo, FOOD_BAR_Y, ICON_FULL_SX, ICON_ROW_SY, ICON_SIZE, ICON_SIZE);
+		} else if (foodThreshold == foodLevel) {
+			blit(xo, FOOD_BAR_Y, ICON_HALF_SX, ICON_ROW_SY, ICON_SIZE, ICON_SIZE);
+		}
+	}
+}
+
 
 static OffsetPosTranslator posTranslator;
 void Gui::onLevelGenerated() {
