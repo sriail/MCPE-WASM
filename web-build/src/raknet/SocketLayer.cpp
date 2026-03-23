@@ -835,6 +835,19 @@ const char* SocketLayer::DomainNameToIP_Old( const char *domainName )
 
 
 	// Use inet_addr instead? What is the difference?
+#ifdef __EMSCRIPTEN__
+	// Emscripten does not provide gethostbyname; use getaddrinfo instead.
+	struct addrinfo hints, *res;
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family   = AF_INET;
+	hints.ai_socktype = SOCK_DGRAM;
+	if (getaddrinfo(domainName, NULL, &hints, &res) != 0 || res == NULL)
+		return 0;
+	struct sockaddr_in *ipv4 = (struct sockaddr_in *)res->ai_addr;
+	memcpy(&addr, &ipv4->sin_addr, sizeof(struct in_addr));
+	freeaddrinfo(res);
+	return inet_ntoa(addr);
+#else
 	struct hostent * phe = gethostbyname( domainName );
 
 	if ( phe == 0 || phe->h_addr_list[ 0 ] == 0 )
@@ -851,6 +864,7 @@ const char* SocketLayer::DomainNameToIP_Old( const char *domainName )
 
 
 	return "";
+#endif // __EMSCRIPTEN__
 }
 const char* SocketLayer::DomainNameToIP( const char *domainName )
 {
@@ -1611,6 +1625,30 @@ void GetMyIP_Win32( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_IDS] )
 
 	freeaddrinfo(servinfo); // free the linked-list
 #else
+#ifdef __EMSCRIPTEN__
+	// Emscripten does not provide gethostbyname; use getaddrinfo instead.
+	{
+		struct addrinfo hints2, *servinfo2 = 0, *aip2;
+		memset(&hints2, 0, sizeof(hints2));
+		hints2.ai_family   = AF_INET;
+		hints2.ai_socktype = SOCK_DGRAM;
+		int idx = 0;
+		if (getaddrinfo(ac, "", &hints2, &servinfo2) == 0) {
+			for (aip2 = servinfo2; aip2 != NULL && idx < MAXIMUM_NUMBER_OF_INTERNAL_IDS; aip2 = aip2->ai_next, idx++) {
+				if (aip2->ai_family == AF_INET) {
+					struct sockaddr_in *ipv4 = (struct sockaddr_in *)aip2->ai_addr;
+					memcpy(&addresses[idx].address.addr4, ipv4, sizeof(sockaddr_in));
+				}
+			}
+			freeaddrinfo(servinfo2);
+		}
+		while (idx < MAXIMUM_NUMBER_OF_INTERNAL_IDS) {
+			addresses[idx] = UNASSIGNED_SYSTEM_ADDRESS;
+			idx++;
+		}
+		return;
+	}
+#else
 	struct hostent *phe = gethostbyname( ac );
 
 	if ( phe == 0 )
@@ -1638,6 +1676,7 @@ void GetMyIP_Win32( SystemAddress addresses[MAXIMUM_NUMBER_OF_INTERNAL_IDS] )
 		memcpy(&addresses[idx].address.addr4.sin_addr,phe->h_addr_list[ idx ],sizeof(struct in_addr));
 
 	}
+#endif // __EMSCRIPTEN__
 #endif
 
 
