@@ -291,38 +291,11 @@ void ExternalFileLevelStorage::tick()
 	tickCount++;
 	if ((tickCount % 50) == 0 && level)
 	{
-		// look for chunks that needs to be saved
-		for (int z = 0; z < CHUNK_CACHE_WIDTH; z++)
-		{
-			for (int x = 0; x < CHUNK_CACHE_WIDTH; x++)
-			{
-				LevelChunk* chunk = level->getChunk(x, z);
-				if (chunk && chunk->unsaved)
-				{
-					int pos = x + z * CHUNK_CACHE_WIDTH;
-					UnsavedChunkList::iterator prev = unsavedChunkList.begin();
-					for ( ; prev != unsavedChunkList.end(); ++prev)
-					{
-						if ((*prev).pos == pos)
-						{
-							// the chunk has been modified again, so update its time
-							(*prev).addedToList = RakNet::GetTimeMS();
-							break;
-						}
-					}
-					if (prev == unsavedChunkList.end())
-					{
-						UnsavedLevelChunk unsaved;
-						unsaved.pos = pos;
-						unsaved.addedToList = RakNet::GetTimeMS();
-						unsaved.chunk = chunk;
-						unsavedChunkList.push_back(unsaved);
-					}
-					chunk->unsaved = false; // not actually saved, but in our working list at least
-				}
-			}
-		}
-
+		// Periodic save of pending unsaved chunks.  The old 16×16 grid
+		// scan used level->getChunk() which force-generates chunks that
+		// may not be near the player; ChunkCache now saves chunks during
+		// eviction and via saveAll(), so we only need to flush pending
+		// writes here.
         savePendingUnsavedChunks(2);
 	}
 	if (tickCount - lastSavedEntitiesTick > (60 * SharedConstants::TicksPerSecond)) {
