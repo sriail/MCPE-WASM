@@ -486,18 +486,10 @@ LevelChunk* RandomLevelSource::create(int x, int z) {
 }
 
 LevelChunk* RandomLevelSource::getChunk(int xOffs, int zOffs) {
-	//static int chunkx = 0;
-	int hashedPos = ChunkPos::hashCode(xOffs, zOffs);
-
-	ChunkMap::iterator it = chunkMap.find(hashedPos);
-	if (it != chunkMap.end())
-		return it->second;
-
     random.setSeed((long)(xOffs * 341872712l + zOffs * 132899541l)); //@fix
 
     unsigned char* blocks = new unsigned char[LevelChunk::ChunkBlockCount];
     LevelChunk* levelChunk = new LevelChunk(level, blocks, xOffs, zOffs);
-	chunkMap.insert(std::make_pair(hashedPos, levelChunk));
 
 	Biome** biomes = level->getBiomeSource()->getBiomeBlock(/*biomes, */xOffs * 16, zOffs * 16, 16, 16);
     float* temperatures = level->getBiomeSource()->temperatures;

@@ -7,22 +7,6 @@ class Biome;
 class Level;
 class LevelChunk;
 
-#if 1 || USE_MAP
-	#include <map>
-	typedef std::map<int, LevelChunk*> ChunkMap;
-#else
-	#if defined(__APPLE__)
-		#include <ext/hash_map>
-		namespace std {
-			using namespace __gnu_cxx;
-		}
-	#else
-		#include <hash_map>
-	#endif
-	typedef std::hash_map<int, LevelChunk*> ChunkMap;
-#endif
-
-
 #include "../chunk/ChunkSource.h"
 #include "LargeCaveFeature.h"
 #include "synth/PerlinNoise.h"
@@ -65,8 +49,6 @@ public:
 	LargeCaveFeature caveFeature;
 	int waterDepths[16+16][16+16];
 private:
-	ChunkMap chunkMap;
-
 	Random random;
 	PerlinNoise lperlinNoise1;
     PerlinNoise lperlinNoise2;
