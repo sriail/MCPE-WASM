@@ -32,10 +32,10 @@ class ChunkCache: public ChunkSource {
     static const int MAX_SAVES = 2;
 
     // Maximum chunks kept in memory; beyond this distant chunks are evicted.
-    static const int MAX_LOADED_CHUNKS = 512;
+    static const int MAX_LOADED_CHUNKS = 256;
 
     // Chunks within this radius (in chunk coords) of the player are never evicted.
-    static const int UNLOAD_KEEP_RADIUS = 8;
+    static const int UNLOAD_KEEP_RADIUS = 6;
 
     static inline int64_t chunkKey(int x, int z) {
         return ((int64_t)x << 32) | ((int64_t)z & 0xFFFFFFFFLL);
@@ -48,7 +48,8 @@ public:
 		last(NULL),
 		level(level_),
 		storage(storage_),
-		source(source_)
+		source(source_),
+		generationDepth(0)
 	{
 		isChunkCache = true;
 		emptyChunk = new EmptyLevelChunk(level_, NULL, 0, 0);
@@ -101,6 +102,16 @@ public:
             last = it->second;
             return it->second;
         }
+
+        // Prevent cascading generation: if we are already inside a getChunk()
+        // generation call (e.g. from postProcess → getTile → getChunk), return
+        // emptyChunk instead of recursively generating more chunks.  This is
+        // the primary defence against the bad_alloc OOM in WASM.
+        if (generationDepth > 0) {
+            return emptyChunk;
+        }
+
+        generationDepth++;
 
         // Evict distant chunks before allocating a new one
         evictDistantChunks(x, z);
@@ -173,6 +184,7 @@ public:
         zLast = z;
         last = newChunk;
 
+        generationDepth--;
         return newChunk;
     }
 
@@ -304,6 +316,7 @@ private:
     Level* level;
 
     LevelChunk* last;
+    int generationDepth;
 
 };
 

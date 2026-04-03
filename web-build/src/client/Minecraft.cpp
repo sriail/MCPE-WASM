@@ -377,9 +377,9 @@ void Minecraft::prepareLevel(const std::string& title) {
 	if (!level->isNew())
 		level->setUpdateLights(false);
 
-	// Only pre-generate a 7×7 chunk area around spawn (radius 3) instead of
+	// Only pre-generate a 5×5 chunk area around spawn (radius 2) instead of
 	// the entire world grid.  This drastically reduces initial load time.
-	static const int PREPARE_RADIUS = 3;
+	static const int PREPARE_RADIUS = 2;
 	const int total = (PREPARE_RADIUS * 2 + 1) * (PREPARE_RADIUS * 2 + 1);
 	int pp = 0;
 
