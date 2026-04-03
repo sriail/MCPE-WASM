@@ -1,7 +1,0 @@
-{
-  // Alphabetical order please :)
-  "ui_defs": [
-    "ui/vr_alignscreen.json",
-    "ui/vr_scheme_screen.json"
-  ]
-}
