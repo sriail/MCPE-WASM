@@ -377,17 +377,26 @@ void Minecraft::prepareLevel(const std::string& title) {
 	if (!level->isNew())
 		level->setUpdateLights(false);
 
-	int Max = CHUNK_CACHE_WIDTH * CHUNK_CACHE_WIDTH;
+	// Only pre-generate a 7×7 chunk area around spawn (radius 3) instead of
+	// the entire world grid.  This drastically reduces initial load time.
+	static const int PREPARE_RADIUS = 3;
+	const int total = (PREPARE_RADIUS * 2 + 1) * (PREPARE_RADIUS * 2 + 1);
 	int pp = 0;
-	for (int x = 8; x < (CHUNK_CACHE_WIDTH * CHUNK_WIDTH); x += CHUNK_WIDTH) {
-        for (int z = 8; z < (CHUNK_CACHE_WIDTH * CHUNK_WIDTH); z += CHUNK_WIDTH) {
-            progressStagePercentage = 100 * pp++ / Max;
-            //printf("level generation progress %d\n", progressStagePercentage);
+
+	// Use chunk (0,0) as the pre-generation centre.  setInitialSpawn() below
+	// will locate the real spawn, which is also near the origin for new worlds.
+	const int spawnChunkX = 0;
+	const int spawnChunkZ = 0;
+
+	for (int dx = -PREPARE_RADIUS; dx <= PREPARE_RADIUS; dx++) {
+        for (int dz = -PREPARE_RADIUS; dz <= PREPARE_RADIUS; dz++) {
+            progressStagePercentage = (pp * 100) / total;
+            pp++;
 #ifdef __EMSCRIPTEN__
             if ((pp & 3) == 0) emscripten_sleep(0); // Yield so ProgressScreen can render
 #endif
 			B.start();
-            level->getTile(x, 64, z);
+            level->getTile((spawnChunkX + dx) * CHUNK_WIDTH + 8, 64, (spawnChunkZ + dz) * CHUNK_DEPTH + 8);
 			B.stop();
 			L.start();
 			if (level->isNew())
@@ -400,11 +409,11 @@ void Minecraft::prepareLevel(const std::string& title) {
 	level->setUpdateLights(true);
 
 	C.start();
-	for (int x = 0; x < CHUNK_CACHE_WIDTH; x++)
+	for (int dx = -PREPARE_RADIUS; dx <= PREPARE_RADIUS; dx++)
 	{
-		for (int z = 0; z < CHUNK_CACHE_WIDTH; z++)
+		for (int dz = -PREPARE_RADIUS; dz <= PREPARE_RADIUS; dz++)
 		{
-			LevelChunk* chunk = level->getChunk(x, z);
+			LevelChunk* chunk = level->getChunk(spawnChunkX + dx, spawnChunkZ + dz);
 			if (chunk && !chunk->createdFromSave)
 			{
 				chunk->unsaved = false;

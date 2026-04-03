@@ -278,8 +278,6 @@ void Level::tickTiles() {
 		for (int i = 0; i < pollChunkOffsetsSize; i += 2) {
 			const int xp = xx + pollChunkOffsets[i];
 			const int zp = zz + pollChunkOffsets[i+1];
-			if (xp >= 0 && xp < CHUNK_CACHE_WIDTH &&
-				zp >= 0 && zp < CHUNK_CACHE_WIDTH)
 				_chunksToPoll.insert(ChunkPos(xp, zp));
 		}
     }
@@ -428,17 +426,14 @@ bool Level::findPath(Path* path, Entity* from, int xBest, int yBest, int zBest, 
 /*protected*/
 void Level::setInitialSpawn() {
     isFindingSpawn = true;
-    int xSpawn = CHUNK_CACHE_WIDTH * CHUNK_WIDTH / 2; // (Level.MAX_LEVEL_SIZE - 100) * 0;
+    int xSpawn = 0;
     int ySpawn = 64;
-    int zSpawn = CHUNK_CACHE_WIDTH * CHUNK_DEPTH / 2; // (Level.MAX_LEVEL_SIZE - 100) * 0;
-    while (!dimension->isValidSpawn(xSpawn, zSpawn)) {
+    int zSpawn = 0;
+    int attempts = 0;
+    while (!dimension->isValidSpawn(xSpawn, zSpawn) && attempts < 1000) {
         xSpawn += random.nextInt(32) - random.nextInt(32);
         zSpawn += random.nextInt(32) - random.nextInt(32);
-
-		if (xSpawn < 4) xSpawn += 32;
-		if (xSpawn >= LEVEL_WIDTH-4) xSpawn -= 32;
-		if (zSpawn < 4) zSpawn += 32;
-		if (zSpawn >= LEVEL_DEPTH-4) zSpawn -= 32;
+        attempts++;
     }
     levelData.setSpawn(xSpawn, ySpawn, zSpawn);
     isFindingSpawn = false;
@@ -451,14 +446,13 @@ void Level::validateSpawn() {
     }
     int xSpawn = levelData.getXSpawn();
     int zSpawn = levelData.getZSpawn();
-    while (getTopTile(xSpawn, zSpawn) == 0 || getTopTile(xSpawn, zSpawn) == Tile::invisible_bedrock->id) {
+    int attempts = 0;
+    while (attempts < 1000) {
+        int topTile = getTopTile(xSpawn, zSpawn);
+        if (topTile != 0 && topTile != Tile::invisible_bedrock->id) break;
         xSpawn += random.nextInt(8) - random.nextInt(8);
         zSpawn += random.nextInt(8) - random.nextInt(8);
-
-		if (xSpawn < 4) xSpawn += 8;
-		if (xSpawn >= LEVEL_WIDTH-4) xSpawn -= 8;
-		if (zSpawn < 4) zSpawn += 8;
-		if (zSpawn >= LEVEL_DEPTH-4) zSpawn -= 8;
+        attempts++;
     }
     levelData.setXSpawn(xSpawn);
     levelData.setZSpawn(zSpawn);
@@ -944,7 +938,7 @@ HitResult Level::clip(const Vec3& A, const Vec3& b, bool liquid /*= false*/, boo
 		if (solidOnly && tile != NULL && tile->getAABB(this, xTile0, yTile0, zTile0) == NULL) {
 			// No collision
 		} else if (t > 0 && tile->mayPick(data, liquid)) {
-			if(xTile0 >= 0 && zTile0 >= 0 && xTile0 < LEVEL_WIDTH && zTile0 < LEVEL_WIDTH) {
+			{
 				HitResult r = tile->clip(this, xTile0, yTile0, zTile0, a, b);
 				if (r.isHit()) return r;
 			}
@@ -2222,9 +2216,8 @@ void Level::setNightMode( bool isNightMode ) {
 }
 
 bool Level::inRange( int x, int y, int z ) {
-	return x >= 0 && x < LEVEL_WIDTH
-		&& y >= 0 && y < LEVEL_HEIGHT
-		&& z >= 0 && z < LEVEL_DEPTH;
+	(void)x; (void)z;
+	return y >= 0 && y < LEVEL_HEIGHT;
 }
 
 //
