@@ -1,0 +1,14 @@
+{
+  "name": "mcpe-wasm",
+  "version": "1.0.0",
+  "description": "Minecraft Pocket Edition WebAssembly – WebSocket serve helper",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ws": "^8.17.1"
+  },
+  "license": "MIT"
+}
