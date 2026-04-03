@@ -40,13 +40,14 @@ $LINK_FLAGS = @(
     "--shell-file", "shell.html",
     "--preload-file", "../../data@/data",
     "-sALLOW_MEMORY_GROWTH=1",
+    "-sINITIAL_MEMORY=256MB",        # Add this line - start with more memory
+    "-sMAXIMUM_MEMORY=2GB",          # Add this line - allow growth up to 2GB
     "-sMAX_WEBGL_VERSION=2",
     "-sASSERTIONS=2",
     "-sEXPORTED_FUNCTIONS=['_main','_idbfsReady','_syncSaves','_malloc','_free']",
     "-sEXPORTED_RUNTIME_METHODS=['FS','ccall','cwrap','lengthBytesUTF8','stringToUTF8']",
     "-O2"
 )
-
 # Source files
 $basePath = (Resolve-Path "../../src").ProviderPath
 $basePathFwd = $basePath.Replace("\", "/")
