@@ -14,7 +14,6 @@
 #include "EmptyLevelChunk.h"
 #include "../Level.h"
 #include "../LevelConstants.h"
-#include "../../entity/Entity.h"
 
 // Hash for packed (x<<32|z) chunk coordinate keys
 struct ChunkKeyHash {
@@ -309,12 +308,6 @@ private:
             LevelChunk* c = it->second;
             if (c == NULL || c == emptyChunk) continue;
             if (c == last) { last = NULL; xLast = -999999999; zLast = -999999999; }
-
-            // Remove non-persistent mob entities that belong to this chunk
-            // from the Level entity list.  Persistent mobs (those the player
-            // interacted with) are kept and will be saved/restored normally.
-            removeChunkEntities(c);
-
             c->unload();
             save(c);
             saveEntities(c);
@@ -322,24 +315,6 @@ private:
             delete c;
             chunks.erase(it);
             --toEvict;
-        }
-    }
-
-    // Mark non-persistent mobs in the given chunk for removal from the Level.
-    void removeChunkEntities(LevelChunk* chunk) {
-        for (unsigned int i = 0; i < level->entities.size(); ++i) {
-            Entity* e = level->entities[i];
-            if (e->removed || e->isPlayer()) continue;
-
-            int ex = Mth::floor(e->x / 16.f);
-            int ez = Mth::floor(e->z / 16.f);
-            if (ex != chunk->x || ez != chunk->z) continue;
-
-            // Keep persistent entities (player-interacted mobs)
-            if (e->persistent) continue;
-
-            // Non-persistent mob: mark for removal so tickEntities() cleans it
-            e->remove();
         }
     }
 

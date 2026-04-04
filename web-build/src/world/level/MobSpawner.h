@@ -30,14 +30,6 @@ public:
 
 	static bool addMob(Level* level, Mob* mob, float x, float y, float z, float yRot, float xRot, bool force);
 	static void makeBabyMob(Mob* mob, float probability);
-
-	// Count mobs of a given base type within a radius (in blocks) of a position.
-	static int countMobsNearPlayer(Level* level, float px, float py, float pz, float radius, int baseTypeId);
-
-	// Maximum number of mobs of each base type allowed near a single player.
-	static const int LOCAL_PASSIVE_MOB_CAP  = 20;
-	static const int LOCAL_HOSTILE_MOB_CAP  = 20;
-	static const int LOCAL_WATER_MOB_CAP    = 10;
 protected:
     static const std::vector<int> bedEnemies;
 private:
