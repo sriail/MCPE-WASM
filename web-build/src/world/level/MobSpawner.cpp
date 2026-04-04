@@ -35,8 +35,9 @@ int MobSpawner::tick(Level* level, bool spawnEnemies, bool spawnFriendlies) {
 
     chunksToPoll.clear();
 
-	// For an infinite world, always scan chunks near one player per tick.
-	// Use a small radius (4 chunks = 64 blocks) to keep the scan lightweight.
+	// For an infinite world, scan chunks near one player per tick (rotating
+	// through players).  Use a small radius (4 chunks = 64 blocks) to keep
+	// the scan lightweight.
 	if (spawnFriendlies) {
 		spawnEnemies = false;
 	}
@@ -176,7 +177,7 @@ void MobSpawner::postProcessSpawnMobs(Level* level, Biome* biome, int xo, int zo
 
     // Respect the global creature cap during chunk generation to prevent
     // mob hordes from building up when many chunks are generated at once.
-    // Check once here — NOT per mob — to avoid expensive entity iteration.
+    // Check once here -- NOT per mob -- to avoid expensive entity iteration.
     int existingCreatures = level->countInstanceOfBaseType(MobTypes::BaseCreature);
     if (existingCreatures >= MobCategory::creature.getMaxInstancesPerLevel())
         return;
