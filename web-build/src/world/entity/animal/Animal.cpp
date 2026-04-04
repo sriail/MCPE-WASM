@@ -84,7 +84,9 @@ Entity* Animal::findAttackTarget()
 
 bool Animal::removeWhenFarAway()
 {
-	return false;
+	// Persistent animals (those the player interacted with) are never
+	// despawned.  Non-persistent ones may be removed to prevent mob hordes.
+	return !persistent;
 }
 
 int Animal::getCreatureBaseType() const {

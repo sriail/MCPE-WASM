@@ -34,21 +34,17 @@ int MobSpawner::tick(Level* level, bool spawnEnemies, bool spawnFriendlies) {
     }
 
     chunksToPoll.clear();
-	// Add all chunks as a quick-and-dirty test
-	// (The code above is the same as in the java version)
-	// This code goes over the whole map one "row" at a time
 
-	// Spawn friendlies == loop over whole map, and disable Monster spawning this tick
+	// For an infinite world, always scan chunks near each player rather than
+	// iterating over a fixed 16×16 grid.  The radius is 8 chunks (128 blocks).
 	if (spawnFriendlies) {
 		spawnEnemies = false;
-		for (int i = 0; i < 256; ++i)
-			chunksToPoll.insert( std::make_pair( ChunkPos(i>>4, i&15), false) );
+	}
 
-	} else {
-		// Only spawn mobs, check around one player per tick (@todo: optimize the "count instances of"?)
+	{
 		static unsigned int _pid = 0;
-		if (++_pid >= level->players.size()) _pid = 0;
 		if (level->players.size()) {
+			if (++_pid >= level->players.size()) _pid = 0;
 			Player* p = level->players[_pid];
 			int xx = Mth::floor(p->x / 16);
 			int zz = Mth::floor(p->z / 16);
@@ -57,8 +53,8 @@ int MobSpawner::tick(Level* level, bool spawnEnemies, bool spawnFriendlies) {
 			for (int z = -r; z <= r; z++) {
 				const int cx = xx + x;
 				const int cz = zz + z;
-				if (cx >= 0 && cx < 16 && cz >= 0 && cz < 16)
-					chunksToPoll.insert(std::make_pair(ChunkPos(cx, cz), false ));
+				// Infinite world: no fixed-grid bounds check
+				chunksToPoll.insert(std::make_pair(ChunkPos(cx, cz), false));
 			}
 		}
 	}
@@ -75,6 +71,28 @@ int MobSpawner::tick(Level* level, bool spawnEnemies, bool spawnFriendlies) {
 		int numMobs = level->countInstanceOfBaseType(mobCategory.getBaseClassId());
 		if (numMobs > mobCategory.getMaxInstancesPerLevel())
 		    continue;
+
+		// Local mob cap: enforce a per-player radius limit so mobs don't
+		// accumulate into hordes.  Skip this category if the nearest player
+		// already has enough mobs nearby.
+		{
+			bool localCapReached = false;
+			int localCap = mobCategory.isFriendly()
+				? (mobCategory.getBaseClassId() == MobTypes::BaseWaterCreature
+					? LOCAL_WATER_MOB_CAP : LOCAL_PASSIVE_MOB_CAP)
+				: LOCAL_HOSTILE_MOB_CAP;
+			for (unsigned int pi = 0; pi < level->players.size(); ++pi) {
+				Player* p = level->players[pi];
+				int nearby = countMobsNearPlayer(level, p->x, p->y, p->z,
+					128.0f, mobCategory.getBaseClassId());
+				if (nearby >= localCap) {
+					localCapReached = true;
+					break;
+				}
+			}
+			if (localCapReached)
+				continue;
+		}
 		//LOGI("NumMobs: %d of Category: %d\n", numMobs, mobCategory.getBaseClassId());
 chunkLoop:
 		for(std::map<ChunkPos, bool>::iterator it = chunksToPoll.begin(); it != chunksToPoll.end(); ++it) {
@@ -181,6 +199,12 @@ void MobSpawner::postProcessSpawnMobs(Level* level, Biome* biome, int xo, int zo
         return;
     }
 
+    // Respect the global creature cap during chunk generation to prevent
+    // mob hordes from building up when many chunks are generated at once.
+    int existingCreatures = level->countInstanceOfBaseType(MobTypes::BaseCreature);
+    if (existingCreatures >= MobCategory::creature.getMaxInstancesPerLevel())
+        return;
+
     while (random->nextFloat() < biome->getCreatureProbability()) {
 
         Biome::MobSpawnerData* type = (Biome::MobSpawnerData*) WeighedRandom::getRandomItem(&level->random, mobs);
@@ -191,6 +215,10 @@ void MobSpawner::postProcessSpawnMobs(Level* level, Biome* biome, int xo, int zo
         int startX = x, startZ = z;
 
         for (int c = 0; c < count; c++) {
+            // Re-check cap per mob to avoid overshooting
+            if (level->countInstanceOfBaseType(MobTypes::BaseCreature) >= MobCategory::creature.getMaxInstancesPerLevel())
+                return;
+
             bool success = false;
             for (int attempts = 0; !success && attempts < 4; attempts++) {
                 // these mobs always spawn at the topmost position
@@ -281,4 +309,21 @@ void MobSpawner::makeBabyMob( Mob* mob, float probability ) {
 		if (babyRandom.nextFloat() < probability)
 			((Animal*)mob)->setAge(-20 * 60 * SharedConstants::TicksPerSecond);
 	}
+}
+
+/*static*/
+int MobSpawner::countMobsNearPlayer(Level* level, float px, float py, float pz, float radius, int baseTypeId) {
+	int n = 0;
+	float r2 = radius * radius;
+	for (unsigned int i = 0; i < level->entities.size(); ++i) {
+		Entity* e = level->entities[i];
+		if (e->removed) continue;
+		if (e->getCreatureBaseType() != baseTypeId) continue;
+		float dx = e->x - px;
+		float dy = e->y - py;
+		float dz = e->z - pz;
+		if (dx * dx + dy * dy + dz * dz <= r2)
+			++n;
+	}
+	return n;
 }
