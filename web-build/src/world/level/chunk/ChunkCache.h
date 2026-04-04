@@ -185,6 +185,19 @@ public:
         last = newChunk;
 
         generationDepth--;
+
+        // After loading a new chunk, mark the chunk area (plus a 1-block
+        // border) as dirty so that neighbouring render-chunks rebuild their
+        // border faces.  Without this, faces adjacent to previously-unloaded
+        // chunks remain hidden because EmptyLevelChunk returned solid
+        // invisible_bedrock during the original render pass.
+        if (newChunk != emptyChunk) {
+            level->setTilesDirty(
+                x * 16 - 1, 0, z * 16 - 1,
+                x * 16 + 16, Level::DEPTH - 1, z * 16 + 16
+            );
+        }
+
         return newChunk;
     }
 

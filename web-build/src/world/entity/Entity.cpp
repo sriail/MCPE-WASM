@@ -24,6 +24,7 @@ Entity::Entity( Level* level )
 	isStuckInWeb(false),
 	removed(false),
 	reallyRemoveIfPlayer(false),
+	persistent(false),
 	canRemove(true), //@todo: remove
 	noPhysics(false),
 	firstTick(true),
@@ -840,6 +841,7 @@ void Entity::saveWithoutId(CompoundTag* entityTag) {
     entityTag->putShort("Fire", (short) onFire);
     entityTag->putShort("Air", (short) airSupply);
     entityTag->putBoolean("OnGround", onGround);
+    entityTag->putBoolean("Persistent", persistent);
 
     addAdditonalSaveData(entityTag);
 }
@@ -885,6 +887,7 @@ bool Entity::load( CompoundTag* tag )
     onFire		= tag->getShort("Fire");
     airSupply	= tag->getShort("Air");
     onGround	= tag->getBoolean("OnGround");
+    persistent	= tag->getBoolean("Persistent");
 
     setPos(x, y, z);
 

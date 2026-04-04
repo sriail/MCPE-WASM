@@ -766,6 +766,11 @@ bool Player::hurt(Entity* source, int dmg) {
 }
 
 void Player::interact(Entity* entity) {
+    // Mark the entity as persistent so it is kept across chunk
+    // unloads / mob cap culling (e.g. animals the player fed or bred).
+    if (entity->isMob())
+        entity->persistent = true;
+
     if (entity->interact(this)) return;
 	ItemInstance* item = inventory->getSelected();
 	if (item != NULL && entity->isMob()) {

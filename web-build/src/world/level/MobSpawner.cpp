@@ -34,31 +34,25 @@ int MobSpawner::tick(Level* level, bool spawnEnemies, bool spawnFriendlies) {
     }
 
     chunksToPoll.clear();
-	// Add all chunks as a quick-and-dirty test
-	// (The code above is the same as in the java version)
-	// This code goes over the whole map one "row" at a time
 
-	// Spawn friendlies == loop over whole map, and disable Monster spawning this tick
+	// For an infinite world, scan chunks near one player per tick (rotating
+	// through players).  Use a small radius (4 chunks = 64 blocks) to keep
+	// the scan lightweight.
 	if (spawnFriendlies) {
 		spawnEnemies = false;
-		for (int i = 0; i < 256; ++i)
-			chunksToPoll.insert( std::make_pair( ChunkPos(i>>4, i&15), false) );
+	}
 
-	} else {
-		// Only spawn mobs, check around one player per tick (@todo: optimize the "count instances of"?)
+	{
 		static unsigned int _pid = 0;
-		if (++_pid >= level->players.size()) _pid = 0;
 		if (level->players.size()) {
+			if (++_pid >= level->players.size()) _pid = 0;
 			Player* p = level->players[_pid];
 			int xx = Mth::floor(p->x / 16);
 			int zz = Mth::floor(p->z / 16);
-			int r = 128 / 16;
+			int r = 4;
 			for (int x = -r; x <= r; x++)
 			for (int z = -r; z <= r; z++) {
-				const int cx = xx + x;
-				const int cz = zz + z;
-				if (cx >= 0 && cx < 16 && cz >= 0 && cz < 16)
-					chunksToPoll.insert(std::make_pair(ChunkPos(cx, cz), false ));
+				chunksToPoll.insert(std::make_pair(ChunkPos(xx + x, zz + z), false));
 			}
 		}
 	}
@@ -180,6 +174,13 @@ void MobSpawner::postProcessSpawnMobs(Level* level, Biome* biome, int xo, int zo
     if (mobs.empty()) {
         return;
     }
+
+    // Respect the global creature cap during chunk generation to prevent
+    // mob hordes from building up when many chunks are generated at once.
+    // Check once here -- NOT per mob -- to avoid expensive entity iteration.
+    int existingCreatures = level->countInstanceOfBaseType(MobTypes::BaseCreature);
+    if (existingCreatures >= MobCategory::creature.getMaxInstancesPerLevel())
+        return;
 
     while (random->nextFloat() < biome->getCreatureProbability()) {
 

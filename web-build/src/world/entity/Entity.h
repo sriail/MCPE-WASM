@@ -209,6 +209,7 @@ public:
 	bool canRemove;
 	bool invisible;
 	bool reallyRemoveIfPlayer;
+	bool persistent; // true if the player interacted with this entity (fed, bred, tamed, etc.)
 protected:
 	static Random sharedRandom;
 	int airCapacity;
