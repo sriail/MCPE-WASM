@@ -54,10 +54,21 @@
             var canvas = document.getElementById('canvas');
 
             // Handle Native Mouse Clicks to lock pointer only for REAL mice
+            // and only when the game wants it (not in menus)
             canvas.addEventListener('mousedown', function (e) {
                 // e.isTrusted ensures this was a physical mouse click
+                // Check if the game is in a state where pointer lock is desired
                 if (e.isTrusted && !document.pointerLockElement && !window.mcMenuOpen) {
-                    canvas.requestPointerLock();
+                    // Only request pointer lock if the C++ side says mouse should be grabbed
+                    if (typeof Module !== 'undefined' && typeof Module._emscripten_is_pointer_locked !== 'undefined') {
+                        // Check the game's mouseGrabbed state
+                        var wantsLock = Module._emscripten_wants_pointer_lock ? Module._emscripten_wants_pointer_lock() : 1;
+                        if (wantsLock) {
+                            canvas.requestPointerLock();
+                        }
+                    } else {
+                        canvas.requestPointerLock();
+                    }
                 }
             });
 

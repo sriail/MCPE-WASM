@@ -32,14 +32,13 @@ void MouseHandler::grab() {
 	SDL_WM_GrabInput(SDL_GRAB_ON);
 	SDL_ShowCursor(0);
 #elif defined(EMSCRIPTEN)
-	// We rely on the user clicking the canvas to gain pointer lock,
-	// but we can try to request it here if they're already interacting.
-	/* EM_ASM(
+	// Request pointer lock when game wants to grab mouse
+	EM_ASM(
 		var canvas = document.getElementById('canvas');
-		if (canvas && canvas.requestPointerLock) {
+		if (canvas && canvas.requestPointerLock && !document.pointerLockElement) {
 			canvas.requestPointerLock();
 		}
-	); */
+	);
 #endif
 }
 
