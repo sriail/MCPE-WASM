@@ -131,7 +131,7 @@ mergeInto(LibraryManager.library, {
             enabled: false,
             volume: 0,
             targetVolume: 0.7,
-            fadeSpeed: 0.008,   // ~0.4s fade at 50 ms interval
+            fadeSpeed: 0.05,    // ~1s fade at 50ms interval (1.0 / 0.05 = 20 steps × 50ms)
             trackIndex: -1,
             tracks: tracks,
             fadeState: 'none',  // 'fadein' | 'fadeout' | 'none'

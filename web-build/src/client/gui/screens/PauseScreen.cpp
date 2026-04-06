@@ -191,7 +191,7 @@ void PauseScreen::updateServerVisibilityText()
 
 void PauseScreen::keyPressed(int eventKey)
 {
-	// Ctrl = back to game (same as clicking "Back to game" button)
+	// Ctrl (left or right) = back to game (same as clicking "Back to game" button)
 	if (eventKey == Keyboard::KEY_LCTRL) {
 		minecraft->setScreen(NULL);
 		return;
