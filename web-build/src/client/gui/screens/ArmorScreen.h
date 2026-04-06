@@ -5,6 +5,7 @@
 
 #include "../components/InventoryPane.h"
 #include "../components/Button.h"
+#include "../components/UnifiedInventoryTabBar.h"
 
 class Font;
 class CItem;
@@ -52,14 +53,14 @@ private:
 	ItemInstance burnResult;
 	float descWidth;
 	ImageButton btnClose;
+	
+	UnifiedInventoryTabBar* tabBar;
 
 	BlankButton btnArmor0;
 	BlankButton btnArmor1;
 	BlankButton btnArmor2;
 	BlankButton btnArmor3;
 	BlankButton* armorButtons[4];
-
-	Touch::THeader bHeader;
 
 	Touch::InventoryPane* inventoryPane;
 	IntRectangle inventoryPaneRect;

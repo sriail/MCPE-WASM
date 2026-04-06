@@ -4,6 +4,7 @@
 #include "../Screen.h"
 #include "../../player/input/touchscreen/TouchAreaModel.h"
 #include "../components/Button.h"
+#include "../components/UnifiedInventoryTabBar.h"
 
 class IngameBlockSelectionScreen : public Screen
 {
@@ -49,6 +50,8 @@ private:
 	bool _pendingQuit;
 
 	Button bArmor;
+	UnifiedInventoryTabBar* tabBar;
+	ImageButton btnClose;
 
 	RectangleArea _area;
 };

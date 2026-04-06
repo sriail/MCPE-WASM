@@ -30,6 +30,7 @@ public:
 
 	static void teardown_static();
 private:
+	static void renderGuiItem3DBlock(Font* font, Textures* textures, const ItemInstance* item, int x, int y);
 	static void fillRect(Tesselator& t, float x, float y, float w, float h, int c);
 	static TileRenderer* tileRenderer;
 	Random random;

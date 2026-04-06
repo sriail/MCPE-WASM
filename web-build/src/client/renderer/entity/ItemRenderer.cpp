@@ -178,23 +178,22 @@ void ItemRenderer::renderGuiItem(Font* font, Textures* textures, const ItemInsta
 	if (!Item::items[id])
 		return;
 
+	// Check if this is a block that can be rendered in 3D
+	bool canRender3D = (id < 256 && Tile::tiles[id] != NULL && 
+	                    TileRenderer::canRender(Tile::tiles[id]->getRenderShape()));
+	
+	// Use 3D rendering for renderable blocks
+	if (canRender3D) {
+		renderGuiItem3DBlock(font, textures, item, int(x), int(y));
+		return;
+	}
+
+	// Fall back to atlas rendering for items and non-renderable blocks
 	int i = getAtlasPos(item);
 
 	if (i < 0) {
-		Tesselator& t = Tesselator::instance;
-		if (!t.isOverridden())
-			renderGuiItemCorrect(font, textures, item, int(x), int(y));
-		else {
-			// @huge @attn @todo @fix:	This is just guess-works..
-			//							it we're batching for saving the
-			//							buffer, this will fail miserably
-			t.endOverrideAndDraw();
-			glDisable2(GL_TEXTURE_2D);
-			fillRect(t, x, y, w, h, 0xff0000);
-			glEnable2(GL_TEXTURE_2D);
-			renderGuiItemCorrect(font, textures, item, int(x), int(y));
-			t.beginOverride();
-		}
+		// No atlas position and not 3D renderable - try correct renderer anyway
+		renderGuiItem3DBlock(font, textures, item, int(x), int(y));
 		return;
 	}
 
@@ -224,6 +223,19 @@ void ItemRenderer::renderGuiItem(Font* font, Textures* textures, const ItemInsta
 	t.vertexUV(x + w, y,     blitOffset, u1, v0);
 	t.vertexUV(x,     y,     blitOffset, u0, v0);
 	t.draw();
+}
+
+// Helper function to render 3D blocks in GUI
+void ItemRenderer::renderGuiItem3DBlock(Font* font, Textures* textures, const ItemInstance* item, int x, int y) {
+	Tesselator& t = Tesselator::instance;
+	if (!t.isOverridden()) {
+		renderGuiItemCorrect(font, textures, item, x, y);
+	} else {
+		// Batch mode - end batch, render 3D, restart batch
+		t.endOverrideAndDraw();
+		renderGuiItemCorrect(font, textures, item, x, y);
+		t.beginOverride();
+	}
 }
 
 void ItemRenderer::renderGuiItemDecorations(const ItemInstance* item, float x, float y) {
