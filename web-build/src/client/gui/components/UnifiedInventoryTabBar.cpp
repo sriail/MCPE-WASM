@@ -37,7 +37,7 @@ private:
 
 UnifiedInventoryTabBar::UnifiedInventoryTabBar(Minecraft* minecraft)
 :	selectedTabIndex(TAB_ITEMS),
-	tabBarHeight(24),
+	tabBarHeight(DEFAULT_TAB_BAR_HEIGHT),
 	screenWidth(0),
 	screenHeight(0),
 	tabNormal(NULL),

@@ -65,9 +65,9 @@ void IngameBlockSelectionScreen::init()
 	buttons.push_back(&btnClose);
 
 	_area = RectangleArea(	(float)getSlotPosX(0) - 4,
-							(float)getSlotPosY(0) - 4 + (tabBar ? tabBar->getTabBarHeight() : 24),
+							(float)getSlotPosY(0) - 4 + (tabBar ? tabBar->getTabBarHeight() : UnifiedInventoryTabBar::DEFAULT_TAB_BAR_HEIGHT),
 							(float)getSlotPosX(InventoryCols) + 4, 
-							(float)getSlotPosY(InventoryRows) + 4 + (tabBar ? tabBar->getTabBarHeight() : 24));
+							(float)getSlotPosY(InventoryRows) + 4 + (tabBar ? tabBar->getTabBarHeight() : UnifiedInventoryTabBar::DEFAULT_TAB_BAR_HEIGHT));
 
 	ItemInstance* selected = inventory->getSelected();
 	if (!selected || selected->isNull()) {
@@ -152,7 +152,7 @@ int IngameBlockSelectionScreen::getSlotPosX(int slotX) {
 
 int IngameBlockSelectionScreen::getSlotPosY(int slotY) {
 	//return height - 63 - 22 * (3 - slotY);
-	int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : 24;
+	int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : UnifiedInventoryTabBar::DEFAULT_TAB_BAR_HEIGHT;
 	int yy = InventoryCols==9? 8 : 3;
 	return tabBarHeight + yy + slotY * getSlotHeight();
 }

@@ -41,6 +41,7 @@ public:
 	int getTabBarHeight() const { return tabBarHeight; }
 	
 	static const int TAB_BUTTON_ID_START = 200;  // IDs 200-202
+	static const int DEFAULT_TAB_BAR_HEIGHT = 24;  // Default height in pixels
 
 private:
 	void createTabButtons();

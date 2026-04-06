@@ -166,7 +166,7 @@ void PaneCraftingScreen::setupPositions() {
 		tabBar->setupPositions(width, height);
 	}
 	
-	const int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : 24;
+	const int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : UnifiedInventoryTabBar::DEFAULT_TAB_BAR_HEIGHT;
 	
 	// Left  - Categories (below tab bar)
 	const int availableHeight = height - tabBarHeight - 16;

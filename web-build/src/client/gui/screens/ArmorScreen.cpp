@@ -128,7 +128,7 @@ void ArmorScreen::setupPositions() {
 	btnClose.y = 0;
 
 	// Inventory pane - start below tab bar
-	const int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : 24;
+	const int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : UnifiedInventoryTabBar::DEFAULT_TAB_BAR_HEIGHT;
 	const int maxWidth = (int)(width/1.8f) - Bx - Bx;
 	const int InventoryColumns = maxWidth / ItemSize;
 	const int realWidth = InventoryColumns * ItemSize;
