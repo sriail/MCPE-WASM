@@ -66,6 +66,7 @@ PaneCraftingScreen::PaneCraftingScreen(int craftingSize)
 	guiBackground(NULL),
 	guiSlotCategory(NULL),
 	guiSlotCategorySelected(NULL),
+	tabBar(NULL),
 	numCategories(4)
 {
 	for (int i = 0; i < numCategories; ++i) {
@@ -85,6 +86,7 @@ PaneCraftingScreen::~PaneCraftingScreen() {
 
 	delete pane;
 	delete guiBackground;
+	delete tabBar;
 
 	// statics
 	delete guiSlotCategory;
@@ -93,6 +95,17 @@ PaneCraftingScreen::~PaneCraftingScreen() {
 }
 
 void PaneCraftingScreen::init() {
+	// Create unified tab bar first
+	tabBar = new UnifiedInventoryTabBar(minecraft);
+	tabBar->init(minecraft, width, height);
+	tabBar->setSelectedTab(TAB_CRAFT);  // This is the Craft screen
+	
+	// Add tab buttons to screen's button list
+	std::vector<Button*>& tabButtons = tabBar->getButtons();
+	for (unsigned int i = 0; i < tabButtons.size(); ++i) {
+		buttons.push_back(tabButtons[i]);
+	}
+	
 	ImageDef def;
 	def.name = "gui/spritesheet.png";
 	def.x = 0;
@@ -148,12 +161,20 @@ void PaneCraftingScreen::initCategories() {
 }
 
 void PaneCraftingScreen::setupPositions() {
-	// Left  - Categories
-	const int buttonHeight = (height - 16) / (Mth::Max(numCategories, 4));
+	// Setup tab bar positions
+	if (tabBar) {
+		tabBar->setupPositions(width, height);
+	}
+	
+	const int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : 24;
+	
+	// Left  - Categories (below tab bar)
+	const int availableHeight = height - tabBarHeight - 16;
+	const int buttonHeight = availableHeight / (Mth::Max(numCategories, 4));
 	for (unsigned c = 0; c < _categoryButtons.size(); ++c) {
 		ImageButton* button = _categoryButtons[c];
 		button->x = (int)BorderPixels;
-		button->y = (int)BorderPixels + c * (1 + buttonHeight);
+		button->y = tabBarHeight + (int)BorderPixels + c * (1 + buttonHeight);
 		button->width = (int)buttonHeight;
 		button->height = (int)buttonHeight;
 
@@ -167,19 +188,19 @@ void PaneCraftingScreen::setupPositions() {
 	}
 	// Right  - Description
 	const int craftW = (int)(100 - 2 * BorderPixels - 0);
-	btnCraft.x = width - descFrameWidth + (descFrameWidth-craftW)/2 - 1;//    width - descFrameWidth + (int)BorderPixels + 4;
-	btnCraft.y = 20;
+	btnCraft.x = width - descFrameWidth + (descFrameWidth-craftW)/2 - 1;
+	btnCraft.y = tabBarHeight + 20;
 	btnCraft.setSize((float)craftW, 62);
 
 	btnClose.width = btnClose.height = 19;
 	btnClose.x = width - btnClose.width;
 	btnClose.y = 0;
 
-	// Middle - Scrolling pane
+	// Middle - Scrolling pane (below tab bar)
 	paneRect.x = buttonHeight + 2 * (int)BorderPixels;
-	paneRect.y = (int)BorderPixels + 2;
+	paneRect.y = tabBarHeight + (int)BorderPixels + 2;
 	paneRect.w = width - paneRect.x - descFrameWidth;
-	paneRect.h = height - 2 * (int)BorderPixels - 4;
+	paneRect.h = height - tabBarHeight - 2 * (int)BorderPixels - 4;
 
 	guiPaneFrame->setSize((float)paneRect.w + 2, (float)paneRect.h + 4);
 	guiBackground->setSize((float)width, (float)height);
@@ -266,6 +287,19 @@ void PaneCraftingScreen::render(int xm, int ym, float a) {
 }
 
 void PaneCraftingScreen::buttonClicked(Button* button) {
+	// Handle tab switching first
+	if (tabBar && tabBar->isTabButton(button)) {
+		int tabIndex = tabBar->getTabIndexForButton(button);
+		if (tabIndex == TAB_ITEMS) {
+			minecraft->setScreen(NULL);  // Go to items screen
+		} else if (tabIndex == TAB_ARMOR) {
+			// TODO: Switch to armor screen
+			minecraft->setScreen(NULL);
+		}
+		// TAB_CRAFT stays on this screen
+		return;
+	}
+	
 	if (button == &btnCraft)
 		craftSelectedItem();
 
@@ -470,7 +504,7 @@ void PaneCraftingScreen::craftSelectedItem()
 
 bool PaneCraftingScreen::renderGameBehind()
 {
-	return false;
+	return true;  // Show game in background (not fullscreen)
 }
 
 bool PaneCraftingScreen::closeOnPlayerHurt() {

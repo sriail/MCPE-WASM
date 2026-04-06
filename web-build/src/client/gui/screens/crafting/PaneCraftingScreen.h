@@ -84,6 +84,7 @@ private:
 	std::vector<Button*> currentCategoryButtons;
 	ImageButton btnClose;
 	CraftButton btnCraft;
+	UnifiedInventoryTabBar* tabBar;
 
 	int craftingSize;
 

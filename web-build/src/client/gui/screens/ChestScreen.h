@@ -5,6 +5,7 @@
 
 #include "../components/InventoryPane.h"
 #include "../components/Button.h"
+#include "../components/UnifiedInventoryTabBar.h"
 
 class Font;
 class CItem;
@@ -48,6 +49,7 @@ private:
 	ImageButton btnClose;
 	Touch::THeader bHeader;
 	Touch::THeader bHeaderChest;
+	UnifiedInventoryTabBar* tabBar;
 
 	Touch::InventoryPane* inventoryPane;
 	Touch::InventoryPane* chestPane;
