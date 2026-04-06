@@ -26,7 +26,9 @@ IngameBlockSelectionScreen::IngameBlockSelectionScreen()
 	InventoryRows(1),
 	InventoryCols(1),
 	InventorySize(1),
-	bArmor(1, "Armor")
+	bArmor(1, "Armor"),
+	tabBar(NULL),
+	btnClose(2, "")
 {
 }
 
@@ -36,11 +38,36 @@ void IngameBlockSelectionScreen::init()
 	InventoryCols = minecraft->isCreativeMode()? 13 : 9;
 	InventorySize = inventory->getContainerSize() - Inventory::MAX_SELECTION_SIZE;
 	InventoryRows = 1 + (InventorySize - 1) / InventoryCols;
+	
+	// Create unified tab bar
+	tabBar = new UnifiedInventoryTabBar(minecraft);
+	tabBar->init(minecraft, width, height);
+	tabBar->setSelectedTab(TAB_ITEMS);  // This is the Items screen
+	
+	// Add tab buttons to screen's button list
+	std::vector<Button*>& tabButtons = tabBar->getButtons();
+	for (unsigned int i = 0; i < tabButtons.size(); ++i) {
+		buttons.push_back(tabButtons[i]);
+	}
+	
+	// Setup close button
+	ImageDef def;
+	def.name = "gui/spritesheet.png";
+	def.x = 0;
+	def.y = 1;
+	def.width = def.height = 18;
+	def.setSrc(IntRectangle(60, 0, 18, 18));
+	btnClose.setImageDef(def, true);
+	btnClose.scaleWhenPressed = false;
+	btnClose.width = btnClose.height = 19;
+	btnClose.x = width - btnClose.width;
+	btnClose.y = 0;
+	buttons.push_back(&btnClose);
 
 	_area = RectangleArea(	(float)getSlotPosX(0) - 4,
-							(float)getSlotPosY(0) - 4,
+							(float)getSlotPosY(0) - 4 + (tabBar ? tabBar->getTabBarHeight() : 24),
 							(float)getSlotPosX(InventoryCols) + 4, 
-							(float)getSlotPosY(InventoryRows) + 4);
+							(float)getSlotPosY(InventoryRows) + 4 + (tabBar ? tabBar->getTabBarHeight() : 24));
 
 	ItemInstance* selected = inventory->getSelected();
 	if (!selected || selected->isNull()) {
@@ -57,13 +84,6 @@ void IngameBlockSelectionScreen::init()
 	}
 	if (!isAllowed(selectedItem))
 		selectedItem = 0;
-
-	if (!minecraft->isCreativeMode()) {
-		bArmor.width = 42;
-		bArmor.x = 0;
-		bArmor.y = height - bArmor.height;
-		buttons.push_back(&bArmor);
-	}
 }
 
 void IngameBlockSelectionScreen::removed()
@@ -132,8 +152,9 @@ int IngameBlockSelectionScreen::getSlotPosX(int slotX) {
 
 int IngameBlockSelectionScreen::getSlotPosY(int slotY) {
 	//return height - 63 - 22 * (3 - slotY);
+	int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : 24;
 	int yy = InventoryCols==9? 8 : 3;
-	return yy + slotY * getSlotHeight();
+	return tabBarHeight + yy + slotY * getSlotHeight();
 }
 
 //int IngameBlockSelectionScreen::getLinearSlotId(int x, int y) {
@@ -316,8 +337,23 @@ int IngameBlockSelectionScreen::getSlotHeight() {
 
 void IngameBlockSelectionScreen::buttonClicked( Button* button )
 {
-	if (button == &bArmor) {
-		minecraft->setScreen(new ArmorScreen());
+	// Handle tab switching
+	if (tabBar && tabBar->isTabButton(button)) {
+		int tabIndex = tabBar->getTabIndexForButton(button);
+		if (tabIndex == TAB_ARMOR) {
+			minecraft->setScreen(new ArmorScreen());
+		} else if (tabIndex == TAB_CRAFT) {
+			// TODO: Switch to crafting screen
+			minecraft->setScreen(NULL);
+		}
+		// TAB_ITEMS stays on this screen
+		return;
 	}
+	
+	if (button == &btnClose) {
+		minecraft->setScreen(NULL);
+		return;
+	}
+	
 	super::buttonClicked(button);
 }

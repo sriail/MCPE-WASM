@@ -48,7 +48,7 @@ ArmorScreen::ArmorScreen():
 	btnArmor2(2),
 	btnArmor3(3),
 	btnClose(4, ""),
-	bHeader (5, "Armor"),
+	tabBar(NULL),
 	guiBackground(NULL),
 	guiSlot(NULL),
 	guiPaneFrame(NULL),
@@ -68,12 +68,24 @@ ArmorScreen::~ArmorScreen() {
 	delete guiSlot;
 	delete guiPaneFrame;
 	delete guiPlayerBg;
+	delete tabBar;
 }
 
 void ArmorScreen::init() {
 	super::init();
 
 	player = minecraft->player;
+	
+	// Create unified tab bar
+	tabBar = new UnifiedInventoryTabBar(minecraft);
+	tabBar->init(minecraft, width, height);
+	tabBar->setSelectedTab(TAB_ARMOR);  // This is the Armor screen
+	
+	// Add tab buttons to screen's button list
+	std::vector<Button*>& tabButtons = tabBar->getButtons();
+	for (unsigned int i = 0; i < tabButtons.size(); ++i) {
+		buttons.push_back(tabButtons[i]);
+	}
 
 	ImageDef def;
 	def.name = "gui/spritesheet.png";
@@ -84,7 +96,6 @@ void ArmorScreen::init() {
 	btnClose.setImageDef(def, true);
 	btnClose.scaleWhenPressed = false;
 
-	buttons.push_back(&bHeader);
 	buttons.push_back(&btnClose);
 
 	armorButtons[0] = &btnArmor0;
@@ -106,15 +117,18 @@ void ArmorScreen::init() {
 }
 
 void ArmorScreen::setupPositions() {
-	// Left  - Categories
-	bHeader.x = bHeader.y = 0;
-	bHeader.width = width;// -  bDone.w;
-
+	// Setup tab bar positions
+	if (tabBar) {
+		tabBar->setupPositions(width, height);
+	}
+	
+	// Close button at top-right
 	btnClose.width = btnClose.height = 19;
 	btnClose.x = width - btnClose.width;
 	btnClose.y = 0;
 
-	// Inventory pane
+	// Inventory pane - start below tab bar
+	const int tabBarHeight = tabBar ? tabBar->getTabBarHeight() : 24;
 	const int maxWidth = (int)(width/1.8f) - Bx - Bx;
 	const int InventoryColumns = maxWidth / ItemSize;
 	const int realWidth = InventoryColumns * ItemSize;
@@ -123,9 +137,9 @@ void ArmorScreen::setupPositions() {
 
 	inventoryPaneRect = IntRectangle(realBx,
 #ifdef __APPLE__
-		26 + By - ((width==240)?1:0), realWidth, ((width==240)?1:0) + height-By-By-28);
+		tabBarHeight + By - ((width==240)?1:0), realWidth, ((width==240)?1:0) + height-By-By-tabBarHeight-4);
 #else
-		26 + By, realWidth, height-By-By-28);
+		tabBarHeight + By, realWidth, height-By-By-tabBarHeight-4);
 #endif
 
 	for (int i = 0; i < NUM_ARMORBUTTONS; ++i) {
@@ -179,7 +193,7 @@ void ArmorScreen::render(int xm, int ym, float a) {
     t.addOffset(0, 0, 500);
 	glEnable2(GL_ALPHA_TEST);
 
-	// Buttons (Left side + crafting)
+	// Buttons (includes tab bar + close button)
 	super::render(xm, ym, a);
 
 	handleRenderPane(inventoryPane, t, xm, ym, a);
@@ -199,6 +213,19 @@ void ArmorScreen::render(int xm, int ym, float a) {
 }
 
 void ArmorScreen::buttonClicked(Button* button) {
+	// Handle tab switching
+	if (tabBar && tabBar->isTabButton(button)) {
+		int tabIndex = tabBar->getTabIndexForButton(button);
+		if (tabIndex == TAB_ITEMS) {
+			minecraft->setScreen(NULL);  // Go to items screen (default inventory)
+		} else if (tabIndex == TAB_CRAFT) {
+			// TODO: Switch to crafting screen
+			minecraft->setScreen(NULL);
+		}
+		// TAB_ARMOR stays on this screen
+		return;
+	}
+	
 	if (button == &btnClose) {
 		minecraft->setScreen(NULL);
 	}
@@ -242,7 +269,7 @@ bool ArmorScreen::isAllowed( int slot ) {
 }
 
 bool ArmorScreen::renderGameBehind() {
-	return false;
+	return true;  // Show game in background (not fullscreen)
 }
 
 std::vector<const ItemInstance*> ArmorScreen::getItems( const Touch::InventoryPane* forPane ) {
