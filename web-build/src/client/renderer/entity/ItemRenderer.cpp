@@ -178,16 +178,33 @@ void ItemRenderer::renderGuiItem(Font* font, Textures* textures, const ItemInsta
 	if (!Item::items[id])
 		return;
 
-	int i = getAtlasPos(item);
-
-	if (i < 0) {
+	// Check if this is a block that can be rendered in 3D
+	bool canRender3D = (id < 256 && Tile::tiles[id] != NULL && 
+	                    TileRenderer::canRender(Tile::tiles[id]->getRenderShape()));
+	
+	// Use 3D rendering for renderable blocks
+	if (canRender3D) {
 		Tesselator& t = Tesselator::instance;
 		if (!t.isOverridden())
 			renderGuiItemCorrect(font, textures, item, int(x), int(y));
 		else {
-			// @huge @attn @todo @fix:	This is just guess-works..
-			//							it we're batching for saving the
-			//							buffer, this will fail miserably
+			// Batch mode - end batch, render 3D, restart batch
+			t.endOverrideAndDraw();
+			renderGuiItemCorrect(font, textures, item, int(x), int(y));
+			t.beginOverride();
+		}
+		return;
+	}
+
+	// Fall back to atlas rendering for items and non-renderable blocks
+	int i = getAtlasPos(item);
+
+	if (i < 0) {
+		// No atlas position and not 3D renderable - try correct renderer anyway
+		Tesselator& t = Tesselator::instance;
+		if (!t.isOverridden())
+			renderGuiItemCorrect(font, textures, item, int(x), int(y));
+		else {
 			t.endOverrideAndDraw();
 			glDisable2(GL_TEXTURE_2D);
 			fillRect(t, x, y, w, h, 0xff0000);
