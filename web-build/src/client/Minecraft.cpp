@@ -2,6 +2,12 @@
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
+// Music system JS functions
+extern "C" {
+	extern void mcMusicInit();
+	extern void mcMusicSetEnabled(int enabled);
+	extern void mcMusicFadeOutAndSwitch();
+}
 #endif
 
 #if defined(APPLE_DEMO_PROMOTION)
@@ -256,6 +262,9 @@ Minecraft::~Minecraft()
 // Only called by server
 void Minecraft::selectLevel( const std::string& levelId, const std::string& levelName, const LevelSettings& settings )
 {
+#ifdef __EMSCRIPTEN__
+	if (options.ambientMusicEnabled) mcMusicFadeOutAndSwitch();
+#endif
 #if defined(CREATORMODE)
 	level = new CreatorLevel(
 #else
@@ -324,6 +333,10 @@ void Minecraft::leaveGame(bool renameLevel /*=false*/)
     if (isGeneratingLevel || !_hasSignaledGeneratingLevelFinished)
         return;
     
+#ifdef __EMSCRIPTEN__
+	if (options.ambientMusicEnabled) mcMusicFadeOutAndSwitch();
+#endif
+
 	isGeneratingLevel = false;
 	bool saveLevel = level && (!level->isClientSide || renameLevel);
 
@@ -1208,6 +1221,11 @@ void Minecraft::init()
 	setIsCreativeMode(false); // false means it's Survival Mode
 	reloadOptions();
 
+#ifdef __EMSCRIPTEN__
+	mcMusicInit();
+	mcMusicSetEnabled(options.ambientMusicEnabled ? 1 : 0);
+#endif
+
 }
 
 void Minecraft::setSize(int w, int h) {
@@ -1631,6 +1649,11 @@ void Minecraft::optionUpdated( const Options::Option* option, bool value ) {
 		ServerSideNetworkHandler* ss = (ServerSideNetworkHandler*) netCallback;
 		ss->allowIncomingConnections(value);
 	}
+#ifdef __EMSCRIPTEN__
+	if(option == &Options::Option::AMBIENT_MUSIC) {
+		mcMusicSetEnabled(value ? 1 : 0);
+	}
+#endif
 }
 
 void Minecraft::optionUpdated( const Options::Option* option, float value ) {
