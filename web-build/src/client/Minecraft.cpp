@@ -776,6 +776,30 @@ void Minecraft::tickInput() {
 					screenChooser.setScreen(SCREEN_BLOCKSELECTION);
 				}
 			#endif
+			#if defined(EMSCRIPTEN)
+				// Q - Drop the currently selected item
+				if (key == Keyboard::KEY_Q) {
+					ItemInstance* selected = player->inventory->getSelected();
+					if (selected != NULL) {
+						player->drop(selected, false);
+						player->inventory->clearSlot(player->inventory->selected);
+					}
+				}
+				// Ctrl - Open pause menu
+				if (key == Keyboard::KEY_LCTRL) {
+					pauseGame(false);
+				}
+				// F11 - Toggle fullscreen
+				if (key == Keyboard::KEY_F11) {
+					EM_ASM(
+						if (!document.fullscreenElement) {
+							document.documentElement.requestFullscreen().catch(function(){});
+						} else {
+							document.exitFullscreen().catch(function(){});
+						}
+					);
+				}
+			#endif
 			#if defined(RPI)
 				if (!screen && key == Keyboard::KEY_O || key == 250) {
 					releaseMouse();
@@ -893,6 +917,10 @@ void Minecraft::tickInput() {
 				if (key == 82)
 					pauseGame(false);
 			#else
+				if (key == Keyboard::KEY_ESCAPE)
+					pauseGame(false);
+			#endif
+			#if defined(EMSCRIPTEN)
 				if (key == Keyboard::KEY_ESCAPE)
 					pauseGame(false);
 			#endif
