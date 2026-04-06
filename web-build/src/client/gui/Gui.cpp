@@ -668,9 +668,7 @@ void Gui::renderBubbles() {
 
 void Gui::renderHunger() {
 	int foodLevel = minecraft->player->foodData.getFoodLevel();
-	// Draw hunger bar directly below the health row (yo=12), left to right.
-	// The leftmost icon represents food points 19-20 and depletes first (left-to-right
-	// depletion means empty icons appear on the left as food is consumed).
+	// Draw hunger bar below health row (yo=12), left-to-right. Left icon depletes first.
 	int yo = 12;
 
 	for (int i = 0; i < 10; i++) {
