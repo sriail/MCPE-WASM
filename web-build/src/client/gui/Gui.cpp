@@ -79,11 +79,15 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 
 	glColor4f2(1, 1, 1, 1);
 
+	// Apply 80% scale to HUD elements (hearts, hunger, toolbar)
+	glPushMatrix2();
+	glScalef2(0.8f, 0.8f, 1.0f);
+
 	// H: 4
     // T: 7
     // L: 6
     // F: 3
-	int ySlot = screenHeight - 16 - 3;
+	int ySlot = (int)(screenHeight / 0.8f) - 16 - 3;
 
 	if (minecraft->gameMode->canHurtPlayer()) {
 		minecraft->textures->loadAndBindTexture("gui/icons.png");
@@ -100,13 +104,15 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_ALPHA_TEST);
 
-		renderSleepAnimation(screenWidth, screenHeight);
+		renderSleepAnimation((int)(screenWidth / 0.8f), (int)(screenHeight / 0.8f));
 
 		glEnable(GL_ALPHA_TEST);
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	renderToolBar(a, ySlot, screenWidth);
+	renderToolBar(a, ySlot, (int)(screenWidth / 0.8f));
+
+	glPopMatrix2();
 
 
 	//font->drawShadow(APP_NAME, 2, 2, 0xffffffff);
@@ -155,11 +161,17 @@ int Gui::getSlotIdAt(int x, int y) {
 	x = (int)(x * InvGuiScale);
 	y = (int)(y * InvGuiScale);
 
-	if (y < (screenHeight - 16 - 3) || y > screenHeight)
+	// Account for 0.8x HUD scale - convert screen coords to scaled HUD coords
+	int scaledScreenWidth = (int)(screenWidth / 0.8f);
+	int scaledScreenHeight = (int)(screenHeight / 0.8f);
+	int sx = (int)(x / 0.8f);
+	int sy = (int)(y / 0.8f);
+
+	if (sy < (scaledScreenHeight - 16 - 3) || sy > scaledScreenHeight)
 		return -1;
 
-	int xBase = 2 + screenWidth / 2 - getNumSlots() * 10;
-	int xRel  = (x - xBase);
+	int xBase = 2 + scaledScreenWidth / 2 - getNumSlots() * 10;
+	int xRel  = (sx - xBase);
 	if (xRel < 0)
 		return -1;
 
@@ -183,15 +195,16 @@ void Gui::flashSlot(int slotId) {
 void Gui::getSlotPos(int slot, int& posX, int& posY) {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
 	int screenHeight = (int)(minecraft->height * InvGuiScale);
-	posX = screenWidth / 2 - getNumSlots() * 10 + slot * 20, 
-	posY = screenHeight - 22;
+	int scaledScreenWidth = (int)(screenWidth / 0.8f);
+	posX = (int)((scaledScreenWidth / 2 - getNumSlots() * 10 + slot * 20) * 0.8f);
+	posY = (int)((screenHeight / 0.8f - 22) * 0.8f);
 }
 
 RectangleArea Gui::getRectangleArea(int extendSide) {
 	const int Spacing = 3;
 	const float pCenterX   = 2.0f + (float)(minecraft->width / 2);
-	const float pHalfWidth = (1.0f + (getNumSlots() * 10 + Spacing)) * Gui::GuiScale;
-	const float pHeight    = (22 + Spacing) * Gui::GuiScale;
+	const float pHalfWidth = (1.0f + (getNumSlots() * 10 + Spacing)) * Gui::GuiScale * 0.8f;
+	const float pHeight    = (22 + Spacing) * Gui::GuiScale * 0.8f;
 
 	if (extendSide < 0)
 		return RectangleArea(0, (float)minecraft->height-pHeight, pCenterX+pHalfWidth+2, (float)minecraft->height);
