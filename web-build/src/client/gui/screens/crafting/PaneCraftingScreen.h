@@ -7,6 +7,7 @@
 
 #include "../../components/ScrollingPane.h"
 #include "../../components/ImageButton.h"
+#include "../../components/Button.h"
 #include "../../components/ItemPane.h"
 
 class Font;
