@@ -17,3 +17,4 @@ const char* OptionStrings::Controls_FeedbackVibration  = "feedback_vibration";
 
 const char* OptionStrings::Game_DifficultyLevel = "game_difficulty";
 const char* OptionStrings::Game_SprintingEnabled = "game_sprinting_enabled";
+const char* OptionStrings::Sound_AmbientMusic = "sound_ambient_music";

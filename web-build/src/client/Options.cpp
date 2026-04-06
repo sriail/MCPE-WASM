@@ -48,7 +48,8 @@ void Options::initDefaultValues() {
 	//skin     = "Default";
 	username = "Steve";
 	serverVisible = true;
-	sprintingEnabled = false;
+	sprintingEnabled = true;
+	ambientMusicEnabled = false;
 
 	keyUp	 = KeyMapping("key.forward", Keyboard::KEY_W);
 	keyLeft  = KeyMapping("key.left", Keyboard::KEY_A);
@@ -127,28 +128,29 @@ void Options::initDefaultValues() {
 }
 
 const Options::Option
-	Options::Option::MUSIC				 (0, "options.music",		true, false),
-	Options::Option::SOUND				 (1, "options.sound",		true, false),
-	Options::Option::INVERT_MOUSE		 (2, "options.invertMouse",	false, true),
-	Options::Option::SENSITIVITY		 (3, "options.sensitivity",	true, false),
-	Options::Option::RENDER_DISTANCE	 (4, "options.renderDistance",false, false),
-	Options::Option::VIEW_BOBBING		 (5, "options.viewBobbing",	false, true),
-	Options::Option::ANAGLYPH			 (6, "options.anaglyph",		false, true),
-	Options::Option::LIMIT_FRAMERATE	 (7, "options.limitFramerate",false, true),
-	Options::Option::DIFFICULTY			 (8, "options.difficulty",	false, false),
-	Options::Option::GRAPHICS			 (9, "options.graphics",		false, true),
-	Options::Option::AMBIENT_OCCLUSION	 (10, "options.ao",		false, true),
-	Options::Option::GUI_SCALE			 (11, "options.guiScale",	false, false),
-	Options::Option::THIRD_PERSON		 (12, "options.thirdperson",	false, true),
-    Options::Option::HIDE_GUI			 (13, "options.hidegui",     false, true),
-	Options::Option::SERVER_VISIBLE		 (14, "options.servervisible", false, true),
-	Options::Option::LEFT_HANDED		 (15, "options.lefthanded", false, true),
-	Options::Option::USE_TOUCHSCREEN	 (16, "options.usetouchscreen", false, true),
-	Options::Option::USE_TOUCH_JOYPAD	 (17, "options.usetouchpad", false, true),
-	Options::Option::DESTROY_VIBRATION   (18, "options.destroyvibration", false, true),
-	Options::Option::FANCY_CLOUDS        (20, "options.fancyClouds", false, true),
-	Options::Option::PIXELS_PER_MILLIMETER(19, "options.pixelspermilimeter", true, false),
-	Options::Option::SPRINTING           (21, "options.sprinting", false, true);
+	Options::Option::MUSIC				 (0, "Music",		true, false),
+	Options::Option::SOUND				 (1, "Sound",		true, false),
+	Options::Option::INVERT_MOUSE		 (2, "Invert Mouse",	false, true),
+	Options::Option::SENSITIVITY		 (3, "Sensitivity",	true, false),
+	Options::Option::RENDER_DISTANCE	 (4, "Render Distance",false, false),
+	Options::Option::VIEW_BOBBING		 (5, "View Bobbing",	false, true),
+	Options::Option::ANAGLYPH			 (6, "3D Anaglyph",		false, true),
+	Options::Option::LIMIT_FRAMERATE	 (7, "Limit Framerate",false, true),
+	Options::Option::DIFFICULTY			 (8, "Difficulty",	false, false),
+	Options::Option::GRAPHICS			 (9, "Fancy Graphics",		false, true),
+	Options::Option::AMBIENT_OCCLUSION	 (10, "Ambient Occlusion",		false, true),
+	Options::Option::GUI_SCALE			 (11, "GUI Scale",	false, false),
+	Options::Option::THIRD_PERSON		 (12, "Third Person",	false, true),
+    Options::Option::HIDE_GUI			 (13, "Hide GUI",     false, true),
+	Options::Option::SERVER_VISIBLE		 (14, "Servers Visible By Default", false, true),
+	Options::Option::LEFT_HANDED		 (15, "Left Handed", false, true),
+	Options::Option::USE_TOUCHSCREEN	 (16, "Use Touchscreen", false, true),
+	Options::Option::USE_TOUCH_JOYPAD	 (17, "Use Touch Joypad", false, true),
+	Options::Option::DESTROY_VIBRATION   (18, "Destroy Vibration", false, true),
+	Options::Option::FANCY_CLOUDS        (20, "Fancy Clouds", false, true),
+	Options::Option::PIXELS_PER_MILLIMETER(19, "Pixels Per Millimeter", true, false),
+	Options::Option::SPRINTING           (21, "Sprinting", false, true),
+	Options::Option::AMBIENT_MUSIC       (22, "Ambient Music", false, true);
 
 /* private */
 const float Options::SOUND_MIN_VALUE = 0.0f;
@@ -256,6 +258,10 @@ void Options::update()
 		if (key == OptionStrings::Game_SprintingEnabled) {
 			readBool(value, sprintingEnabled);
 		}
+		// Sound
+		if (key == OptionStrings::Sound_AmbientMusic) {
+			readBool(value, ambientMusicEnabled);
+		}
 	}
     
 #ifdef __APPLE__
@@ -312,6 +318,9 @@ void Options::save()
 	addOptionToSaveOutput(stringVec, OptionStrings::Multiplayer_ServerVisible, serverVisible);
 	addOptionToSaveOutput(stringVec, OptionStrings::Game_DifficultyLevel, difficulty);
 	addOptionToSaveOutput(stringVec, OptionStrings::Game_SprintingEnabled, sprintingEnabled);
+
+	// Sound
+	addOptionToSaveOutput(stringVec, OptionStrings::Sound_AmbientMusic, ambientMusicEnabled);
 
 	// Input
 	addOptionToSaveOutput(stringVec, OptionStrings::Controls_InvertMouse, invertYMouse);
@@ -459,6 +468,9 @@ void Options::toggle(const Option* option, int dir) {
 	}
 	if (option == &Option::SPRINTING) {
 		sprintingEnabled = !sprintingEnabled;
+	}
+	if (option == &Option::AMBIENT_MUSIC) {
+		ambientMusicEnabled = !ambientMusicEnabled;
 	}
 	notifyOptionUpdate(option, getBooleanValue(option));
 	save();

@@ -53,6 +53,7 @@ void OptionsScreen::init() {
 	categoryButtons.push_back(new Touch::TButton(3, "Game"));
 	categoryButtons.push_back(new Touch::TButton(4, "Controls"));
 	categoryButtons.push_back(new Touch::TButton(5, "Graphics"));
+	categoryButtons.push_back(new Touch::TButton(6, "Sound"));
 	buttons.push_back(bHeader);
 	buttons.push_back(btnClose);
 	for(std::vector<Touch::TButton*>::iterator it = categoryButtons.begin(); it != categoryButtons.end(); ++it) {
@@ -104,7 +105,7 @@ void OptionsScreen::buttonClicked( Button* button ) {
 	if(button == btnClose) {
 		minecraft->reloadOptions();
 		minecraft->screenChooser.setScreen(SCREEN_STARTMENU);
-	} else if(button->id > 1 && button->id < 7) {
+	} else if(button->id > 1 && button->id < 8) {
 		// This is a category button
 		int categoryButton = button->id - categoryButtons[0]->id;
 		selectCategory(categoryButton);
@@ -130,20 +131,16 @@ void OptionsScreen::generateOptionScreens() {
 	optionPanes.push_back(new OptionsPane());
 	optionPanes.push_back(new OptionsPane());
 	optionPanes.push_back(new OptionsPane());
+	optionPanes.push_back(new OptionsPane());
 	// Mojang Pane
 	optionPanes[0]->createOptionsGroup("options.group.mojang")
 		//.addOptionItem(&Options::Option::THIRD_PERSON, minecraft);
 		.addOptionItem(&Options::Option::SENSITIVITY, minecraft);
-// 	int mojangGroup = optionPanes[0]->createOptionsGroup("Mojang");
-// 	static const int arr[] = {5,4,3,15};
-// 	std::vector<int> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-// 	optionPanes[0]->createStepSlider(minecraft, mojangGroup, "This works?", &Options::Option::DIFFICULTY, vec);
-// 
+
 	// Game Pane
 	optionPanes[1]->createOptionsGroup("Game")
 		//.addOptionItem(&Options::Option::THIRD_PERSON, minecraft)
-		.addOptionItem(&Options::Option::SERVER_VISIBLE, minecraft)
-		.addOptionItem(&Options::Option::SPRINTING, minecraft);
+		.addOptionItem(&Options::Option::SERVER_VISIBLE, minecraft);
 	
 	// Input Pane
 	optionPanes[2]->createOptionsGroup("Controls")
@@ -160,6 +157,10 @@ void OptionsScreen::generateOptionScreens() {
 	optionPanes[3]->createOptionsGroup("Experimental graphics")
 		.addOptionItem(&Options::Option::AMBIENT_OCCLUSION, minecraft)
 		.addOptionItem(&Options::Option::FANCY_CLOUDS, minecraft);
+
+	// Sound Pane
+	optionPanes[4]->createOptionsGroup("Sound")
+		.addOptionItem(&Options::Option::AMBIENT_MUSIC, minecraft);
 }
 
 void OptionsScreen::mouseClicked( int x, int y, int buttonNum ) {

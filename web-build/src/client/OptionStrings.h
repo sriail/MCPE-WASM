@@ -20,6 +20,7 @@ public:
 
 	static const char* Game_DifficultyLevel;
 	static const char* Game_SprintingEnabled;
+	static const char* Sound_AmbientMusic;
 };
 
 #endif /*NET_MINECRAFT_CLIENT__OptionsStrings_H__*/
