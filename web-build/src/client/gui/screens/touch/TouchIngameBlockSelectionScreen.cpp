@@ -14,6 +14,7 @@
 #include "../../../sound/SoundEngine.h"
 #include "../../../../world/entity/player/Inventory.h"
 #include "../../../../platform/input/Mouse.h"
+#include "../../../../platform/input/Keyboard.h"
 #include "../../../../util/Mth.h"
 #include "../../../../world/item/ItemInstance.h"
 #include "../../../../world/entity/player/Player.h"
@@ -240,6 +241,15 @@ void IngameBlockSelectionScreen::buttonClicked(Button* button) {
 		minecraft->setScreen(new ArmorScreen());
 
 	// Items tab - already on items screen, no action needed
+}
+
+void IngameBlockSelectionScreen::keyPressed(int eventKey) {
+	// E closes inventory (same as pressing Escape or the Done button)
+	if (eventKey == Keyboard::KEY_E) {
+		minecraft->setScreen(NULL);
+		return;
+	}
+	super::keyPressed(eventKey);
 }
 
 bool IngameBlockSelectionScreen::isAllowed( int slot )

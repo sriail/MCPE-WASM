@@ -3,18 +3,18 @@
 #include "../item/FoodItem.h"
 #include "../entity/player/Player.h"
 
-const float SimpleFoodData::EXHAUSTION_SPRINT       = 0.1f;
-const float SimpleFoodData::EXHAUSTION_SPRINT_JUMP  = 0.8f;
-const float SimpleFoodData::EXHAUSTION_JUMP         = 0.05f;
-const float SimpleFoodData::EXHAUSTION_ATTACK       = 0.3f;
+const float SimpleFoodData::EXHAUSTION_SPRINT       = 0.05f;
+const float SimpleFoodData::EXHAUSTION_SPRINT_JUMP  = 0.6f;
+const float SimpleFoodData::EXHAUSTION_JUMP         = 0.02f;
+const float SimpleFoodData::EXHAUSTION_ATTACK       = 0.1f;
 const float SimpleFoodData::EXHAUSTION_DAMAGE       = 0.1f;
-const float SimpleFoodData::EXHAUSTION_MINE         = 0.025f;
+const float SimpleFoodData::EXHAUSTION_MINE         = 0.015f;
 const float SimpleFoodData::EXHAUSTION_WALK         = 0.0f;
-const float SimpleFoodData::EXHAUSTION_SWIM         = 0.015f;
+const float SimpleFoodData::EXHAUSTION_SWIM         = 0.01f;
 
 SimpleFoodData::SimpleFoodData()
 :	foodLevel(20),
-	saturationLevel(5.0f),
+	saturationLevel(10.0f),
 	exhaustionLevel(0.0f),
 	tickTimer(0)
 {

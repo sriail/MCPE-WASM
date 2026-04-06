@@ -79,15 +79,13 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 
 	glColor4f2(1, 1, 1, 1);
 
-	// Apply 80% scale to HUD elements (hearts, hunger, toolbar)
+	// Apply 80% scale to HUD elements (hearts, hunger, toolbar) so they take up 20% less space
 	glPushMatrix2();
 	glScalef2(0.8f, 0.8f, 1.0f);
 
-	// H: 4
-    // T: 7
-    // L: 6
-    // F: 3
-	int ySlot = (int)(screenHeight / 0.8f) - 16 - 3;
+	const int scaledScreenWidth  = (int)(screenWidth  / 0.8f);
+	const int scaledScreenHeight = (int)(screenHeight / 0.8f);
+	const int ySlot = scaledScreenHeight - 22;
 
 	if (minecraft->gameMode->canHurtPlayer()) {
 		minecraft->textures->loadAndBindTexture("gui/icons.png");
@@ -104,13 +102,13 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_ALPHA_TEST);
 
-		renderSleepAnimation((int)(screenWidth / 0.8f), (int)(screenHeight / 0.8f));
+		renderSleepAnimation(scaledScreenWidth, scaledScreenHeight);
 
 		glEnable(GL_ALPHA_TEST);
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	renderToolBar(a, ySlot, (int)(screenWidth / 0.8f));
+	renderToolBar(a, ySlot, scaledScreenWidth);
 
 	glPopMatrix2();
 
@@ -125,7 +123,9 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
     bool isChatting = false;
 	renderChatMessages(screenHeight, max, isChatting, font);
 #if !defined(RPI)
-	renderOnSelectItemNameText(screenWidth, font, ySlot);
+	// Item name overlay: ySlot in screen-space (toolbar top edge * 0.8 scale)
+	int ySlotScreen = (int)((screenHeight / 0.8f - 22) * 0.8f);
+	renderOnSelectItemNameText(screenWidth, font, ySlotScreen);
 #endif
 #if defined(RPI)
 	renderDebugInfo();
@@ -161,17 +161,18 @@ int Gui::getSlotIdAt(int x, int y) {
 	x = (int)(x * InvGuiScale);
 	y = (int)(y * InvGuiScale);
 
-	// Account for 0.8x HUD scale - convert screen coords to scaled HUD coords
-	int scaledScreenWidth = (int)(screenWidth / 0.8f);
-	int scaledScreenHeight = (int)(screenHeight / 0.8f);
+	// Convert screen pixel coords → scaled-space coords (divide by 0.8)
+	int scaledW = (int)(screenWidth / 0.8f);
+	int scaledH = (int)(screenHeight / 0.8f);
 	int sx = (int)(x / 0.8f);
 	int sy = (int)(y / 0.8f);
 
-	if (sy < (scaledScreenHeight - 16 - 3) || sy > scaledScreenHeight)
+	// Toolbar occupies [scaledH-22, scaledH] in scaled space
+	if (sy < (scaledH - 22) || sy > scaledH)
 		return -1;
 
-	int xBase = 2 + scaledScreenWidth / 2 - getNumSlots() * 10;
-	int xRel  = (sx - xBase);
+	int xBase = scaledW / 2 - getNumSlots() * 10;
+	int xRel  = sx - xBase;
 	if (xRel < 0)
 		return -1;
 
@@ -195,9 +196,12 @@ void Gui::flashSlot(int slotId) {
 void Gui::getSlotPos(int slot, int& posX, int& posY) {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
 	int screenHeight = (int)(minecraft->height * InvGuiScale);
-	int scaledScreenWidth = (int)(screenWidth / 0.8f);
-	posX = (int)((scaledScreenWidth / 2 - getNumSlots() * 10 + slot * 20) * 0.8f);
-	posY = (int)((screenHeight / 0.8f - 22) * 0.8f);
+	// Return coordinates in scaled space (rendered inside glScalef(0.8)), so
+	// the physical screen position = posX * 0.8, posY * 0.8.
+	int scaledW = (int)(screenWidth / 0.8f);
+	int scaledH = (int)(screenHeight / 0.8f);
+	posX = scaledW / 2 - getNumSlots() * 10 + slot * 20;
+	posY = scaledH - 22;
 }
 
 RectangleArea Gui::getRectangleArea(int extendSide) {
@@ -650,7 +654,8 @@ void Gui::renderHearts() {
 
 void Gui::renderBubbles() {
 	if (minecraft->player->isUnderLiquid(Material::water)) {
-		int yo = 12;
+		// Render oxygen bubbles BELOW the hearts/hunger rows
+		int yo = 22;
 		int count = (int) std::ceil((minecraft->player->airSupply - 2) * 10.0f / Player::TOTAL_AIR_SUPPLY);
 		int extra = (int) std::ceil((minecraft->player->airSupply) * 10.0f / Player::TOTAL_AIR_SUPPLY) - count;
 		for (int i = 0; i < count + extra; i++) {
@@ -662,23 +667,28 @@ void Gui::renderBubbles() {
 }
 
 void Gui::renderHunger() {
+	int screenWidth = (int)(minecraft->width * InvGuiScale);
+	int scaledScreenWidth = (int)(screenWidth / 0.8f);
+
 	int foodLevel = minecraft->player->foodData.getFoodLevel();
-	int xx = 2;
+	int yo = 2;
 
+	// Render the hunger bar on the RIGHT side, from right to left.
+	// Each icon covers 2 food points; i=0 is the rightmost icon.
+	// Icon i depletes first when food is highest (rightmost empties first).
 	for (int i = 0; i < 10; i++) {
-		int yo = 12;
-		int xo = xx + i * 8;
-		int ip2 = i * 2 + 1;
+		int xo = scaledScreenWidth - 2 - 9 - i * 8;
+		// ip2 counts from the right: rightmost icon = food points 19-20, leftmost = 1-2
+		int ip2 = (9 - i) * 2 + 1;
 
-		// Background hunger icon (empty drumstick outline)
+		// Background outline (empty drumstick, facing left toward center)
 		blit(xo, yo, 16 + 0 * 9, 9 * 3, 9, 9);
 
-		// Full drumstick
 		if (ip2 < foodLevel) {
+			// Full drumstick
 			blit(xo, yo, 16 + 4 * 9, 9 * 3, 9, 9);
-		}
-		// Half drumstick
-		else if (ip2 == foodLevel) {
+		} else if (ip2 == foodLevel) {
+			// Half drumstick
 			blit(xo, yo, 16 + 5 * 9, 9 * 3, 9, 9);
 		}
 	}

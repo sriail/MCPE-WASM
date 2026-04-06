@@ -98,32 +98,47 @@ mergeInto(LibraryManager.library, {
     // ─── Ambient Music System ────────────────────────────────────────────────
     mcMusicInit: function () {
         if (window._mcMusic) return;
+
+        // Build blob URLs from the music files preloaded into the virtual FS
+        var trackPaths = [
+            '/data/sound/aac/music/01+-+Key.m4a',
+            '/data/sound/aac/music/02+-+Door.m4a',
+            '/data/sound/aac/music/03+-+Subwoofer+Lullaby.m4a',
+            '/data/sound/aac/music/05+-+Living+Mice.m4a',
+            '/data/sound/aac/music/06+-+Moog+City.m4a',
+            '/data/sound/aac/music/07+-+Haggstrom.m4a',
+            '/data/sound/aac/music/08+-+Minecraft.m4a',
+            '/data/sound/aac/music/11+-+Mice+on+Venus.m4a',
+            '/data/sound/aac/music/12+-+Dry+Hands.m4a',
+            '/data/sound/aac/music/13+-+Wet+Hands.m4a',
+            '/data/sound/aac/music/21+-+Danny.m4a',
+            '/data/sound/aac/music/22+-+Beginning.m4a'
+        ];
+
+        var tracks = [];
+        for (var i = 0; i < trackPaths.length; i++) {
+            try {
+                var fileData = FS.readFile(trackPaths[i]);
+                var blob = new Blob([fileData], { type: 'audio/mp4' });
+                tracks.push(URL.createObjectURL(blob));
+            } catch (e) {
+                // File not accessible – skip silently
+            }
+        }
+
         window._mcMusic = {
             audio: null,
             enabled: false,
             volume: 0,
-            targetVolume: 0.5,
-            fadeSpeed: 0.01,
+            targetVolume: 0.7,
+            fadeSpeed: 0.008,   // ~0.4s fade at 50 ms interval
             trackIndex: -1,
-            tracks: [
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/calm1.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/calm2.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/calm3.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/hal1.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/hal2.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/hal3.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/hal4.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/nuance1.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/nuance2.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/piano1.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/piano2.ogg',
-                'https://minecraft-music.fra1.cdn.digitaloceanspaces.com/piano3.ogg'
-            ],
-            fadeState: 'none', // 'fadein', 'fadeout', 'none'
+            tracks: tracks,
+            fadeState: 'none',  // 'fadein' | 'fadeout' | 'none'
             pendingPlay: false,
             fadeInterval: null
         };
-        // Set up fade interval
+
         window._mcMusic.fadeInterval = setInterval(function () {
             var m = window._mcMusic;
             if (!m || !m.audio) return;
@@ -137,79 +152,64 @@ mergeInto(LibraryManager.library, {
                 if (m.volume <= 0) {
                     m.audio.pause();
                     m.fadeState = 'none';
-                    if (m.pendingPlay) {
+                    if (m.pendingPlay && m.enabled && m.tracks.length > 0) {
                         m.pendingPlay = false;
-                        if (m.enabled) {
-                            // Pick next track and start playing
-                            var idx = Math.floor(Math.random() * m.tracks.length);
-                            m.trackIndex = idx;
-                            m.audio.src = m.tracks[idx];
-                            m.audio.play().catch(function () {});
-                            m.fadeState = 'fadein';
-                        }
+                        m._startNextTrack();
                     }
                 }
             }
         }, 50);
-    },
 
-    mcMusicSetEnabled: function (enabled) {
-        if (!window._mcMusic) return;
-        var m = window._mcMusic;
-        m.enabled = !!enabled;
-        if (m.enabled) {
-            if (!m.audio) {
-                m.audio = new Audio();
-                m.audio.loop = false;
-                m.audio.volume = 0;
-                m.audio.addEventListener('ended', function () {
-                    // When track ends, wait a moment then play next
-                    setTimeout(function () {
-                        if (m.enabled) {
-                            var idx = Math.floor(Math.random() * m.tracks.length);
-                            m.trackIndex = idx;
-                            m.audio.src = m.tracks[idx];
-                            m.volume = 0;
-                            m.audio.volume = 0;
-                            m.audio.play().catch(function () {});
-                            m.fadeState = 'fadein';
-                        }
-                    }, 3000 + Math.random() * 10000);
-                });
-            }
-            if (!m.audio.src || m.audio.paused) {
-                var idx = Math.floor(Math.random() * m.tracks.length);
-                m.trackIndex = idx;
-                m.audio.src = m.tracks[idx];
-                m.volume = 0;
-                m.audio.volume = 0;
-                m.audio.play().catch(function () {});
-                m.fadeState = 'fadein';
-            }
-        } else {
-            if (m.audio && !m.audio.paused) {
-                m.fadeState = 'fadeout';
-                m.pendingPlay = false;
-            }
-        }
-    },
-
-    mcMusicFadeOutAndSwitch: function () {
-        if (!window._mcMusic) return;
-        var m = window._mcMusic;
-        if (!m.enabled || !m.audio) return;
-        if (!m.audio.paused) {
-            m.fadeState = 'fadeout';
-            m.pendingPlay = true;
-        } else {
-            // Not currently playing, just start a new track
-            var idx = Math.floor(Math.random() * m.tracks.length);
+        window._mcMusic._startNextTrack = function () {
+            var m = window._mcMusic;
+            if (!m.tracks.length) return;
+            // Pick a different track from the last one
+            var idx;
+            do { idx = Math.floor(Math.random() * m.tracks.length); }
+            while (m.tracks.length > 1 && idx === m.trackIndex);
             m.trackIndex = idx;
             m.audio.src = m.tracks[idx];
             m.volume = 0;
             m.audio.volume = 0;
             m.audio.play().catch(function () {});
             m.fadeState = 'fadein';
+        };
+    },
+
+    mcMusicSetEnabled: function (enabled) {
+        if (!window._mcMusic) return;
+        var m = window._mcMusic;
+        m.enabled = !!enabled;
+        if (m.enabled && m.tracks.length > 0) {
+            if (!m.audio) {
+                m.audio = new Audio();
+                m.audio.loop = false;
+                m.audio.volume = 0;
+                m.audio.addEventListener('ended', function () {
+                    // Wait 3-13 s between tracks, then fade in the next one
+                    setTimeout(function () {
+                        if (m.enabled) m._startNextTrack();
+                    }, 3000 + Math.random() * 10000);
+                });
+            }
+            if (m.audio.paused) {
+                m._startNextTrack();
+            }
+        } else if (!m.enabled && m.audio && !m.audio.paused) {
+            m.fadeState = 'fadeout';
+            m.pendingPlay = false;
+        }
+    },
+
+    mcMusicFadeOutAndSwitch: function () {
+        if (!window._mcMusic) return;
+        var m = window._mcMusic;
+        if (!m.enabled || !m.audio || !m.tracks.length) return;
+        if (!m.audio.paused) {
+            m.fadeState = 'fadeout';
+            m.pendingPlay = true;
+        } else {
+            m._startNextTrack();
         }
     }
 });

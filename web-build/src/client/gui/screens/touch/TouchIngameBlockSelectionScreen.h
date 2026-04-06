@@ -36,6 +36,7 @@ public:
 	std::vector<const ItemInstance*> getItems(const InventoryPane* forPane);
 
 	void buttonClicked(Button* button);
+	void keyPressed(int eventKey) override;
 protected:
 	virtual void mouseClicked(int x, int y, int buttonNum);
 	virtual void mouseReleased(int x, int y, int buttonNum);
