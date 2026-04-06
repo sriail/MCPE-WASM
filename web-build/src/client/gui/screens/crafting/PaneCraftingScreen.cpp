@@ -227,6 +227,7 @@ void PaneCraftingScreen::render(int xm, int ym, float a) {
 	static StopwatchNLast r(N);
 	//renderBackground();
 	Tesselator& t = Tesselator::instance;
+	glDisable2(GL_DEPTH_TEST);
 	guiBackground->draw(t, 0, 0);
 	glEnable2(GL_ALPHA_TEST);
 
@@ -290,6 +291,7 @@ void PaneCraftingScreen::render(int xm, int ym, float a) {
 		minecraft->font->drawWordWrap(currentItemDesc, (float)btnCraft.x, (float)(btnCraft.y + btnCraft.height + 6), (float)btnCraft.width, rgbActive);
 	}
 	//glDisable2(GL_ALPHA_TEST);
+	glEnable2(GL_DEPTH_TEST);
 }
 
 void PaneCraftingScreen::buttonClicked(Button* button) {

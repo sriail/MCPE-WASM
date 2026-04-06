@@ -178,17 +178,13 @@ void ItemRenderer::renderGuiItem(Font* font, Textures* textures, const ItemInsta
 
 	if (i < 0) {
 		Tesselator& t = Tesselator::instance;
-		if (!t.isOverridden())
+		if (!t.isOverridden()) {
 			renderGuiItemCorrect(font, textures, item, int(x), int(y));
-		else {
-			// @huge @attn @todo @fix:	This is just guess-works..
-			//							it we're batching for saving the
-			//							buffer, this will fail miserably
+		} else {
 			t.endOverrideAndDraw();
-			glDisable2(GL_TEXTURE_2D);
-			fillRect(t, x, y, w, h, 0xff0000);
-			glEnable2(GL_TEXTURE_2D);
+			glDisable2(GL_DEPTH_TEST);
 			renderGuiItemCorrect(font, textures, item, int(x), int(y));
+			glEnable2(GL_DEPTH_TEST);
 			t.beginOverride();
 		}
 		return;

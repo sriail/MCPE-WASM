@@ -193,9 +193,8 @@ void ArmorScreen::render(int xm, int ym, float a) {
 
 	Tesselator& t = Tesselator::instance;
 
-    t.addOffset(0, 0, -500);
+	glDisable2(GL_DEPTH_TEST);
 	guiBackground->draw(t, 0, 0);
-    t.addOffset(0, 0, 500);
 	glEnable2(GL_ALPHA_TEST);
 
 	// Buttons (Left side + crafting)
@@ -206,15 +205,16 @@ void ArmorScreen::render(int xm, int ym, float a) {
 	t.colorABGR(0xffffffff);
 	glColor4f2(1, 1, 1, 1);
 
-	t.addOffset(0, 0, -490);
 	guiPlayerBg->draw(t, (float)guiPlayerBgRect.x, (float)guiPlayerBgRect.y);
-	t.addOffset(0, 0, 490);
+	glEnable2(GL_DEPTH_TEST);
 	renderPlayer((float)(guiPlayerBgRect.x + guiPlayerBgRect.w / 2), 0.85f * height);
+	glDisable2(GL_DEPTH_TEST);
 
 	for (int i = 0; i < NUM_ARMORBUTTONS; ++i) {
 		drawSlotItemAt(t, i, player->getArmor(i), armorButtons[i]->x, armorButtons[i]->y);
 	}
 	glDisable2(GL_ALPHA_TEST);
+	glEnable2(GL_DEPTH_TEST);
 }
 
 void ArmorScreen::buttonClicked(Button* button) {
