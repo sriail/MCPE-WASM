@@ -7,6 +7,7 @@
 
 #include "../../components/ScrollingPane.h"
 #include "../../components/ImageButton.h"
+#include "../../components/Button.h"
 #include "../../components/ItemPane.h"
 
 class Font;
@@ -84,6 +85,11 @@ private:
 	std::vector<Button*> currentCategoryButtons;
 	ImageButton btnClose;
 	CraftButton btnCraft;
+
+	Touch::TButton bTabCraft;
+	Touch::TButton bTabArmor;
+	Touch::TButton bTabItems;
+	Touch::THeader bTabHeader;
 
 	int craftingSize;
 

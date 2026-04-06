@@ -13,6 +13,9 @@
 #include "../../../network/RakNetInstance.h"
 #include "../../renderer/entity/EntityRenderDispatcher.h"
 #include "../../../world/item/ArmorItem.h"
+#include "touch/TouchIngameBlockSelectionScreen.h"
+#include "crafting/WorkbenchScreen.h"
+#include "../../../world/item/crafting/Recipe.h"
 
 static void setIfNotSet(bool& ref, bool condition) {
 	ref = (ref || condition);
@@ -49,6 +52,9 @@ ArmorScreen::ArmorScreen():
 	btnArmor3(3),
 	btnClose(4, ""),
 	bHeader (5, "Armor"),
+	bTabCraft(6, "Craft"),
+	bTabArmor(7, "Armor"),
+	bTabItems(8, "Items"),
 	guiBackground(NULL),
 	guiSlot(NULL),
 	guiPaneFrame(NULL),
@@ -84,8 +90,13 @@ void ArmorScreen::init() {
 	btnClose.setImageDef(def, true);
 	btnClose.scaleWhenPressed = false;
 
+	buttons.push_back(&bTabCraft);
+	buttons.push_back(&bTabArmor);
+	buttons.push_back(&bTabItems);
 	buttons.push_back(&bHeader);
 	buttons.push_back(&btnClose);
+
+	bTabArmor.selected = true; // Armor tab is active on this screen
 
 	armorButtons[0] = &btnArmor0;
 	armorButtons[1] = &btnArmor1;
@@ -106,13 +117,21 @@ void ArmorScreen::init() {
 }
 
 void ArmorScreen::setupPositions() {
-	// Left  - Categories
-	bHeader.x = bHeader.y = 0;
-	bHeader.width = width;// -  bDone.w;
+	// Tab bar at top
+	bTabCraft.y = bTabArmor.y = bTabItems.y = bHeader.y = 0;
+	bTabCraft.x = 0;
+	bTabCraft.width = bTabArmor.width = bTabItems.width = 48;
+	bTabArmor.x = bTabCraft.width;
+	bTabItems.x = bTabCraft.width + bTabArmor.width;
+
+	bHeader.x = bTabCraft.width + bTabArmor.width + bTabItems.width;
+	bHeader.width = width - bTabCraft.width - bTabArmor.width - bTabItems.width;
 
 	btnClose.width = btnClose.height = 19;
 	btnClose.x = width - btnClose.width;
 	btnClose.y = 0;
+
+	bHeader.xText = bHeader.x + (bHeader.width - btnClose.width) / 2;
 
 	// Inventory pane
 	const int maxWidth = (int)(width/1.8f) - Bx - Bx;
@@ -174,9 +193,8 @@ void ArmorScreen::render(int xm, int ym, float a) {
 
 	Tesselator& t = Tesselator::instance;
 
-    t.addOffset(0, 0, -500);
+	glDisable2(GL_DEPTH_TEST);
 	guiBackground->draw(t, 0, 0);
-    t.addOffset(0, 0, 500);
 	glEnable2(GL_ALPHA_TEST);
 
 	// Buttons (Left side + crafting)
@@ -187,21 +205,32 @@ void ArmorScreen::render(int xm, int ym, float a) {
 	t.colorABGR(0xffffffff);
 	glColor4f2(1, 1, 1, 1);
 
-	t.addOffset(0, 0, -490);
 	guiPlayerBg->draw(t, (float)guiPlayerBgRect.x, (float)guiPlayerBgRect.y);
-	t.addOffset(0, 0, 490);
+	glEnable2(GL_DEPTH_TEST);
 	renderPlayer((float)(guiPlayerBgRect.x + guiPlayerBgRect.w / 2), 0.85f * height);
+	glDisable2(GL_DEPTH_TEST);
 
 	for (int i = 0; i < NUM_ARMORBUTTONS; ++i) {
 		drawSlotItemAt(t, i, player->getArmor(i), armorButtons[i]->x, armorButtons[i]->y);
 	}
 	glDisable2(GL_ALPHA_TEST);
+	glEnable2(GL_DEPTH_TEST);
 }
 
 void ArmorScreen::buttonClicked(Button* button) {
 	if (button == &btnClose) {
 		minecraft->setScreen(NULL);
 	}
+
+	if (button == &bTabCraft) {
+		minecraft->setScreen(new WorkbenchScreen(Recipe::SIZE_2X2));
+	}
+
+	if (button == &bTabItems) {
+		minecraft->setScreen(new Touch::IngameBlockSelectionScreen());
+	}
+
+	// bTabArmor - already on armor screen, no action
 
 	if (button->id >= 0 && button->id <= 3) {
 		takeAndClearSlot(button->id);
@@ -242,7 +271,7 @@ bool ArmorScreen::isAllowed( int slot ) {
 }
 
 bool ArmorScreen::renderGameBehind() {
-	return false;
+	return true;
 }
 
 std::vector<const ItemInstance*> ArmorScreen::getItems( const Touch::InventoryPane* forPane ) {
