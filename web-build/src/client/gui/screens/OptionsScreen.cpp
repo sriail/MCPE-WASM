@@ -140,7 +140,8 @@ void OptionsScreen::generateOptionScreens() {
 	// Game Pane
 	optionPanes[1]->createOptionsGroup("Game")
 		//.addOptionItem(&Options::Option::THIRD_PERSON, minecraft)
-		.addOptionItem(&Options::Option::SERVER_VISIBLE, minecraft);
+		.addOptionItem(&Options::Option::SERVER_VISIBLE, minecraft)
+		.addOptionItem(&Options::Option::SPRINTING, minecraft);
 	
 	// Input Pane
 	optionPanes[2]->createOptionsGroup("Controls")

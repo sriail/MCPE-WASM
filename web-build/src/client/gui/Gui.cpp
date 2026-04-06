@@ -85,7 +85,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 
 	const int scaledScreenWidth  = (int)(screenWidth  / 0.8f);
 	const int scaledScreenHeight = (int)(screenHeight / 0.8f);
-	const int ySlot = scaledScreenHeight - 22;
+	const int ySlot = scaledScreenHeight - 19;
 
 	if (minecraft->gameMode->canHurtPlayer()) {
 		minecraft->textures->loadAndBindTexture("gui/icons.png");

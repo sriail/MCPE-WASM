@@ -186,6 +186,10 @@ void LocalPlayer::aiStep() {
 		setSprinting(false);
 		sprintClickTimer = 0;
 	} else {
+		// Alt key held while moving forward triggers sprint
+		if (Keyboard::isKeyDown(Keyboard::KEY_LALT) && isUpPressed) {
+			setSprinting(true);
+		}
 		if (sprintClickTimer > 0) sprintClickTimer--;
 		if (isUpPressed && !wasUpPressed) {
 			if (sprintClickTimer > 0) {

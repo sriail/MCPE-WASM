@@ -73,6 +73,8 @@ static int sdlKeyToGame(SDL_Keycode sym) {
         case SDLK_RSHIFT:   return 10; // Keyboard::KEY_LSHIFT
         case SDLK_LCTRL:
         case SDLK_RCTRL:    return 17; // Ctrl key
+        case SDLK_LALT:
+        case SDLK_RALT:     return 18; // Keyboard::KEY_LALT
         case SDLK_F1:       return 112;
         case SDLK_F2:       return 113;
         case SDLK_F3:       return 114;

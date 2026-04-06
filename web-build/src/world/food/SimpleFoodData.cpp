@@ -14,7 +14,7 @@ const float SimpleFoodData::EXHAUSTION_SWIM         = 0.01f;
 
 SimpleFoodData::SimpleFoodData()
 :	foodLevel(20),
-	saturationLevel(10.0f),
+	saturationLevel(0.5f),
 	exhaustionLevel(0.0f),
 	tickTimer(0)
 {
