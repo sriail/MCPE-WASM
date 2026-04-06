@@ -171,11 +171,12 @@ void PaneCraftingScreen::setupPositions() {
 
 	bTabHeader.x = tabWidth * 3;
 	bTabHeader.width = width - tabWidth * 3;
-	bTabHeader.xText = bTabHeader.x + (bTabHeader.width - 19) / 2;
 
 	btnClose.width = btnClose.height = 19;
 	btnClose.x = width - btnClose.width;
 	btnClose.y = 0;
+
+	bTabHeader.xText = bTabHeader.x + (bTabHeader.width - btnClose.width) / 2;
 
 	// Left  - Categories
 	const int topBarHeight = 26;

@@ -126,11 +126,12 @@ void ArmorScreen::setupPositions() {
 
 	bHeader.x = bTabCraft.width + bTabArmor.width + bTabItems.width;
 	bHeader.width = width - bTabCraft.width - bTabArmor.width - bTabItems.width;
-	bHeader.xText = bHeader.x + (bHeader.width - 19) / 2;
 
 	btnClose.width = btnClose.height = 19;
 	btnClose.x = width - btnClose.width;
 	btnClose.y = 0;
+
+	bHeader.xText = bHeader.x + (bHeader.width - btnClose.width) / 2;
 
 	// Inventory pane
 	const int maxWidth = (int)(width/1.8f) - Bx - Bx;
