@@ -96,6 +96,7 @@ private:
 	int autoJumpTime;
 	int sprintClickTimer;
 	bool wasUpPressed;
+	bool wasAltHeld;
 
 	int sentInventoryItemId;
 	int sentInventoryItemData;
