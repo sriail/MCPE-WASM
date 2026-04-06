@@ -913,14 +913,13 @@ void Minecraft::tickInput() {
 				}
 			#endif
 
-			#ifndef RPI
+			#if defined(EMSCRIPTEN)
+				if (key == Keyboard::KEY_ESCAPE)
+					pauseGame(false);
+			#elif !defined(RPI)
 				if (key == 82)
 					pauseGame(false);
 			#else
-				if (key == Keyboard::KEY_ESCAPE)
-					pauseGame(false);
-			#endif
-			#if defined(EMSCRIPTEN)
 				if (key == Keyboard::KEY_ESCAPE)
 					pauseGame(false);
 			#endif
