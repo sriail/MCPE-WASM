@@ -60,6 +60,9 @@ private:
 	BlankButton* armorButtons[4];
 
 	Touch::THeader bHeader;
+	Touch::TButton bTabCraft;
+	Touch::TButton bTabArmor;
+	Touch::TButton bTabItems;
 
 	Touch::InventoryPane* inventoryPane;
 	IntRectangle inventoryPaneRect;

@@ -56,9 +56,9 @@ IngameBlockSelectionScreen::IngameBlockSelectionScreen()
 	bArmor  (4, "Armor"),
 	bDone   (3, ""),
 	//bDone   (3, "Done"),
-	bMenu   (2, "Menu"),
+	bItems  (5, "Items"),
 	bCraft  (1, "Craft"),
-	bHeader (0, "Select blocks")
+	bHeader (0, "Items")
 {
 }
 
@@ -113,23 +113,26 @@ void IngameBlockSelectionScreen::init()
 	if (!minecraft->isCreativeMode()) {
 		buttons.push_back(&bCraft);
 		buttons.push_back(&bArmor);
+		buttons.push_back(&bItems);
+		bItems.selected = true; // Items tab is active on this screen
 	}
 }
 
 void IngameBlockSelectionScreen::setupPositions() {
-	bHeader.y = bDone.y = bCraft.y = 0;
+	bHeader.y = bDone.y = bCraft.y = bItems.y = bArmor.y = 0;
 	bDone.x   = width -  bDone.width;
-	bCraft.x  = 0;//width - bDone.w - bCraft.w;
-	bCraft.width = bArmor.width = 48;
+	bCraft.x  = 0;
+	bCraft.width = bArmor.width = bItems.width = 48;
 	bArmor.x = bCraft.width;
+	bItems.x = bCraft.width + bArmor.width;
 
 	if (minecraft->isCreativeMode()) {
 		bHeader.x = 0;
-		bHeader.width = width;// -  bDone.w;
-		bHeader.xText = width/2; // Center of the screen
+		bHeader.width = width;
+		bHeader.xText = width/2;
 	} else {
-		bHeader.x = bCraft.width + bArmor.width;
-		bHeader.width = width - bCraft.width - bArmor.width;// -  bDone.w;
+		bHeader.x = bCraft.width + bArmor.width + bItems.width;
+		bHeader.width = width - bCraft.width - bArmor.width - bItems.width;
 		bHeader.xText = bHeader.x + (bHeader.width - bDone.width) /2;
 	}
 
@@ -230,14 +233,13 @@ void IngameBlockSelectionScreen::buttonClicked(Button* button) {
 	if (button->id == bDone.id)
 		minecraft->setScreen(NULL);
 
-    if (button->id == bMenu.id)
-        minecraft->screenChooser.setScreen(SCREEN_PAUSE);
-
 	if (button->id == bCraft.id)
 		minecraft->setScreen(new WorkbenchScreen(Recipe::SIZE_2X2));
 
 	if (button == &bArmor)
 		minecraft->setScreen(new ArmorScreen());
+
+	// Items tab - already on items screen, no action needed
 }
 
 bool IngameBlockSelectionScreen::isAllowed( int slot )

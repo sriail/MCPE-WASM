@@ -148,12 +148,16 @@ void TButton::renderBg( Minecraft* minecraft, int xm, int ym )
 	minecraft->textures->loadAndBindTexture("gui/touchgui.png");
 
 	//printf("ButtonId: %d - Hovered? %d (cause: %d, %d, %d, %d, <> %d, %d)\n", id, hovered, x, y, x+w, y+h, xm, ym);
-	if (active)
-		glColor4f2(1, 1, 1, 1);
+	if (active) {
+		if (selected)
+			glColor4f2(1.2f, 1.15f, 1.1f, 1); // Lighter tint for selected tab
+		else
+			glColor4f2(1, 1, 1, 1);
+	}
 	else
 		glColor4f2(0.5f, 0.5f, 0.5f, 1);
 
-	blit(x, y, hovered?66:0, 0, width, height, 66, 26);
+	blit(x, y, (hovered || selected)?66:0, 0, width, height, 66, 26);
 	//blit(x + w / 2, y, 200 - w / 2, 46 + yImage * 20, w / 2, h, 0, 20);
 }
 

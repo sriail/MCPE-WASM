@@ -13,6 +13,9 @@
 #include "../../../network/RakNetInstance.h"
 #include "../../renderer/entity/EntityRenderDispatcher.h"
 #include "../../../world/item/ArmorItem.h"
+#include "touch/TouchIngameBlockSelectionScreen.h"
+#include "crafting/WorkbenchScreen.h"
+#include "../../../world/item/crafting/Recipe.h"
 
 static void setIfNotSet(bool& ref, bool condition) {
 	ref = (ref || condition);
@@ -49,6 +52,9 @@ ArmorScreen::ArmorScreen():
 	btnArmor3(3),
 	btnClose(4, ""),
 	bHeader (5, "Armor"),
+	bTabCraft(6, "Craft"),
+	bTabArmor(7, "Armor"),
+	bTabItems(8, "Items"),
 	guiBackground(NULL),
 	guiSlot(NULL),
 	guiPaneFrame(NULL),
@@ -84,8 +90,13 @@ void ArmorScreen::init() {
 	btnClose.setImageDef(def, true);
 	btnClose.scaleWhenPressed = false;
 
+	buttons.push_back(&bTabCraft);
+	buttons.push_back(&bTabArmor);
+	buttons.push_back(&bTabItems);
 	buttons.push_back(&bHeader);
 	buttons.push_back(&btnClose);
+
+	bTabArmor.selected = true; // Armor tab is active on this screen
 
 	armorButtons[0] = &btnArmor0;
 	armorButtons[1] = &btnArmor1;
@@ -106,9 +117,16 @@ void ArmorScreen::init() {
 }
 
 void ArmorScreen::setupPositions() {
-	// Left  - Categories
-	bHeader.x = bHeader.y = 0;
-	bHeader.width = width;// -  bDone.w;
+	// Tab bar at top
+	bTabCraft.y = bTabArmor.y = bTabItems.y = bHeader.y = 0;
+	bTabCraft.x = 0;
+	bTabCraft.width = bTabArmor.width = bTabItems.width = 48;
+	bTabArmor.x = bTabCraft.width;
+	bTabItems.x = bTabCraft.width + bTabArmor.width;
+
+	bHeader.x = bTabCraft.width + bTabArmor.width + bTabItems.width;
+	bHeader.width = width - bTabCraft.width - bTabArmor.width - bTabItems.width;
+	bHeader.xText = bHeader.x + (bHeader.width - 19) / 2;
 
 	btnClose.width = btnClose.height = 19;
 	btnClose.x = width - btnClose.width;
@@ -203,6 +221,16 @@ void ArmorScreen::buttonClicked(Button* button) {
 		minecraft->setScreen(NULL);
 	}
 
+	if (button == &bTabCraft) {
+		minecraft->setScreen(new WorkbenchScreen(Recipe::SIZE_2X2));
+	}
+
+	if (button == &bTabItems) {
+		minecraft->setScreen(new Touch::IngameBlockSelectionScreen());
+	}
+
+	// bTabArmor - already on armor screen, no action
+
 	if (button->id >= 0 && button->id <= 3) {
 		takeAndClearSlot(button->id);
 	}
@@ -242,7 +270,7 @@ bool ArmorScreen::isAllowed( int slot ) {
 }
 
 bool ArmorScreen::renderGameBehind() {
-	return false;
+	return true;
 }
 
 std::vector<const ItemInstance*> ArmorScreen::getItems( const Touch::InventoryPane* forPane ) {

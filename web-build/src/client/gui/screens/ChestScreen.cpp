@@ -392,7 +392,7 @@ bool ChestScreen::isAllowed( int slot )
 
 bool ChestScreen::renderGameBehind()
 {
-	return false;
+	return true;
 }
 
 std::vector<const ItemInstance*> ChestScreen::getItems( const Touch::InventoryPane* forPane )

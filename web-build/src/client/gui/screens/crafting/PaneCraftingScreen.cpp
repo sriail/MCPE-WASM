@@ -16,6 +16,8 @@
 #include "../../../../world/level/Level.h"
 #include "../../../../world/item/DyePowderItem.h"
 #include "../../../../world/item/crafting/Recipe.h"
+#include "../touch/TouchIngameBlockSelectionScreen.h"
+#include "../ArmorScreen.h"
 
 static NinePatchLayer* guiPaneFrame = NULL;
 
@@ -62,6 +64,10 @@ PaneCraftingScreen::PaneCraftingScreen(int craftingSize)
 	pane(NULL),
 	btnCraft(1),
 	btnClose(2, ""),
+	bTabCraft(10, "Craft"),
+	bTabArmor(11, "Armor"),
+	bTabItems(12, "Items"),
+	bTabHeader(13, "Craft"),
 	selectedCategoryButton(NULL),
 	guiBackground(NULL),
 	guiSlotCategory(NULL),
@@ -104,8 +110,15 @@ void PaneCraftingScreen::init() {
 
 	btnCraft.init(minecraft->textures);
 
-	buttons.push_back(&btnCraft);
+	// Add tab bar buttons
+	buttons.push_back(&bTabCraft);
+	buttons.push_back(&bTabArmor);
+	buttons.push_back(&bTabItems);
+	buttons.push_back(&bTabHeader);
 	buttons.push_back(&btnClose);
+	bTabCraft.selected = true; // Craft tab is active on this screen
+
+	buttons.push_back(&btnCraft);
 
 	// GUI patches
 	NinePatchFactory builder(minecraft->textures, "gui/spritesheet.png");
@@ -148,12 +161,29 @@ void PaneCraftingScreen::initCategories() {
 }
 
 void PaneCraftingScreen::setupPositions() {
+	// Tab bar at top
+	const int tabWidth = 48;
+	bTabCraft.y = bTabArmor.y = bTabItems.y = bTabHeader.y = 0;
+	bTabCraft.x = 0;
+	bTabCraft.width = bTabArmor.width = bTabItems.width = tabWidth;
+	bTabArmor.x = tabWidth;
+	bTabItems.x = tabWidth * 2;
+
+	bTabHeader.x = tabWidth * 3;
+	bTabHeader.width = width - tabWidth * 3;
+	bTabHeader.xText = bTabHeader.x + (bTabHeader.width - 19) / 2;
+
+	btnClose.width = btnClose.height = 19;
+	btnClose.x = width - btnClose.width;
+	btnClose.y = 0;
+
 	// Left  - Categories
-	const int buttonHeight = (height - 16) / (Mth::Max(numCategories, 4));
+	const int topBarHeight = 26;
+	const int buttonHeight = (height - topBarHeight - 16) / (Mth::Max(numCategories, 4));
 	for (unsigned c = 0; c < _categoryButtons.size(); ++c) {
 		ImageButton* button = _categoryButtons[c];
 		button->x = (int)BorderPixels;
-		button->y = (int)BorderPixels + c * (1 + buttonHeight);
+		button->y = topBarHeight + (int)BorderPixels + c * (1 + buttonHeight);
 		button->width = (int)buttonHeight;
 		button->height = (int)buttonHeight;
 
@@ -167,19 +197,15 @@ void PaneCraftingScreen::setupPositions() {
 	}
 	// Right  - Description
 	const int craftW = (int)(100 - 2 * BorderPixels - 0);
-	btnCraft.x = width - descFrameWidth + (descFrameWidth-craftW)/2 - 1;//    width - descFrameWidth + (int)BorderPixels + 4;
-	btnCraft.y = 20;
+	btnCraft.x = width - descFrameWidth + (descFrameWidth-craftW)/2 - 1;
+	btnCraft.y = topBarHeight + 20;
 	btnCraft.setSize((float)craftW, 62);
-
-	btnClose.width = btnClose.height = 19;
-	btnClose.x = width - btnClose.width;
-	btnClose.y = 0;
 
 	// Middle - Scrolling pane
 	paneRect.x = buttonHeight + 2 * (int)BorderPixels;
-	paneRect.y = (int)BorderPixels + 2;
+	paneRect.y = topBarHeight + (int)BorderPixels + 2;
 	paneRect.w = width - paneRect.x - descFrameWidth;
-	paneRect.h = height - 2 * (int)BorderPixels - 4;
+	paneRect.h = height - topBarHeight - 2 * (int)BorderPixels - 4;
 
 	guiPaneFrame->setSize((float)paneRect.w + 2, (float)paneRect.h + 4);
 	guiBackground->setSize((float)width, (float)height);
@@ -271,6 +297,14 @@ void PaneCraftingScreen::buttonClicked(Button* button) {
 
 	if (button == &btnClose)
 		minecraft->setScreen(NULL);
+
+	if (button == &bTabItems)
+		minecraft->setScreen(new Touch::IngameBlockSelectionScreen());
+
+	if (button == &bTabArmor)
+		minecraft->setScreen(new ArmorScreen());
+
+	// bTabCraft - already on craft screen, no action
 
 	// Did we click a category?
 	if (button->id >= 100 && button->id < 200) {
@@ -470,7 +504,7 @@ void PaneCraftingScreen::craftSelectedItem()
 
 bool PaneCraftingScreen::renderGameBehind()
 {
-	return false;
+	return true;
 }
 
 bool PaneCraftingScreen::closeOnPlayerHurt() {

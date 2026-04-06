@@ -379,7 +379,7 @@ bool FurnaceScreen::isAllowed( int slot )
 
 bool FurnaceScreen::renderGameBehind()
 {
-	return false;
+	return true;
 }
 
 std::vector<const ItemInstance*> FurnaceScreen::getItems( const Touch::InventoryPane* forPane )

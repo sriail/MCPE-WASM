@@ -55,7 +55,7 @@ private:
 	ImageButton bDone;
 	TButton bCraft;
 	TButton bArmor;
-	TButton bMenu;
+	TButton bItems;
 
 	IntRectangle clippingArea;
 

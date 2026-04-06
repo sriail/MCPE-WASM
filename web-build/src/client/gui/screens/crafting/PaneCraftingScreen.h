@@ -85,6 +85,11 @@ private:
 	ImageButton btnClose;
 	CraftButton btnCraft;
 
+	Touch::TButton bTabCraft;
+	Touch::TButton bTabArmor;
+	Touch::TButton bTabItems;
+	Touch::THeader bTabHeader;
+
 	int craftingSize;
 
 	ItemPane* pane;
