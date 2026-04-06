@@ -91,6 +91,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		t.begin();
 		t.colorABGR(0xffffffff);
 		renderHearts();
+		renderHunger();
 		renderBubbles();
 		t.draw();
 	}
@@ -643,6 +644,29 @@ void Gui::renderBubbles() {
 			int xo =  i * 8 + 2;
 			if (i < count) blit(xo, yo, 16, 9 * 2, 9, 9);
 			else blit(xo, yo, 16 + 9, 9 * 2, 9, 9);
+		}
+	}
+}
+
+void Gui::renderHunger() {
+	int foodLevel = minecraft->player->foodData.getFoodLevel();
+	int xx = 2;
+
+	for (int i = 0; i < 10; i++) {
+		int yo = 12;
+		int xo = xx + i * 8;
+		int ip2 = i * 2 + 1;
+
+		// Background hunger icon (empty drumstick outline)
+		blit(xo, yo, 16 + 0 * 9, 9 * 3, 9, 9);
+
+		// Full drumstick
+		if (ip2 < foodLevel) {
+			blit(xo, yo, 16 + 4 * 9, 9 * 3, 9, 9);
+		}
+		// Half drumstick
+		else if (ip2 == foodLevel) {
+			blit(xo, yo, 16 + 5 * 9, 9 * 3, 9, 9);
 		}
 	}
 }

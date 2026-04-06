@@ -30,7 +30,7 @@ public:
 
 	ItemInstance useTimeDepleted(ItemInstance* instance, Level* level, Player* player) {
 		instance->count--;
-		player->foodData.eat(this);
+		player->foodData.eat(this->nutrition, this->saturationModifier);
 		level->playSound(player, "random.burp", 0.5f, level->random.nextFloat() * 0.1f + 0.9f);
 		return *instance;
 	}
@@ -44,7 +44,7 @@ public:
     }
 
 	ItemInstance* use(ItemInstance* instance, Level* level, Player* player) {
-		if (!player->abilities.invulnerable && player->isHurt()) {
+		if (canAlwaysEat || player->foodData.needsFood()) {
 			player->startUsingItem(*instance, getUseDuration(instance));
 		}
 		return instance;

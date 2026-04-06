@@ -443,6 +443,9 @@ void Player::jumpFromGround() {
 		float rr = yRot * Mth::DEGRAD;
 		xd -= Mth::sin(rr) * 0.2f;
 		zd += Mth::cos(rr) * 0.2f;
+		foodData.addExhaustion(SimpleFoodData::EXHAUSTION_SPRINT_JUMP);
+	} else {
+		foodData.addExhaustion(SimpleFoodData::EXHAUSTION_JUMP);
 	}
 }
 
@@ -509,6 +512,14 @@ void Player::aiStep() {
     if (onGround || health <= 0) tTilt = 0;
     bob += (tBob - bob) * 0.4f;
     tilt += (tTilt - tilt) * 0.8f;
+
+    // Add sprint exhaustion
+    if (isSprinting() && onGround) {
+        float dist = Mth::sqrt(xd * xd + zd * zd);
+        if (dist > 0.01f) {
+            foodData.addExhaustion(SimpleFoodData::EXHAUSTION_SPRINT * dist);
+        }
+    }
 
     if (health > 0) {
         EntityList& entities = level->getEntities(this, bb.grow(1, 0, 1));
