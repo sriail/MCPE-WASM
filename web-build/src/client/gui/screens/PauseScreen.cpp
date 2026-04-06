@@ -5,6 +5,7 @@
 #include "../../../util/Mth.h"
 #include "../../../network/RakNetInstance.h"
 #include "../../../network/ServerSideNetworkHandler.h"
+#include "../../../platform/input/Keyboard.h"
 
 PauseScreen::PauseScreen(bool wasBackPaused)
 :	saveStep(0),
@@ -186,4 +187,14 @@ void PauseScreen::updateServerVisibilityText()
 	bServerVisibility->msg = ss->allowsIncomingConnections()?
 		"Server is visible"
 	:   "Server is invisible";
+}
+
+void PauseScreen::keyPressed(int eventKey)
+{
+	// Ctrl (left or right) = back to game (same as clicking "Back to game" button)
+	if (eventKey == Keyboard::KEY_LCTRL) {
+		minecraft->setScreen(NULL);
+		return;
+	}
+	super::keyPressed(eventKey);
 }

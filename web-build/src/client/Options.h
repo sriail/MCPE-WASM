@@ -48,6 +48,7 @@ public:
 		static const Option DESTROY_VIBRATION;
 		static const Option FANCY_CLOUDS;
 		static const Option SPRINTING;
+		static const Option AMBIENT_MUSIC;
 
 		static const Option PIXELS_PER_MILLIMETER;
 
@@ -164,6 +165,7 @@ public:
 	bool isJoyTouchArea;
 	bool useTouchScreen;
 	bool sprintingEnabled;
+	bool ambientMusicEnabled;
 	float pixelsPerMillimeter;
     Options(Minecraft* minecraft, const std::string& workingDirectory)
 	:	minecraft(minecraft)
@@ -267,6 +269,8 @@ public:
 			return fancyClouds;
 		if (item == &Option::SPRINTING)
 			return sprintingEnabled;
+		if (item == &Option::AMBIENT_MUSIC)
+			return ambientMusicEnabled;
 		return false;
 	}
 

@@ -22,6 +22,7 @@ public:
 	void render(int xm, int ym, float a);
 protected:
     void buttonClicked(Button* button);
+	void keyPressed(int eventKey) override;
 private:
 	void updateServerVisibilityText();
 

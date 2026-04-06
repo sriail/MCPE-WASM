@@ -186,6 +186,14 @@ void LocalPlayer::aiStep() {
 		setSprinting(false);
 		sprintClickTimer = 0;
 	} else {
+		// Alt key held while moving forward triggers sprint; release Alt to stop
+		bool altHeld = Keyboard::isKeyDown(Keyboard::KEY_LALT);
+		if (altHeld && isUpPressed) {
+			setSprinting(true);
+		} else if (wasAltHeld && !altHeld && isSprinting()) {
+			setSprinting(false);
+		}
+		wasAltHeld = altHeld;
 		if (sprintClickTimer > 0) sprintClickTimer--;
 		if (isUpPressed && !wasUpPressed) {
 			if (sprintClickTimer > 0) {
@@ -441,6 +449,7 @@ void LocalPlayer::_init() {
 	sentInventoryItemData = item? item->getAuxValue() : 0;
 	sprintClickTimer = 0;
 	wasUpPressed = false;
+	wasAltHeld = false;
 }
 
 void LocalPlayer::startCrafting(int x, int y, int z, int tableSize) {

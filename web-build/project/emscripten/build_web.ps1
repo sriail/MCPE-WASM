@@ -44,7 +44,7 @@ $LINK_FLAGS = @(
     "-sMAXIMUM_MEMORY=2GB",          # Add this line - allow growth up to 2GB
     "-sMAX_WEBGL_VERSION=2",
     "-sASSERTIONS=2",
-    "-sEXPORTED_FUNCTIONS=['_main','_idbfsReady','_syncSaves','_malloc','_free']",
+    "-sEXPORTED_FUNCTIONS=['_main','_idbfsReady','_syncSaves','_malloc','_free','_emscripten_wants_pointer_lock']",
     "-sEXPORTED_RUNTIME_METHODS=['FS','ccall','cwrap','lengthBytesUTF8','stringToUTF8']",
     "-O2"
 )

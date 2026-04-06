@@ -26,6 +26,15 @@ extern "C" EMSCRIPTEN_KEEPALIVE int emscripten_is_pointer_locked() {
     return g_pointerLocked ? 1 : 0;
 }
 
+// Called from JavaScript to check if the game wants pointer lock
+// Returns 1 if game wants lock (in gameplay, no screen/menu open), 0 otherwise
+extern "C" EMSCRIPTEN_KEEPALIVE int emscripten_wants_pointer_lock() {
+    if (!g_app) return 0;
+    Minecraft* mc = static_cast<Minecraft*>(g_app);
+    // Only want pointer lock if no screen is active (in-game)
+    return (mc->screen == NULL && mc->level != NULL) ? 1 : 0;
+}
+
 // Screen dimensions – initialised from the actual browser window at startup
 // and kept in sync on resize via emscripten_set_resize_callback.
 static int g_screenW = 854, g_screenH = 480;
@@ -62,6 +71,10 @@ static int sdlKeyToGame(SDL_Keycode sym) {
         case SDLK_ESCAPE:   return 27;
         case SDLK_LSHIFT:
         case SDLK_RSHIFT:   return 10; // Keyboard::KEY_LSHIFT
+        case SDLK_LCTRL:
+        case SDLK_RCTRL:    return 17; // Ctrl key
+        case SDLK_LALT:
+        case SDLK_RALT:     return 18; // Keyboard::KEY_LALT
         case SDLK_F1:       return 112;
         case SDLK_F2:       return 113;
         case SDLK_F3:       return 114;

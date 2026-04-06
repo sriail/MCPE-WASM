@@ -2,6 +2,12 @@
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
+// Music system JS functions
+extern "C" {
+	extern void mcMusicInit();
+	extern void mcMusicSetEnabled(int enabled);
+	extern void mcMusicFadeOutAndSwitch();
+}
 #endif
 
 #if defined(APPLE_DEMO_PROMOTION)
@@ -256,6 +262,9 @@ Minecraft::~Minecraft()
 // Only called by server
 void Minecraft::selectLevel( const std::string& levelId, const std::string& levelName, const LevelSettings& settings )
 {
+#ifdef __EMSCRIPTEN__
+	if (options.ambientMusicEnabled) mcMusicFadeOutAndSwitch();
+#endif
 #if defined(CREATORMODE)
 	level = new CreatorLevel(
 #else
@@ -324,6 +333,10 @@ void Minecraft::leaveGame(bool renameLevel /*=false*/)
     if (isGeneratingLevel || !_hasSignaledGeneratingLevelFinished)
         return;
     
+#ifdef __EMSCRIPTEN__
+	if (options.ambientMusicEnabled) mcMusicFadeOutAndSwitch();
+#endif
+
 	isGeneratingLevel = false;
 	bool saveLevel = level && (!level->isClientSide || renameLevel);
 
@@ -763,6 +776,34 @@ void Minecraft::tickInput() {
 					screenChooser.setScreen(SCREEN_BLOCKSELECTION);
 				}
 			#endif
+			#if defined(EMSCRIPTEN)
+				// Q - Drop the currently selected item
+				if (key == Keyboard::KEY_Q) {
+					ItemInstance* selected = player->inventory->getSelected();
+					if (selected != NULL && !selected->isNull()) {
+						// Copy before clearing: clearSlot deletes the slot's ItemInstance,
+						// and Player::drop() also deletes its argument → double-free if we
+						// pass the inventory pointer directly.
+						ItemInstance* copy = new ItemInstance(*selected);
+						player->inventory->clearSlot(player->inventory->selected);
+						player->drop(copy, false);
+					}
+				}
+				// Ctrl - Open pause menu
+				if (key == Keyboard::KEY_LCTRL) {
+					pauseGame(false);
+				}
+				// F11 - Toggle fullscreen
+				if (key == Keyboard::KEY_F11) {
+					EM_ASM(
+						if (!document.fullscreenElement) {
+							document.documentElement.requestFullscreen().catch(function(){});
+						} else {
+							document.exitFullscreen().catch(function(){});
+						}
+					);
+				}
+			#endif
 			#if defined(RPI)
 				if (!screen && key == Keyboard::KEY_O || key == 250) {
 					releaseMouse();
@@ -876,7 +917,10 @@ void Minecraft::tickInput() {
 				}
 			#endif
 
-			#ifndef RPI
+			#if defined(EMSCRIPTEN)
+				if (key == Keyboard::KEY_ESCAPE)
+					pauseGame(false);
+			#elif !defined(RPI)
 				if (key == 82)
 					pauseGame(false);
 			#else
@@ -1207,6 +1251,11 @@ void Minecraft::init()
 	user = new User("TestUser", "");
 	setIsCreativeMode(false); // false means it's Survival Mode
 	reloadOptions();
+
+#ifdef __EMSCRIPTEN__
+	mcMusicInit();
+	mcMusicSetEnabled(options.ambientMusicEnabled ? 1 : 0);
+#endif
 
 }
 
@@ -1631,6 +1680,11 @@ void Minecraft::optionUpdated( const Options::Option* option, bool value ) {
 		ServerSideNetworkHandler* ss = (ServerSideNetworkHandler*) netCallback;
 		ss->allowIncomingConnections(value);
 	}
+#ifdef __EMSCRIPTEN__
+	if(option == &Options::Option::AMBIENT_MUSIC) {
+		mcMusicSetEnabled(value ? 1 : 0);
+	}
+#endif
 }
 
 void Minecraft::optionUpdated( const Options::Option* option, float value ) {

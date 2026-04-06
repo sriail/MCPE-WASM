@@ -79,11 +79,13 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 
 	glColor4f2(1, 1, 1, 1);
 
-	// H: 4
-    // T: 7
-    // L: 6
-    // F: 3
-	int ySlot = screenHeight - 16 - 3;
+	// Apply 80% scale to HUD elements (hearts, hunger, toolbar) so they take up 20% less space
+	glPushMatrix2();
+	glScalef2(0.8f, 0.8f, 1.0f);
+
+	const int scaledScreenWidth  = (int)(screenWidth  / 0.8f);
+	const int scaledScreenHeight = (int)(screenHeight / 0.8f);
+	const int ySlot = scaledScreenHeight - 19;
 
 	if (minecraft->gameMode->canHurtPlayer()) {
 		minecraft->textures->loadAndBindTexture("gui/icons.png");
@@ -91,6 +93,7 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		t.begin();
 		t.colorABGR(0xffffffff);
 		renderHearts();
+		renderHunger();
 		renderBubbles();
 		t.draw();
 	}
@@ -99,13 +102,15 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_ALPHA_TEST);
 
-		renderSleepAnimation(screenWidth, screenHeight);
+		renderSleepAnimation(scaledScreenWidth, scaledScreenHeight);
 
 		glEnable(GL_ALPHA_TEST);
 		glEnable(GL_DEPTH_TEST);
 	}
 
-	renderToolBar(a, ySlot, screenWidth);
+	renderToolBar(a, ySlot, scaledScreenWidth);
+
+	glPopMatrix2();
 
 
 	//font->drawShadow(APP_NAME, 2, 2, 0xffffffff);
@@ -118,7 +123,9 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
     bool isChatting = false;
 	renderChatMessages(screenHeight, max, isChatting, font);
 #if !defined(RPI)
-	renderOnSelectItemNameText(screenWidth, font, ySlot);
+	// Item name overlay: ySlot in screen-space (toolbar top edge * 0.8 scale)
+	int ySlotScreen = (int)((screenHeight / 0.8f - 22) * 0.8f);
+	renderOnSelectItemNameText(screenWidth, font, ySlotScreen);
 #endif
 #if defined(RPI)
 	renderDebugInfo();
@@ -154,11 +161,18 @@ int Gui::getSlotIdAt(int x, int y) {
 	x = (int)(x * InvGuiScale);
 	y = (int)(y * InvGuiScale);
 
-	if (y < (screenHeight - 16 - 3) || y > screenHeight)
+	// Convert screen pixel coords → scaled-space coords (divide by 0.8)
+	int scaledW = (int)(screenWidth / 0.8f);
+	int scaledH = (int)(screenHeight / 0.8f);
+	int sx = (int)(x / 0.8f);
+	int sy = (int)(y / 0.8f);
+
+	// Toolbar occupies [scaledH-22, scaledH] in scaled space
+	if (sy < (scaledH - 22) || sy > scaledH)
 		return -1;
 
-	int xBase = 2 + screenWidth / 2 - getNumSlots() * 10;
-	int xRel  = (x - xBase);
+	int xBase = scaledW / 2 - getNumSlots() * 10;
+	int xRel  = sx - xBase;
 	if (xRel < 0)
 		return -1;
 
@@ -182,15 +196,19 @@ void Gui::flashSlot(int slotId) {
 void Gui::getSlotPos(int slot, int& posX, int& posY) {
 	int screenWidth = (int)(minecraft->width * InvGuiScale);
 	int screenHeight = (int)(minecraft->height * InvGuiScale);
-	posX = screenWidth / 2 - getNumSlots() * 10 + slot * 20, 
-	posY = screenHeight - 22;
+	// Return coordinates in scaled space (rendered inside glScalef(0.8)), so
+	// the physical screen position = posX * 0.8, posY * 0.8.
+	int scaledW = (int)(screenWidth / 0.8f);
+	int scaledH = (int)(screenHeight / 0.8f);
+	posX = scaledW / 2 - getNumSlots() * 10 + slot * 20;
+	posY = scaledH - 22;
 }
 
 RectangleArea Gui::getRectangleArea(int extendSide) {
 	const int Spacing = 3;
 	const float pCenterX   = 2.0f + (float)(minecraft->width / 2);
-	const float pHalfWidth = (1.0f + (getNumSlots() * 10 + Spacing)) * Gui::GuiScale;
-	const float pHeight    = (22 + Spacing) * Gui::GuiScale;
+	const float pHalfWidth = (1.0f + (getNumSlots() * 10 + Spacing)) * Gui::GuiScale * 0.8f;
+	const float pHeight    = (22 + Spacing) * Gui::GuiScale * 0.8f;
 
 	if (extendSide < 0)
 		return RectangleArea(0, (float)minecraft->height-pHeight, pCenterX+pHalfWidth+2, (float)minecraft->height);
@@ -636,13 +654,38 @@ void Gui::renderHearts() {
 
 void Gui::renderBubbles() {
 	if (minecraft->player->isUnderLiquid(Material::water)) {
-		int yo = 12;
+		// Render oxygen bubbles below the hunger bar
+		int yo = 22;
 		int count = (int) std::ceil((minecraft->player->airSupply - 2) * 10.0f / Player::TOTAL_AIR_SUPPLY);
 		int extra = (int) std::ceil((minecraft->player->airSupply) * 10.0f / Player::TOTAL_AIR_SUPPLY) - count;
 		for (int i = 0; i < count + extra; i++) {
 			int xo =  i * 8 + 2;
 			if (i < count) blit(xo, yo, 16, 9 * 2, 9, 9);
 			else blit(xo, yo, 16 + 9, 9 * 2, 9, 9);
+		}
+	}
+}
+
+void Gui::renderHunger() {
+	int foodLevel = minecraft->player->foodData.getFoodLevel();
+	// Draw hunger bar below health row (yo=12), left-to-right. Left icon depletes first.
+	int yo = 12;
+
+	for (int i = 0; i < 10; i++) {
+		int xo = 2 + i * 8;
+		// ip2 for leftmost (i=0) = 19, for rightmost (i=9) = 1.
+		// When food drops from 20: leftmost (ip2=19) == food → half icon.
+		int ip2 = 2 * (9 - i) + 1;
+
+		// Background outline
+		blit(xo, yo, 16 + 0 * 9, 9 * 3, 9, 9);
+
+		if (ip2 < foodLevel) {
+			// Full drumstick
+			blit(xo, yo, 16 + 4 * 9, 9 * 3, 9, 9);
+		} else if (ip2 == foodLevel) {
+			// Half drumstick
+			blit(xo, yo, 16 + 5 * 9, 9 * 3, 9, 9);
 		}
 	}
 }
@@ -771,7 +814,7 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 		const float since = getTimeS() - _flashSlotStartTime;
 		if (since > 0.2f) _flashSlotId = -1;
 		else {
-			int x = screenWidth / 2 - getNumSlots() * 10 + _flashSlotId * 20 + 2;
+			int x = xBase + _flashSlotId * 20 + 2;
 			int color = 0xffffff + (((int)(/*0x80 * since +*/ 0x51 - 0x50 * Mth::cos(10 * 6.28f * since))) << 24);
 			//LOGI("Color: %.8x\n", color);
 			fill(x, ySlot, x+16, ySlot+16, color);
@@ -799,7 +842,8 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 	//renderSlotWatch.printEvery(100, "Render slots:");
 
 	//int x = screenWidth / 2 + getNumSlots() * 10 + (getNumSlots()-1) * 20 + 2;
-	blit(screenWidth / 2 + 10 * getNumSlots() - 20 + 4, ySlot + 6, 242, 252, 14, 4, 14, 4);
+	// "..." indicator sits 4px inside the last (inventory) slot
+	blit(xBase + slotsWidth - 16, ySlot + 6, 242, 252, 14, 4, 14, 4);
 
 	minecraft->textures->loadAndBindTexture("gui/gui_blocks.png");
 	t.endOverrideAndDraw();
