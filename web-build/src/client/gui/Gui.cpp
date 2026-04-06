@@ -654,7 +654,7 @@ void Gui::renderHearts() {
 
 void Gui::renderBubbles() {
 	if (minecraft->player->isUnderLiquid(Material::water)) {
-		// Render oxygen bubbles BELOW the hearts/hunger rows
+		// Render oxygen bubbles below the hunger bar
 		int yo = 22;
 		int count = (int) std::ceil((minecraft->player->airSupply - 2) * 10.0f / Player::TOTAL_AIR_SUPPLY);
 		int extra = (int) std::ceil((minecraft->player->airSupply) * 10.0f / Player::TOTAL_AIR_SUPPLY) - count;
@@ -667,21 +667,19 @@ void Gui::renderBubbles() {
 }
 
 void Gui::renderHunger() {
-	int screenWidth = (int)(minecraft->width * InvGuiScale);
-	int scaledScreenWidth = (int)(screenWidth / 0.8f);
-
 	int foodLevel = minecraft->player->foodData.getFoodLevel();
-	int yo = 2;
+	// Draw hunger bar directly below the health row (yo=12), left to right.
+	// The leftmost icon represents food points 19-20 and depletes first (left-to-right
+	// depletion means empty icons appear on the left as food is consumed).
+	int yo = 12;
 
-	// Render the hunger bar on the RIGHT side, from right to left.
-	// Each icon covers 2 food points; i=0 is the rightmost icon.
-	// Icon i depletes first when food is highest (rightmost empties first).
 	for (int i = 0; i < 10; i++) {
-		int xo = scaledScreenWidth - 2 - 9 - i * 8;
-		// ip2 counts from the right: rightmost icon = food points 19-20, leftmost = 1-2
-		int ip2 = (9 - i) * 2 + 1;
+		int xo = 2 + i * 8;
+		// ip2 for leftmost (i=0) = 19, for rightmost (i=9) = 1.
+		// When food drops from 20: leftmost (ip2=19) == food → half icon.
+		int ip2 = 2 * (9 - i) + 1;
 
-		// Background outline (empty drumstick, facing left toward center)
+		// Background outline
 		blit(xo, yo, 16 + 0 * 9, 9 * 3, 9, 9);
 
 		if (ip2 < foodLevel) {
@@ -818,7 +816,7 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 		const float since = getTimeS() - _flashSlotStartTime;
 		if (since > 0.2f) _flashSlotId = -1;
 		else {
-			int x = screenWidth / 2 - getNumSlots() * 10 + _flashSlotId * 20 + 2;
+			int x = xBase + _flashSlotId * 20 + 2;
 			int color = 0xffffff + (((int)(/*0x80 * since +*/ 0x51 - 0x50 * Mth::cos(10 * 6.28f * since))) << 24);
 			//LOGI("Color: %.8x\n", color);
 			fill(x, ySlot, x+16, ySlot+16, color);
@@ -846,7 +844,8 @@ void Gui::renderToolBar( float a, int ySlot, const int screenWidth ) {
 	//renderSlotWatch.printEvery(100, "Render slots:");
 
 	//int x = screenWidth / 2 + getNumSlots() * 10 + (getNumSlots()-1) * 20 + 2;
-	blit(screenWidth / 2 + 10 * getNumSlots() - 20 + 4, ySlot + 6, 242, 252, 14, 4, 14, 4);
+	// "..." indicator sits 4px inside the last (inventory) slot
+	blit(xBase + slotsWidth - 16, ySlot + 6, 242, 252, 14, 4, 14, 4);
 
 	minecraft->textures->loadAndBindTexture("gui/gui_blocks.png");
 	t.endOverrideAndDraw();

@@ -780,9 +780,13 @@ void Minecraft::tickInput() {
 				// Q - Drop the currently selected item
 				if (key == Keyboard::KEY_Q) {
 					ItemInstance* selected = player->inventory->getSelected();
-					if (selected != NULL) {
-						player->drop(selected, false);
+					if (selected != NULL && !selected->isNull()) {
+						// Copy before clearing: clearSlot deletes the slot's ItemInstance,
+						// and Player::drop() also deletes its argument → double-free if we
+						// pass the inventory pointer directly.
+						ItemInstance* copy = new ItemInstance(*selected);
 						player->inventory->clearSlot(player->inventory->selected);
+						player->drop(copy, false);
 					}
 				}
 				// Ctrl - Open pause menu
