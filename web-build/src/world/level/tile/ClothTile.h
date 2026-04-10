@@ -8,14 +8,14 @@
 class ClothTile: public Tile
 {
 	typedef Tile super;
-	static const int COLOR_TEX_POS = 7 * 16 + 1;
+	static const int COLOR_TEX_POS = 7 * 17 + 1;
 public:
     ClothTile(int id)
-	:	super(id, 4 * 16, Material::cloth)
+	:	super(id, 4 * 17, Material::cloth)
 	{
 	}
 	ClothTile(int id, int data)
-		:	super(id, 4 * 16, Material::cloth)
+		:	super(id, 4 * 17, Material::cloth)
 	{
 	}
 
@@ -27,7 +27,7 @@ public:
 
         // invert bits (so 1111 becomes black)
         data = ~(data & 0xf);
-        return COLOR_TEX_POS + ((data & 8) >> 3) + ((data & 7) * 16);
+        return COLOR_TEX_POS + ((data & 8) >> 3) + ((data & 7) * 17);
     }
 
 	static int getTileDataForItemAuxValue(int auxValue) {

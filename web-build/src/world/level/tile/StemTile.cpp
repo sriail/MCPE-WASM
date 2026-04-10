@@ -1,6 +1,6 @@
 #include "StemTile.h"
 StemTile::StemTile( int id, Tile* fruit )
-: super(id, 15 + 6 * 16),
+: super(id, 117), // texCoord(15,6)
   fruit(fruit) {
 	setTicking(true);
 	float ss = 0.125f;

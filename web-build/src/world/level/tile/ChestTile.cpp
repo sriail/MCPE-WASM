@@ -8,7 +8,7 @@
 ChestTile::ChestTile( int id )
 :	super(id, Material::wood)
 {
-	tex = 10 + 16;
+	tex = 10 + 17; // texCoord(10,1)
 	const float m = 0.025f;
 	setShape(m, 0, m, 1-m, 1-m-m, 1-m);
 }
@@ -161,7 +161,7 @@ int ChestTile::getTexture( LevelSource* level, int x, int y, int z, int face )
 		int lockDir = 5;
 		if ((Tile::solid[w] || Tile::solid[w2]) && !Tile::solid[e] && !Tile::solid[e2]) lockDir = 5;
 		if ((Tile::solid[e] || Tile::solid[e2]) && !Tile::solid[w] && !Tile::solid[w2]) lockDir = 4;
-		return (face == lockDir ? tex + 16 : tex + 32) + offs;
+		return (face == lockDir ? tex + 17 : tex + 34) + offs;
 	} else if (w == id || e == id) {
 		if (face == 4 || face == 5) return tex;
 		int offs = 0;
@@ -177,7 +177,7 @@ int ChestTile::getTexture( LevelSource* level, int x, int y, int z, int face )
 		if ((Tile::solid[n] || Tile::solid[n2]) && !Tile::solid[s] && !Tile::solid[s2]) lockDir = 3;
 		if ((Tile::solid[s] || Tile::solid[s2]) && !Tile::solid[n] && !Tile::solid[n2]) lockDir = 2;
 
-		return (face == lockDir ? tex + 16 : tex + 32) + offs;
+		return (face == lockDir ? tex + 17 : tex + 34) + offs;
 	} else { */
 		//int lockDir = 3;
 		int lockDir = level->getData(x, y, z);

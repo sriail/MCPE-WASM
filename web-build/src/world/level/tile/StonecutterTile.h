@@ -13,13 +13,13 @@ public:
     StonecutterTile(int id)
 	:	super(id, Material::stone)
 	{
-        tex = 13 + 16 * 2;
+        tex = 47; // texCoord(13,2)
     }
 
     int getTexture(int face) {
-		if (face == Facing::UP) return 9 + 10 * 16;
-		if (face == Facing::DOWN) return 14 + 3 * 16;
-		if (face == Facing::NORTH || face == Facing::SOUTH) return 8 + 10 * 16;
+		if (face == Facing::UP) return 179; // texCoord(9,10)
+		if (face == Facing::DOWN) return 65; // texCoord(14,3)
+		if (face == Facing::NORTH || face == Facing::SOUTH) return 178; // texCoord(8,10)
 		return tex;
     }
 

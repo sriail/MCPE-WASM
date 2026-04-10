@@ -3,7 +3,7 @@
 #include "../Level.h"
 #include "LevelEvent.h"
 TrapDoorTile::TrapDoorTile( int id, const Material* material ) : super(id, material) {
-	tex = 4 + 5 * 16;
+	tex = 89; // texCoord(4,5)
 	if(material == Material::metal) tex++;
 	float r = 0.5f;
 	float h = 1.0f;

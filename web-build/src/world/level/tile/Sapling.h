@@ -45,9 +45,9 @@ public:
     int getTexture(int face, int data) {
         data = data & LeafTile::LEAF_TYPE_MASK;
         if (data == LeafTile::EVERGREEN_LEAF) {
-            return 15 + 16 * 3;
+            return 66; // texCoord(15,3)
         } else if (data == LeafTile::BIRCH_LEAF) {
-            return 15 + 16 * 4;
+            return 83; // texCoord(15,4)
         //} else if (data == TYPE_JUNGLE) {
         //    return 14 + 16;
         } else {

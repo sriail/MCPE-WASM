@@ -15,11 +15,11 @@ public:
     WorkbenchTile(int id)
 	:	super(id, Material::wood)
 	{
-        tex = 11 + 16 * 3;
+        tex = 62; // texCoord(11,3)
     }
 
     int getTexture(int face) {
-        if (face == 1) return tex - 16;
+        if (face == 1) return tex - 17;
         if (face == 0) return Tile::wood->getTexture(0);
         if (face == 2 || face == 4) return tex + 1;
         return tex;

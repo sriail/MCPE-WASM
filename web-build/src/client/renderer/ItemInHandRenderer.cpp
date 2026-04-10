@@ -503,7 +503,7 @@ void ItemInHandRenderer::renderFire( float a )
 	float size = 1;
 	for (int i = 0; i < 2; i++) {
 		glPushMatrix2();
-		int tex = ((Tile*)Tile::fire)->tex + i * 16;
+		int tex = ((Tile*)Tile::fire)->tex + i * TERRAIN_ATLAS_COLS;
 		int xt = texToPixelX(tex);
 		int yt = texToPixelY(tex);
 

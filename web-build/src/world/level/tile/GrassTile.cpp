@@ -13,7 +13,7 @@ int GrassTile::getTexture( LevelSource* level, int x, int y, int z, int face ) {
 	if (face == 1) return 0;
 	if (face == 0) return 2;
 	const Material* above = level->getMaterial(x, y + 1, z);
-	if (above == Material::topSnow || above == Material::snow) return 4 * 16 + 4;
+	if (above == Material::topSnow || above == Material::snow) return 72; // texCoord(4,4)
 	else return 3;
 }
 

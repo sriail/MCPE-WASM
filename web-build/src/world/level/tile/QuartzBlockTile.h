@@ -20,31 +20,31 @@ public:
 	static const int TYPE_LINES  = 2;
 
 	QuartzBlockTile(int id)
-	:	super(id, 4 + 13 * 16, Material::stone)
+	:	super(id, 225, Material::stone) // texCoord(4,13)
 	{}
 
 	int getTexture(int face, int data) {
 		if (face == Facing::UP || face == Facing::DOWN) {
 			if (data == TYPE_CHISELED)
 			{
-				return 6 + 12 * 16;
+				return 210; // texCoord(6,12)
 			}
 			if (data == TYPE_LINES)
 			{
-				return 5 + 12 * 16;
+				return 209; // texCoord(5,12)
 			}
 			if (face == Facing::DOWN) {
-				return 3 + 13 * 16;
+				return 224; // texCoord(3,13)
 			}
-			return 4 + 12 * 16;
+			return 208; // texCoord(4,12)
 		}
 		if (data == TYPE_CHISELED)
 		{
-			return 6 + 13 * 16;
+			return 227; // texCoord(6,13)
 		}
 		if (data == TYPE_LINES)
 		{
-			return 5 + 13 * 16;
+			return 226; // texCoord(5,13)
 		}
 		return tex;
 	}

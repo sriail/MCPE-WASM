@@ -182,8 +182,8 @@ public:
 
     int getTexture(int face, int data) {
         if ((data & LEAF_TYPE_MASK) == EVERGREEN_LEAF) {
-			return (this == Tile::leaves)?	tex + 5 * 16
-										:	tex -     16;
+			return (this == Tile::leaves)?	tex + 5 * 17
+										:	tex -     17;
         }
         return tex;
     }

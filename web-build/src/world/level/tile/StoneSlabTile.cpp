@@ -49,13 +49,13 @@ int StoneSlabTile::getTexture(int face, int data) {
         if (face <= 1) return 6;
         return 5;
     } else if (data == SAND_SLAB) {
-        if (face == Facing::DOWN) return 13 * 16;
-        if (face == Facing::UP) return 11 * 16;
-        return 12 * 16;
+        if (face == Facing::DOWN) return 221; // texCoord(0,13)
+        if (face == Facing::UP) return 187; // texCoord(0,11)
+        return 204; // texCoord(0,12)
     } else if (data == WOOD_SLAB) {
         return 4;
     } else if (data == COBBLESTONE_SLAB) {
-        return 16;
+        return 17; // texCoord(0,1)
 	} else if (data == BRICK_SLAB) {
 		return Tile::redBrick->tex;
 	} else if (data == SMOOTHBRICK_SLAB) {

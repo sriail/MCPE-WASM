@@ -7,7 +7,7 @@
 DoorTile::DoorTile(int id, const Material* material)
 :	super(id, material)
 {
-	tex = 1 + 6 * 16;
+	tex = 103; // texCoord(1,6)
 	if (material == Material::metal) tex++;
 
 	float r = 0.5f;
@@ -20,7 +20,7 @@ int DoorTile::getTexture(LevelSource* level, int x, int y, int z, int face) {
 
 	int compositeData = getCompositeData(level, x, y, z);
 	int texture = tex;
-	if ((compositeData & C_IS_UPPER_MASK) != 0) texture -= 16;
+	if ((compositeData & C_IS_UPPER_MASK) != 0) texture -= 17;
 
 	int dir = compositeData & C_DIR_MASK;
 	bool isOpen = (compositeData & C_OPEN_MASK) != 0;

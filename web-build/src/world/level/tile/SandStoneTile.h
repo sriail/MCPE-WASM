@@ -21,10 +21,10 @@ public:
 
 	int getTexture(int face, int data) {
 		if (face == Facing::UP || (face == Facing::DOWN && data > 0)) {
-			return 11 * 16;//tex - 16;
+			return 187;//texCoord(0,11)
 		}
 		if (face == Facing::DOWN) {
-			return 13 * 16;//tex + 16;
+			return 221;//texCoord(0,13)
 		}
 		return super::getTexture(face, data);
 	}

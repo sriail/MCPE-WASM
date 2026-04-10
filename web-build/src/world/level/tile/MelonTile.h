@@ -10,8 +10,8 @@ public:
 	int getResource(int data, Random* random);
 	int getResourceCount(Random* random);
 private:
-	static const int TEX = 8 + 8 * 16;
-	static const int TEX_TOP = 9 + 8 * 16;
+	static const int TEX = 8 + 8 * 17;
+	static const int TEX_TOP = 9 + 8 * 17;
 };
 
 #endif /* NET_MINECRAFT_WORLD_LEVEL_TILE__MelonTile_H__ */

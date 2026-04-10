@@ -16,7 +16,7 @@ FurnaceTile::FurnaceTile( int id, bool lit )
 :   super(id, Material::stone),
 	lit(lit)
 {
-	tex = 13 + 16 * 2;
+	tex = 47; // texCoord(13,2)
 }
 
 int FurnaceTile::getResource( int data, Random* random/*, int playerBonusLevel*/ )
@@ -32,20 +32,20 @@ void FurnaceTile::onPlace( Level* level, int x, int y, int z )
 
 int FurnaceTile::getTexture( LevelSource* level, int x, int y, int z, int face )
 {
-	if (face == 1) return tex + 17;
-	if (face == 0) return tex + 17;
+	if (face == 1) return tex + 18;
+	if (face == 0) return tex + 18;
 
 	int lockDir = level->getData(x, y, z);
 
 	if (face != lockDir) return tex;
-	if (lit) return tex + 16;
+	if (lit) return tex + 17;
 	else return tex - 1;
 }
 
 int FurnaceTile::getTexture( int face )
 {
-	if (face == 1) return tex + 17;
-	if (face == 0) return tex + 17;
+	if (face == 1) return tex + 18;
+	if (face == 0) return tex + 18;
 	if (face == 3) return tex - 1;
 	return tex;
 }

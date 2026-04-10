@@ -14,7 +14,7 @@ public:
 	FarmTile(int id)
 	:	Tile(id, Material::dirt)
 	{
-        tex = 7 + 5 * 16;
+        tex = 92; // texCoord(7,5)
         setTicking(true);
         setShape(0, 0, 0, 1, 15 / 16.0f, 1);
         setLightBlock(255);

@@ -12,7 +12,7 @@ const int BedTile::HEAD_DIRECTION_OFFSETS[4][2] = {
 	{  1,  0 }
 };
 
-BedTile::BedTile( int id ) : super(id, 6 + 8 * 16, Material::cloth) {
+BedTile::BedTile( int id ) : super(id, 142, Material::cloth) { // texCoord(6,8)
 	setShape();
 }
 
@@ -108,18 +108,18 @@ int BedTile::getTexture( int face, int data ) {
 	int tileFacing = Direction::RELATIVE_DIRECTION_FACING[direction][face];
 	if (isHeadPiece(data)) {
 		if (tileFacing == Facing::NORTH) {
-			return tex + 2 + 16;
+			return tex + 2 + 17;
 		}
 		if (tileFacing == Facing::EAST || tileFacing == Facing::WEST) {
-			return tex + 1 + 16;
+			return tex + 1 + 17;
 		}
 		return tex + 1;
 	} else {
 		if (tileFacing == Facing::SOUTH) {
-			return tex - 1 + 16;
+			return tex - 1 + 17;
 		}
 		if (tileFacing == Facing::EAST || tileFacing == Facing::WEST) {
-			return tex + 16;
+			return tex + 17;
 		}
 		return tex;
 	}

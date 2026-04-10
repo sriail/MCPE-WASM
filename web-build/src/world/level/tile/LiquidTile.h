@@ -132,7 +132,7 @@ public:
 
 protected:
 	LiquidTile(int id, const Material* material)
-		: Tile(id, (material == Material::lava ? 14 : 12) * 16 + 13, material)
+		: Tile(id, (material == Material::lava ? 14 : 12) * 17 + 13, material)
 	{
         float yo = 0;
         float e = 0;

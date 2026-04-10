@@ -20,7 +20,7 @@ public:
 	TreeTile(int id)
 	:	Tile(id, Material::wood)
 	{
-        tex = 20;
+        tex = 21;
     }
 
     int getResourceCount(Random* random) {
@@ -51,11 +51,11 @@ public:
     }
 
     int getTexture(int face, int data) {
-        if (face == 1) return 21;
-        if (face == 0) return 21;
-        if (data == DARK_TRUNK)  return 4 + 7 * 16;
-        if (data == BIRCH_TRUNK) return 5 + 7 * 16;
-        return 20;
+        if (face == 1) return 22;
+        if (face == 0) return 22;
+        if (data == DARK_TRUNK)  return 123; // texCoord(4,7)
+        if (data == BIRCH_TRUNK) return 124; // texCoord(5,7)
+        return 21;
     }
 
 protected:

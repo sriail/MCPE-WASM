@@ -11,8 +11,8 @@ TallGrass::TallGrass( int id, int tex ) : super(id, tex, Material::replaceable_p
 
 int TallGrass::getTexture( int face, int data ) {
 	if(data == TALL_GRASS) return tex;
-	if(data == FERN) return tex + 16 + 1;
-	if(data == DEAD_SHRUB) return tex + 16;
+	if(data == FERN) return tex + 17 + 1;
+	if(data == DEAD_SHRUB) return tex + 17;
 	return tex;
 }
 
