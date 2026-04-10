@@ -49,6 +49,9 @@ FurnaceRecipes::FurnaceRecipes()
 	addFurnaceRecipe(Tile::mushroom2->id, ItemInstance(Item::dye_powder, 1, DyePowderItem::RED));
 	addFurnaceRecipe(Tile::treeTrunk->id,   ItemInstance(Item::coal, 1, CoalItem::CHAR_COAL));
 	addFurnaceRecipe(Tile::netherrack->id,  ItemInstance(Item::netherbrick));
+	addFurnaceRecipe(Item::mutton_raw->id,  ItemInstance(Item::mutton_cooked));
+	addFurnaceRecipe(Tile::greenEmeraldOre->id, ItemInstance(Item::greenEmerald));
+	addFurnaceRecipe(Tile::netherQuartzOre->id, ItemInstance(Item::netherQuartz));
 	/*
 		// special silk touch related recipes:
 		addFurnaceRecipe(Tile::coalOre->id, ItemInstance(Item::coal));
