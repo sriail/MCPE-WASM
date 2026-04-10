@@ -12,6 +12,9 @@ void OreRecipes::addRecipes(Recipes* r)
 		std::make_pair(Tile::ironBlock,    ItemInstance(Item::ironIngot, 9)),
 		std::make_pair(Tile::emeraldBlock, ItemInstance(Item::emerald, 9)),
 		std::make_pair(Tile::lapisBlock,   ItemInstance(Item::dye_powder, 9, DyePowderItem::BLUE))
+		std::make_pair(Tile::greenEmeraldBlock, ItemInstance(Item::greenEmerald, 9)),
+		std::make_pair(Tile::coalBlock,        ItemInstance(Item::coal, 9)),
+		std::make_pair(Tile::redstoneBlock,    ItemInstance(Item::redStone, 9))
 	};
 	const int NumItems = sizeof(map) / sizeof(Pair);
 
@@ -31,6 +34,27 @@ void OreRecipes::addRecipes(Recipes* r)
 
 			definition('#', from));
 	}
+
+	// Slime block
+	r->addShapedRecipe(ItemInstance(Tile::slimeBlock), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::slimeBall));
+
+	r->addShapedRecipe(ItemInstance(Item::slimeBall, 9), //
+		"#", //
+
+		definition('#', Tile::slimeBlock));
+
+	// Hay bale
+	r->addShapedRecipe(ItemInstance(Tile::hayBale), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::wheat));
 
 	//r->addShapedRecipe(ItemInstance(Item::goldIngot), //
 	//	"###", //

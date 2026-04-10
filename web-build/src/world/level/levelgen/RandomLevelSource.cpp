@@ -336,6 +336,60 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 		feature.place(level, &random, x, y, z);
     }
 
+    // green emerald ore - rare, below Y=32
+    for (int i = 0; i < 1; i++) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(32);
+        int z = zo + random.nextInt(16);
+        OreFeature feature(Tile::greenEmeraldOre->id, 1);
+        feature.place(level, &random, x, y, z);
+    }
+
+    // granite veins (stoneVariant data 0)
+    for (int i = 0; i < 10; i++) {
+        int cx = xo + random.nextInt(16);
+        int cy = random.nextInt(80);
+        int cz = zo + random.nextInt(16);
+        for (int j = 0; j < 33; j++) {
+            int bx = cx + random.nextInt(6) - 3;
+            int by = cy + random.nextInt(6) - 3;
+            int bz = cz + random.nextInt(6) - 3;
+            if (level->getTile(bx, by, bz) == Tile::rock->id) {
+                level->setTileAndData(bx, by, bz, Tile::stoneVariant->id, 0);
+            }
+        }
+    }
+
+    // diorite veins (stoneVariant data 2)
+    for (int i = 0; i < 10; i++) {
+        int cx = xo + random.nextInt(16);
+        int cy = random.nextInt(80);
+        int cz = zo + random.nextInt(16);
+        for (int j = 0; j < 33; j++) {
+            int bx = cx + random.nextInt(6) - 3;
+            int by = cy + random.nextInt(6) - 3;
+            int bz = cz + random.nextInt(6) - 3;
+            if (level->getTile(bx, by, bz) == Tile::rock->id) {
+                level->setTileAndData(bx, by, bz, Tile::stoneVariant->id, 2);
+            }
+        }
+    }
+
+    // andesite veins (stoneVariant data 4)
+    for (int i = 0; i < 10; i++) {
+        int cx = xo + random.nextInt(16);
+        int cy = random.nextInt(80);
+        int cz = zo + random.nextInt(16);
+        for (int j = 0; j < 33; j++) {
+            int bx = cx + random.nextInt(6) - 3;
+            int by = cy + random.nextInt(6) - 3;
+            int bz = cz + random.nextInt(6) - 3;
+            if (level->getTile(bx, by, bz) == Tile::rock->id) {
+                level->setTileAndData(bx, by, bz, Tile::stoneVariant->id, 4);
+            }
+        }
+    }
+
     const float ss = 0.5f;
     int oFor = (int) ((forestNoise.getValue(xo * ss, zo * ss) / 8 + random.nextFloat() * 4 + 4) / 3);
     int forests = 0;//1; (java: 0)
