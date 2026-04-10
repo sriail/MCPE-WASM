@@ -2,6 +2,7 @@
 #include "EntityRenderDispatcher.h"
 #include "../Tesselator.h"
 #include "../TileRenderer.h"
+#include "../TerrainAtlas.h"
 #include "../Textures.h"
 #include "../../gui/Font.h"
 #include "../../../world/entity/item/ItemEntity.h"
@@ -80,17 +81,21 @@ void ItemRenderer::render(Entity* itemEntity_, float x, float y, float z, float 
 	} else {
 		glScalef2(1 / 2.0f, 1 / 2.0f, 1 / 2.0f);
 		int icon = item->getIcon();
+		float u0, u1, v0, v1;
 		if (item->id < 256) {
 			bindTexture("terrain.png");
+			u0 = (texToPixelX(icon) + 0) / TERRAIN_ATLAS_PIXELS;
+			u1 = (texToPixelX(icon) + 16) / TERRAIN_ATLAS_PIXELS;
+			v0 = (texToPixelY(icon) + 0) / TERRAIN_ATLAS_PIXELS;
+			v1 = (texToPixelY(icon) + 16) / TERRAIN_ATLAS_PIXELS;
 		} else {
 			bindTexture("gui/items.png");
+			u0 = ((icon % 16) * 16 + 0) / 256.0f;
+			u1 = ((icon % 16) * 16 + 16) / 256.0f;
+			v0 = ((icon / 16) * 16 + 0) / 256.0f;
+			v1 = ((icon / 16) * 16 + 16) / 256.0f;
 		}
 		Tesselator& t = Tesselator::instance;
-
-		float u0 = ((icon % 16) * 16 + 0) / 256.0f;
-		float u1 = ((icon % 16) * 16 + 16) / 256.0f;
-		float v0 = ((icon / 16) * 16 + 0) / 256.0f;
-		float v1 = ((icon / 16) * 16 + 16) / 256.0f;
 
 		float r = 1.0f;
 		float xo = 0.5f;
@@ -286,22 +291,21 @@ void ItemRenderer::renderGuiItemCorrect(Font* font, Textures* textures, const It
 		//}
 		if (item->id < 256) {
 			textures->loadAndBindTexture("terrain.png");
+			blit((float)x, (float)y, (float)texToPixelX(item->getIcon()), (float)texToPixelY(item->getIcon()), 16, 16, TERRAIN_ATLAS_PIXELS);
 		} else {
 			textures->loadAndBindTexture("gui/items.png");
+			blit((float)x, (float)y, (float)(item->getIcon() % 16 * 16), (float)(item->getIcon() / 16 * 16), 16, 16, 256.0f);
 		}
-		//Tesselator& t = Tesselator::instance;
-		//t.scale2d(Gui::InvGuiScale, Gui::InvGuiScale);
-		blit((float)x, (float)y, (float)(item->getIcon() % 16 * 16), (float)(item->getIcon() / 16 * 16), 16, 16);
 		//t.resetScale();
 	}
 	//glEnable(GL_CULL_FACE);
 }
 
 /*static*/
-void ItemRenderer::blit(float x, float y, float sx, float sy, float w, float h) {
+void ItemRenderer::blit(float x, float y, float sx, float sy, float w, float h, float texSize) {
 	float blitOffset = 0;
-	const float us = 1 / 256.0f;
-	const float vs = 1 / 256.0f;
+	const float us = 1 / texSize;
+	const float vs = 1 / texSize;
 	Tesselator& t = Tesselator::instance;
 	t.begin();
 	t.vertexUV(x, y + h, blitOffset, sx * us, (sy + h) * vs);

@@ -1,4 +1,5 @@
 #include "TileRenderer.h"
+#include "TerrainAtlas.h"
 #include "../Minecraft.h"
 #include "Tesselator.h"
 
@@ -229,13 +230,13 @@ bool TileRenderer::tesselateLadderInWorld( Tile* tt, int x, int y, int z )
 
 	float br = tt->getBrightness(level, x, y, z);
 	t.color(br, br, br);
-	int xt = ((tex & 0xf) << 4);
-	int yt = tex & 0xf0;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
 
-	float u0 = (xt) / 256.0f;
-	float u1 = (xt + 15.99f) / 256.0f;
-	float v0 = (yt) / 256.0f;
-	float v1 = (yt + 15.99f) / 256.0f;
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 15.99f) / TERRAIN_ATLAS_PIXELS;
 
 	int face = level->getData(x, y, z);
 
@@ -333,18 +334,18 @@ void TileRenderer::tesselateTorch( Tile* tt, float x, float y, float z, float xx
 	int tex = tt->getTexture(0);
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
-	float u0 = (xt) / 256.0f;
-	float u1 = (xt + 15.99f) / 256.0f;
-	float v0 = (yt) / 256.0f;
-	float v1 = (yt + 15.99f) / 256.0f;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 15.99f) / TERRAIN_ATLAS_PIXELS;
 
 
-	float uc0 = u0 + 7 / 256.0f;
-	float vc0 = v0 + 6 / 256.0f;
-	float uc1 = u0 + 9 / 256.0f;
-	float vc1 = v0 + 8 / 256.0f;
+	float uc0 = u0 + 7 / TERRAIN_ATLAS_PIXELS;
+	float vc0 = v0 + 6 / TERRAIN_ATLAS_PIXELS;
+	float uc1 = u0 + 9 / TERRAIN_ATLAS_PIXELS;
+	float vc1 = v0 + 8 / TERRAIN_ATLAS_PIXELS;
 	x += 0.5f;
 	z += 0.5f;
 
@@ -388,12 +389,12 @@ void TileRenderer::tesselateCrossTexture( Tile* tt, int data, float x, float y, 
 	int tex = tt->getTexture(0, data);
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
-	float u0 = (xt) / 256.0f;
-	float u1 = (xt + 15.99f) / 256.0f;
-	float v0 = (yt) / 256.0f;
-	float v1 = (yt + 15.99f) / 256.0f;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 15.99f) / TERRAIN_ATLAS_PIXELS;
 
 	float x0 = x + 0.5f - 0.45f;
 	float x1 = x + 0.5f + 0.45f;
@@ -424,12 +425,12 @@ void TileRenderer::tesselateStemTexture( Tile* tt, int data, float h, float x, f
 	Tesselator& t = Tesselator::instance;
 	int tex = tt->getTexture(0, data);
 	if(fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
-	float u0 = (xt) / 256.0f;
-	float u1 = (xt + 15.99f) / 256.0f;
-	float v0 = (yt) / 256.0f;
-	float v1 = (yt + 15.99f * h) / 256.0f;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 15.99f * h) / TERRAIN_ATLAS_PIXELS;
 
 	float x0 = x + 0.5f - 0.45f;
 	float x1 = x + 0.5f + 0.45f;
@@ -462,12 +463,12 @@ void TileRenderer::tesselateStemDirTexture( Tile* tt, int data, int dir, float h
 	int tex = tt->getTexture(0, data) + 16;
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
-	float u0 = (xt) / 256.0f;
-	float u1 = (xt + 15.99f) / 256.0f;
-	float v0 = (yt) / 256.0f;
-	float v1 = (yt + 15.99f * h) / 256.0f;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 15.99f * h) / TERRAIN_ATLAS_PIXELS;
 
 	float x0 = x + 0.5f - 0.5f;
 	float x1 = x + 0.5f + 0.5f;
@@ -547,16 +548,16 @@ bool TileRenderer::tesselateWaterInWorld( Tile* tt, int x, int y, int z )
 		if (angle > -999) {
 			tex = tt->getTexture(2, data);
 		}
-		int xt = (tex & 0xf) << 4;
-		int yt = tex & 0xf0;
+		int xt = texToPixelX(tex);
+		int yt = texToPixelY(tex);
 
-		float uc = (xt + 0.5f * 16) / 256.0f;
-		float vc = (yt + 0.5f * 16) / 256.0f;
+		float uc = (xt + 0.5f * 16) / TERRAIN_ATLAS_PIXELS;
+		float vc = (yt + 0.5f * 16) / TERRAIN_ATLAS_PIXELS;
 		if (angle < -999) {
 			angle = 0;
 		} else {
-			uc = (xt + 1 * 16) / 256.0f;
-			vc = (yt + 1 * 16) / 256.0f;
+			uc = (xt + 1 * 16) / TERRAIN_ATLAS_PIXELS;
+			vc = (yt + 1 * 16) / TERRAIN_ATLAS_PIXELS;
 		}
 		float s = (Mth::sin(angle) * 8) / 256.5f; // @attn: to get rid of "jitter" (caused
 		float c = (Mth::cos(angle) * 8) / 256.5f; //  of fp rounding errors) in big oceans)
@@ -587,8 +588,8 @@ bool TileRenderer::tesselateWaterInWorld( Tile* tt, int x, int y, int z )
 		if (face == 3) xt++;
 
 		int tex = tt->getTexture(face + 2, data);
-		int xTex = (tex & 0xf) << 4;
-		int yTex = tex & 0xf0;
+		int xTex = texToPixelX(tex);
+		int yTex = texToPixelY(tex);
 
 		if (noCulling || dirs[face]) {
 			float hh0;
@@ -625,12 +626,12 @@ bool TileRenderer::tesselateWaterInWorld( Tile* tt, int x, int y, int z )
 			}
 
 			changed = true;
-			float u0 = (xTex + 0 * 16) / 256.0f;
-			float u1 = (xTex + 1 * 16 - 0.01f) / 256.0f;
+			float u0 = (xTex + 0 * 16) / TERRAIN_ATLAS_PIXELS;
+			float u1 = (xTex + 1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 
-			float v01 = (yTex + (1 - hh0) * 16) / 256.0f;
-			float v02 = (yTex + (1 - hh1) * 16) / 256.0f;
-			float v1 = (yTex + 1 * 16 - 0.01f) / 256.0f;
+			float v01 = (yTex + (1 - hh0) * 16) / TERRAIN_ATLAS_PIXELS;
+			float v02 = (yTex + (1 - hh1) * 16) / TERRAIN_ATLAS_PIXELS;
+			float v1 = (yTex + 1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 
 			float br = tt->getBrightness(level, xt, yt, zt);
 			if (face < 2) br *= c2;
@@ -1477,13 +1478,13 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 		t.color(r10 * centerBrightness, g10 * centerBrightness, b10 * centerBrightness);
 		int tex = tt->getTexture(level, x, y, z, Facing::DOWN);
 
-		int xt = (tex & 0xf) << 4;
-		int yt = tex & 0xf0;
+		int xt = texToPixelX(tex);
+		int yt = texToPixelY(tex);
 
-		float u0 = (xt) / 256.0f;
-		float u1 = (xt + 16 - 0.01f) / 256.0f;
-		float v0 = (yt) / 256.0f;
-		float v1 = (yt + 16 - 0.01f) / 256.0f;
+		float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+		float u1 = (xt + 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
+		float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+		float v1 = (yt + 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 
 		float x0 = x + tt->xx0;
 		float x1 = x + tt->xx1;
@@ -1504,13 +1505,13 @@ bool TileRenderer::tesselateBedInWorld(Tile *tt, int x, int y, int z) {
 
 	int tex = tt->getTexture(level, x, y, z, Facing::UP);
 
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
 
-	float u0 = (xt) / 256.0f;
-	float u1 = (xt + 16 ) / 256.0f;
-	float v0 = (yt) / 256.0f;
-	float v1 = (yt + 16) / 256.0f;
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + 16 ) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 16) / TERRAIN_ATLAS_PIXELS;
 
 	// Default is west
 	float topLeftU = u0;
@@ -1745,21 +1746,21 @@ void TileRenderer::renderFaceDown( Tile* tt, float x, float y, float z, int tex 
 	Tesselator& t = Tesselator::instance;
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
 
-	float u0 = (xt + tt->xx0 * 16) / 256.0f;
-	float u1 = (xt + tt->xx1 * 16 - 0.01f) / 256.0f;
-	float v0 = (yt + tt->zz0 * 16) / 256.0f;
-	float v1 = (yt + tt->zz1 * 16 - 0.01f) / 256.0f;
+	float u0 = (xt + tt->xx0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + tt->xx1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt + tt->zz0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + tt->zz1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 
 	if (tt->xx0 < 0 || tt->xx1 > 1) {
-		u0 = (xt + 0 * 15.99f) / 256.0f;
-		u1 = (xt + 1 * 15.99f) / 256.0f;
+		u0 = (xt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		u1 = (xt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 	if (tt->zz0 < 0 || tt->zz1 > 1) {
-		v0 = (yt + 0 * 15.99f) / 256.0f;
-		v1 = (yt + 1 * 15.99f) / 256.0f;
+		v0 = (yt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		v1 = (yt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 
 	float x0 = x + tt->xx0;
@@ -1790,21 +1791,21 @@ void TileRenderer::renderFaceUp( Tile* tt, float x, float y, float z, int tex )
 	Tesselator& t = Tesselator::instance;
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
 
-	float u0 = (xt + tt->xx0 * 16) / 256.0f;
-	float u1 = (xt + tt->xx1 * 16 - 0.01f) / 256.0f;
-	float v0 = (yt + tt->zz0 * 16) / 256.0f;
-	float v1 = (yt + tt->zz1 * 16 - 0.01f) / 256.0f;
+	float u0 = (xt + tt->xx0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + tt->xx1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt + tt->zz0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + tt->zz1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 
 	if (tt->xx0 < 0 || tt->xx1 > 1) {
-		u0 = (xt + 0 * 15.99f) / 256.0f;
-		u1 = (xt + 1 * 15.99f) / 256.0f;
+		u0 = (xt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		u1 = (xt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 	if (tt->zz0 < 0 || tt->zz1 > 1) {
-		v0 = (yt + 0 * 15.99f) / 256.0f;
-		v1 = (yt + 1 * 15.99f) / 256.0f;
+		v0 = (yt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		v1 = (yt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 
 	float x0 = x + tt->xx0;
@@ -1835,12 +1836,12 @@ void TileRenderer::renderNorth( Tile* tt, float x, float y, float z, int tex )
 	Tesselator& t = Tesselator::instance;
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
-	float u0 = (xt + tt->xx0 * 16) / 256.0f;
-	float u1 = (xt + tt->xx1 * 16 - 0.01f) / 256.0f;
-	float v0 = (yt + 16 - tt->yy1 * 16) / 256.0f;
-	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / 256.0f;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
+	float u0 = (xt + tt->xx0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + tt->xx1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt + 16 - tt->yy1 * 16) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 	if (xFlipTexture) {
 		float tmp = u0;
 		u0 = u1;
@@ -1848,12 +1849,12 @@ void TileRenderer::renderNorth( Tile* tt, float x, float y, float z, int tex )
 	}
 
 	if (tt->xx0 < 0 || tt->xx1 > 1) {
-		u0 = (xt + 0 * 15.99f) / 256.0f;
-		u1 = (xt + 1 * 15.99f) / 256.0f;
+		u0 = (xt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		u1 = (xt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 	if (tt->yy0 < 0 || tt->yy1 > 1) {
-		v0 = (yt + 0 * 15.99f) / 256.0f;
-		v1 = (yt + 1 * 15.99f) / 256.0f;
+		v0 = (yt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		v1 = (yt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 
 	float x0 = x + tt->xx0;
@@ -1884,13 +1885,13 @@ void TileRenderer::renderSouth( Tile* tt, float x, float y, float z, int tex )
 	Tesselator& t = Tesselator::instance;
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
 
-	float u0 = (xt + tt->xx0 * 16) / 256.0f;
-	float u1 = (xt + tt->xx1 * 16 - 0.01f) / 256.0f;
-	float v0 = (yt + 16 - tt->yy1 * 16) / 256.0f;
-	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / 256.0f;
+	float u0 = (xt + tt->xx0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + tt->xx1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt + 16 - tt->yy1 * 16) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 	if (xFlipTexture) {
 		float tmp = u0;
 		u0 = u1;
@@ -1898,12 +1899,12 @@ void TileRenderer::renderSouth( Tile* tt, float x, float y, float z, int tex )
 	}
 
 	if (tt->xx0 < 0 || tt->xx1 > 1) {
-		u0 = (xt + 0 * 15.99f) / 256.0f;
-		u1 = (xt + 1 * 15.99f) / 256.0f;
+		u0 = (xt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		u1 = (xt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 	if (tt->yy0 < 0 || tt->yy1 > 1) {
-		v0 = (yt + 0 * 15.99f) / 256.0f;
-		v1 = (yt + 1 * 15.99f) / 256.0f;
+		v0 = (yt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		v1 = (yt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 
 	float x0 = x + tt->xx0;
@@ -1934,13 +1935,13 @@ void TileRenderer::renderWest( Tile* tt, float x, float y, float z, int tex )
 	Tesselator& t = Tesselator::instance;
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
 
-	float u0 = (xt + tt->zz0 * 16) / 256.0f;
-	float u1 = (xt + tt->zz1 * 16 - 0.01f) / 256.0f;
-	float v0 = (yt + 16 - tt->yy1 * 16) / 256.0f;
-	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / 256.0f;
+	float u0 = (xt + tt->zz0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + tt->zz1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt + 16 - tt->yy1 * 16) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 	if (xFlipTexture) {
 		float tmp = u0;
 		u0 = u1;
@@ -1948,12 +1949,12 @@ void TileRenderer::renderWest( Tile* tt, float x, float y, float z, int tex )
 	}
 
 	if (tt->zz0 < 0 || tt->zz1 > 1) {
-		u0 = (xt + 0 * 15.99f) / 256.0f;
-		u1 = (xt + 1 * 15.99f) / 256.0f;
+		u0 = (xt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		u1 = (xt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 	if (tt->yy0 < 0 || tt->yy1 > 1) {
-		v0 = (yt + 0 * 15.99f) / 256.0f;
-		v1 = (yt + 1 * 15.99f) / 256.0f;
+		v0 = (yt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		v1 = (yt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 
 	float x0 = x + tt->xx0;
@@ -1984,13 +1985,13 @@ void TileRenderer::renderEast( Tile* tt, float x, float y, float z, int tex )
 	Tesselator& t = Tesselator::instance;
 
 	if (fixedTexture >= 0) tex = fixedTexture;
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
 
-	float u0 = (xt + tt->zz0 * 16) / 256.0f;
-	float u1 = (xt + tt->zz1 * 16 - 0.01f) / 256.0f;
-	float v0 = (yt + 16 - tt->yy1 * 16) / 256.0f;
-	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / 256.0f;
+	float u0 = (xt + tt->zz0 * 16) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + tt->zz1 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt + 16 - tt->yy1 * 16) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 16 - tt->yy0 * 16 - 0.01f) / TERRAIN_ATLAS_PIXELS;
 	if (xFlipTexture) {
 		float tmp = u0;
 		u0 = u1;
@@ -1998,12 +1999,12 @@ void TileRenderer::renderEast( Tile* tt, float x, float y, float z, int tex )
 	}
 
 	if (tt->zz0 < 0 || tt->zz1 > 1) {
-		u0 = (xt + 0 * 15.99f) / 256.0f;
-		u1 = (xt + 1 * 15.99f) / 256.0f;
+		u0 = (xt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		u1 = (xt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 	if (tt->yy0 < 0 || tt->yy1 > 1) {
-		v0 = (yt + 0 * 15.99f) / 256.0f;
-		v1 = (yt + 1 * 15.99f) / 256.0f;
+		v0 = (yt + 0 * 15.99f) / TERRAIN_ATLAS_PIXELS;
+		v1 = (yt + 1 * 15.99f) / TERRAIN_ATLAS_PIXELS;
 	}
 
 	float x1 = x + tt->xx1;
@@ -2331,22 +2332,22 @@ bool TileRenderer::tesselateThinFenceInWorld(ThinFenceTile* tt, int x, int y, in
 		edgeTex = tt->getEdgeTexture();
 	}
 
-	const int xt = (tex & 0xf) << 4;
-	const int yt = tex & 0xf0;
-	float u0 = (xt) / 256.0f;
-	const float u1 = (xt + 7.99f) / 256.0f;
-	const float u2 = (xt + 15.99f) / 256.0f;
-	const float v0 = (yt) / 256.0f;
-	const float v2 = (yt + 15.99f) / 256.0f;
+	const int xt = texToPixelX(tex);
+	const int yt = texToPixelY(tex);
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	const float u1 = (xt + 7.99f) / TERRAIN_ATLAS_PIXELS;
+	const float u2 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+	const float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	const float v2 = (yt + 15.99f) / TERRAIN_ATLAS_PIXELS;
 
-	const int xet = (edgeTex & 0xf) << 4;
-	const int yet = edgeTex & 0xf0;
+	const int xet = texToPixelX(edgeTex);
+	const int yet = texToPixelY(edgeTex);
 
-	const float iu0 = (xet + 7) / 256.0f;
-	const float iu1 = (xet + 8.99f) / 256.0f;
-	const float iv0 = (yet) / 256.0f;
-	const float iv1 = (yet + 8) / 256.0f;
-	const float iv2 = (yet + 15.99f) / 256.0f;
+	const float iu0 = (xet + 7) / TERRAIN_ATLAS_PIXELS;
+	const float iu1 = (xet + 8.99f) / TERRAIN_ATLAS_PIXELS;
+	const float iv0 = (yet) / TERRAIN_ATLAS_PIXELS;
+	const float iv1 = (yet + 8) / TERRAIN_ATLAS_PIXELS;
+	const float iv2 = (yet + 15.99f) / TERRAIN_ATLAS_PIXELS;
 
 	const float x0 = (float)x;
 	const float x1 = x0 + .5f;
@@ -2753,12 +2754,12 @@ void TileRenderer::tesselateRowTexture( Tile* tt, int data, float x, float y, fl
 	if(fixedTexture >= 0)
 		tex = fixedTexture;
 
-	int xt = (tex & 0xf) << 4;
-	int yt = tex & 0xf0;
-	float u0 = (xt) / 256.0f;
-	float u1 = (xt + 15.99f) / 256.f;
-	float v0 = (yt) / 256.0f;
-	float v1 = (yt + 15.99f) / 256.0f;
+	int xt = texToPixelX(tex);
+	int yt = texToPixelY(tex);
+	float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+	float u1 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+	float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+	float v1 = (yt + 15.99f) / TERRAIN_ATLAS_PIXELS;
 
 	float x0 = x + 0.5f - 0.25f;
 	float x1 = x + 0.5f + 0.25f;

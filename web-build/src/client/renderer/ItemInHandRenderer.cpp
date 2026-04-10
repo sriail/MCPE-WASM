@@ -1,5 +1,6 @@
 #include "ItemInHandRenderer.h"
 
+#include "TerrainAtlas.h"
 #include "gles.h"
 #include "Tesselator.h"
 #include "entity/EntityRenderDispatcher.h"
@@ -131,12 +132,23 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			Tesselator& t = Tesselator::instance;
 			t.beginOverride();
 			t.color(0xff, 0xff, 0xff);
-			const int up = itemIcon & 15;
-			const int vp = itemIcon >> 4;
-			float u1 = (up * 16 + 0.00f) / 256.0f;
-			float u0 = (up * 16 + 15.99f) / 256.0f;
-			float v0 = (vp * 16 + 0.00f) / 256.0f;
-			float v1 = (vp * 16 + 15.99f) / 256.0f;
+			float u1, u0, v0, v1;
+			float halfPixel;
+			if (item->id < 256) {
+				u1 = (texToPixelX(itemIcon) + 0.00f) / TERRAIN_ATLAS_PIXELS;
+				u0 = (texToPixelX(itemIcon) + 15.99f) / TERRAIN_ATLAS_PIXELS;
+				v0 = (texToPixelY(itemIcon) + 0.00f) / TERRAIN_ATLAS_PIXELS;
+				v1 = (texToPixelY(itemIcon) + 15.99f) / TERRAIN_ATLAS_PIXELS;
+				halfPixel = 0.5f / TERRAIN_ATLAS_PIXELS;
+			} else {
+				const int up = itemIcon & 15;
+				const int vp = itemIcon >> 4;
+				u1 = (up * 16 + 0.00f) / 256.0f;
+				u0 = (up * 16 + 15.99f) / 256.0f;
+				v0 = (vp * 16 + 0.00f) / 256.0f;
+				v1 = (vp * 16 + 15.99f) / 256.0f;
+				halfPixel = 0.5f / 256.0f;
+			}
 
 			float r = 1.0f;
 //			float xo = 0.0f;
@@ -165,7 +177,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float uu = u0 + (u1 - u0) * p - 0.5f / 256.0f;
+				float uu = u0 + (u1 - u0) * p - halfPixel;
 				float xx = r * p;
 				t.vertexUV(xx, 0, 0 - dd, uu, v1);
 				t.vertexUV(xx, 0, 0, uu, v1);
@@ -174,7 +186,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			}
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float uu = u0 + (u1 - u0) * p - 0.5f / 256.0f;
+				float uu = u0 + (u1 - u0) * p - halfPixel;
 				float xx = r * p + 1 / 16.0f;
 				t.vertexUV(xx, 1, 0 - dd, uu, v0);
 				t.vertexUV(xx, 1, 0, uu, v0);
@@ -183,7 +195,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			}
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float vv = v1 + (v0 - v1) * p - 0.5f / 256.0f;
+				float vv = v1 + (v0 - v1) * p - halfPixel;
 				float yy = r * p + 1 / 16.0f;
 				t.vertexUV(0, yy, 0, u0, vv);
 				t.vertexUV(r, yy, 0, u1, vv);
@@ -192,7 +204,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			}
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float vv = v1 + (v0 - v1) * p - 0.5f / 256.0f;
+				float vv = v1 + (v0 - v1) * p - halfPixel;
 				float yy = r * p;
 				t.vertexUV(r, yy, 0, u1, vv);
 				t.vertexUV(0, yy, 0, u0, vv);
@@ -428,11 +440,11 @@ void ItemInHandRenderer::renderTex( float a, int tex )
 	float y1 = +1;
 	float z0 = -0.5f;
 
-	float r = 2 / 256.0f;
-	float u0 = (tex % 16) / 256.0f - r;
-	float u1 = (tex % 16 + 15.99f) / 256.0f + r;
-	float v0 = (tex / 16) / 256.0f - r;
-	float v1 = (tex / 16 + 15.99f) / 256.0f + r;
+	float r = 2 / TERRAIN_ATLAS_PIXELS;
+	float u0 = texToPixelX(tex) / TERRAIN_ATLAS_PIXELS - r;
+	float u1 = (texToPixelX(tex) + 15.99f) / TERRAIN_ATLAS_PIXELS + r;
+	float v0 = texToPixelY(tex) / TERRAIN_ATLAS_PIXELS - r;
+	float v1 = (texToPixelY(tex) + 15.99f) / TERRAIN_ATLAS_PIXELS + r;
 
 	t.begin();
 	t.vertexUV(x0, y0, z0, u1, v1);
@@ -492,13 +504,13 @@ void ItemInHandRenderer::renderFire( float a )
 	for (int i = 0; i < 2; i++) {
 		glPushMatrix2();
 		int tex = ((Tile*)Tile::fire)->tex + i * 16;
-		int xt = (tex & 0xf) << 4;
-		int yt = tex & 0xf0;
+		int xt = texToPixelX(tex);
+		int yt = texToPixelY(tex);
 
-		float u0 = (xt) / 256.0f;
-		float u1 = (xt + 15.99f) / 256.0f;
-		float v0 = (yt) / 256.0f;
-		float v1 = (yt + 15.99f) / 256.0f;
+		float u0 = (xt) / TERRAIN_ATLAS_PIXELS;
+		float u1 = (xt + 15.99f) / TERRAIN_ATLAS_PIXELS;
+		float v0 = (yt) / TERRAIN_ATLAS_PIXELS;
+		float v1 = (yt + 15.99f) / TERRAIN_ATLAS_PIXELS;
 
 		float x0 = (0 - size) / 2;
 		float x1 = x0 + size;
