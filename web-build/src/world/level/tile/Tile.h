@@ -229,6 +229,84 @@ public:
 	static Tile* quartzBlock;
 	static Tile* stairs_quartz;
 
+	// Stone variants (ID 19)
+	static Tile* stoneVariant;
+
+	// Wood planks (ID 5 is already 'wood' - we'll change to WoodPlanks)
+	// Wood variant blocks
+	static Tile* fence_spruce;
+	static Tile* fence_birch;
+	static Tile* fence_jungle;
+	static Tile* fenceGate_spruce;
+	static Tile* fenceGate_birch;
+	static Tile* fenceGate_jungle;
+	static Tile* stairs_spruce;
+	static Tile* stairs_birch;
+	static Tile* stairs_jungle;
+	static Tile* door_spruce;
+	static Tile* door_birch;
+	static Tile* door_jungle;
+	static Tile* trapdoor_spruce;
+	static Tile* trapdoor_birch;
+	static Tile* trapdoor_jungle;
+	static Tile* sign_spruce;
+	static Tile* wallSign_spruce;
+	static Tile* sign_birch;
+	static Tile* wallSign_birch;
+	static Tile* sign_jungle;
+	static Tile* wallSign_jungle;
+
+	// Stone variant stairs/slabs/walls
+	static Tile* stairs_granite;
+	static Tile* stairs_polishedGranite;
+	static Tile* stairs_diorite;
+	static Tile* stairs_polishedDiorite;
+	static Tile* stairs_andesite;
+	static Tile* stairs_polishedAndesite;
+	static Tile* wall_granite;
+	static Tile* wall_diorite;
+	static Tile* wall_andesite;
+	static Tile* wall_sandstone;
+	static Tile* wall_netherBrick;
+
+	// Sandstone variants
+	static Tile* stairs_smoothSandstone;
+
+	// Jungle
+	static Tile* jungleLog;
+	static LeafTile* jungleLeaves;
+	static Tile* jungleSapling;
+
+	// Redstone & mechanisms
+	static Tile* redstoneLamp;
+	static Tile* redstoneLamp_lit;
+	static Tile* redstoneBlock;
+	static Tile* piston;
+	static Tile* stickyPiston;
+	static Tile* comparator_off;
+	static Tile* comparator_on;
+
+	// Ores and mineral blocks
+	static Tile* greenEmeraldOre;
+	static Tile* greenEmeraldBlock;
+
+	// Nether
+	static Tile* netherBrickFence;
+	static Tile* hellSand;
+	static Tile* netherQuartzOre;
+
+	// Misc blocks
+	static Tile* smoothStone;
+	static Tile* hayBale;
+	static Tile* slimeBlock;
+	static Tile* coalBlock;
+	static Tile* glassPaneTile;
+	static Tile* cocoa;
+
+	// Second slab pair
+	static Tile* stoneSlab2;
+	static Tile* stoneSlabHalf2;
+
 	// invisible bedrock is used to block off empty chunks (i.e. prevent player movement)
 	static Tile* invisible_bedrock;
 	static Tile* info_updateGame1;

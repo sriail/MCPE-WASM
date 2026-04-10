@@ -59,4 +59,14 @@
 #include "WebTile.h"
 #include "WorkbenchTile.h"
 
+#include "StoneVariantTile.h"
+#include "WoodPlanks.h"
+#include "WallTile.h"
+#include "RedstoneLampTile.h"
+#include "PistonTile.h"
+#include "HayBaleTile.h"
+#include "SlimeBlockTile.h"
+#include "CocoaTile.h"
+#include "SoulSandTile.h"
+
 #endif /* TILE_INCLUDE_H__ */
