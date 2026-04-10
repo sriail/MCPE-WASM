@@ -229,6 +229,34 @@ public:
 	static Tile* quartzBlock;
 	static Tile* stairs_quartz;
 
+	// New blocks
+	static Tile* stoneVariant;       // granite, diorite, andesite and polished variants (ID 19)
+	static Tile* woodPlanks;         // wood planks with variants (oak/spruce/birch data values)
+	static Tile* hayBlock;           // hay bale (ID 170)
+	static Tile* redstoneBlock;      // block of redstone (ID 152)
+
+	// Wood variant stairs
+	static Tile* stairs_spruce;      // spruce stairs (ID 134)
+	static Tile* stairs_birch;       // birch stairs (ID 135)
+
+	// Wood variant fences & gates
+	static Tile* fence_spruce;       // (ID 188)
+	static Tile* fence_birch;        // (ID 189)
+	static Tile* fenceGate_spruce;   // (ID 183)
+	static Tile* fenceGate_birch;    // (ID 184)
+
+	// Stone variant stairs
+	static Tile* stairs_granite;     // (ID 129)
+	static Tile* stairs_diorite;     // (ID 130)
+	static Tile* stairs_andesite;    // (ID 131)
+	static Tile* stairs_polGranite;  // (ID 132)
+	static Tile* stairs_polDiorite;  // (ID 133)
+	static Tile* stairs_polAndesite; // (ID 136)
+
+	// Actual emerald (green) ore and block
+	static Tile* greenEmeraldOre;    // (ID 129 was already used, use 137)
+	static Tile* greenEmeraldBlock;  // (ID 138)
+
 	// invisible bedrock is used to block off empty chunks (i.e. prevent player movement)
 	static Tile* invisible_bedrock;
 	static Tile* info_updateGame1;

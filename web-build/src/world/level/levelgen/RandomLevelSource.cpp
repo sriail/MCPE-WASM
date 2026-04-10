@@ -1,6 +1,7 @@
 #include "RandomLevelSource.h"
 
 #include "feature/FeatureInclude.h"
+#include "feature/OreFeatureWithData.h"
 #include "../Level.h"
 #include "../ChunkPos.h"
 #include "../MobSpawner.h"
@@ -10,6 +11,7 @@
 #include "../material/Material.h"
 #include "../tile/Tile.h"
 #include "../tile/HeavyTile.h"
+#include "../tile/StoneVariantTile.h"
 #include "../../../util/Random.h"
 
 const float RandomLevelSource::SNOW_CUTOFF = 0.5f;
@@ -287,6 +289,33 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 		feature.place(level, &random, x, y, z);
     }
 
+    // Granite generation (underground clusters)
+    for (int i = 0; i < 10; i++) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(80);
+        int z = zo + random.nextInt(16);
+        OreFeatureWithData feature(Tile::stoneVariant->id, StoneVariantTile::DATA_GRANITE, 32);
+		feature.place(level, &random, x, y, z);
+    }
+
+    // Diorite generation (underground clusters)
+    for (int i = 0; i < 10; i++) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(80);
+        int z = zo + random.nextInt(16);
+        OreFeatureWithData feature(Tile::stoneVariant->id, StoneVariantTile::DATA_DIORITE, 32);
+		feature.place(level, &random, x, y, z);
+    }
+
+    // Andesite generation (underground clusters)
+    for (int i = 0; i < 10; i++) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(80);
+        int z = zo + random.nextInt(16);
+        OreFeatureWithData feature(Tile::stoneVariant->id, StoneVariantTile::DATA_ANDESITE, 32);
+		feature.place(level, &random, x, y, z);
+    }
+
     for (int i = 0; i < 20; i++) {
         int x = xo + random.nextInt(16);
         int y = random.nextInt(128);
@@ -333,6 +362,15 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
         int y = random.nextInt(16) + random.nextInt(16);
         int z = zo + random.nextInt(16);
         OreFeature feature(Tile::lapisOre->id, 6);
+		feature.place(level, &random, x, y, z);
+    }
+
+    // Green emerald ore (rare, found below y=32)
+    if (random.nextInt(3) == 0) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(28) + 4;
+        int z = zo + random.nextInt(16);
+        OreFeature feature(Tile::greenEmeraldOre->id, 3);
 		feature.place(level, &random, x, y, z);
     }
 

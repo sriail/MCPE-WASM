@@ -53,6 +53,7 @@ protected:
 	Biome* setLeafColor(int leafColor);
 	Biome* setColor(int color);
 	Biome* setSnowCovered();
+	Biome* setTemperatureAndDownfall(float temp, float dfall);
 	Biome* clearMobs(bool friendlies = true, bool waterFriendlies = true, bool enemies = true);
 
 	MobList _enemies;
@@ -83,11 +84,20 @@ public:
 	virtual MobList& getMobs(const MobCategory& category);
 	virtual float getCreatureProbability();
 
+	// Temperature system
+	virtual bool hasSnow() { return temperature < 0.15f; }
+	virtual bool hasRain() { return downfall > 0.0f; }
+	virtual bool isHumid() { return downfall > 0.85f; }
+	virtual float getTemperature() { return temperature; }
+	virtual float getDownfall() { return downfall; }
+
 	std::string name;
 	int color;
 	char topMaterial;
 	char material;
 	int leafColor;
+	float temperature;
+	float downfall;
 private:
 	static Biome* map[64*64];
 };
