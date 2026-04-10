@@ -253,6 +253,10 @@ public:
 	static Tile* stairs_polDiorite;  // (ID 133)
 	static Tile* stairs_polAndesite; // (ID 136)
 
+	// Actual emerald (green) ore and block
+	static Tile* greenEmeraldOre;    // (ID 129 was already used, use 137)
+	static Tile* greenEmeraldBlock;  // (ID 138)
+
 	// invisible bedrock is used to block off empty chunks (i.e. prevent player movement)
 	static Tile* invisible_bedrock;
 	static Tile* info_updateGame1;

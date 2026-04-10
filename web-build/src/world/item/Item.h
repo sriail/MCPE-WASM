@@ -200,6 +200,7 @@ public:
 
 	static Item* netherbrick;
 	static Item* netherQuartz;
+	static Item* greenEmerald; // actual green emerald gem
 
     static Item* record_01;
     static Item* record_02;

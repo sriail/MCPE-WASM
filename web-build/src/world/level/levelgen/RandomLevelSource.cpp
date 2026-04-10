@@ -365,6 +365,15 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 		feature.place(level, &random, x, y, z);
     }
 
+    // Green emerald ore (rare, found below y=32)
+    if (random.nextInt(3) == 0) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(28) + 4;
+        int z = zo + random.nextInt(16);
+        OreFeature feature(Tile::greenEmeraldOre->id, 3);
+		feature.place(level, &random, x, y, z);
+    }
+
     const float ss = 0.5f;
     int oFor = (int) ((forestNoise.getValue(xo * ss, zo * ss) / 8 + random.nextFloat() * 4 + 4) / 3);
     int forests = 0;//1; (java: 0)

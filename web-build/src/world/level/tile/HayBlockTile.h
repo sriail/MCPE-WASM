@@ -17,7 +17,7 @@ public:
 	static const int TEX_TOP  = 15 + 8 * 16; // 143
 
 	HayBlockTile(int id)
-	:	super(id, TEX_SIDE, Material::grass)
+	:	super(id, TEX_SIDE, Material::vegetable)
 	{
 	}
 

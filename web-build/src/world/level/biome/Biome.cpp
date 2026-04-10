@@ -30,7 +30,9 @@ Biome* Biome::map[64*64];
 Biome::Biome()
 :	topMaterial(((Tile*)Tile::grass)->id),
 	material(((Tile*)Tile::dirt)->id),
-	leafColor(0x4EE031)
+	leafColor(0x4EE031),
+	temperature(0.5f),
+	downfall(0.5f)
 {
     _friendlies.insert(_friendlies.end(), MobSpawnerData(MobTypes::Sheep, 12, 2, 3));
     _friendlies.insert(_friendlies.end(), MobSpawnerData(MobTypes::Pig, 10, 1, 3));
@@ -84,6 +86,13 @@ Biome* Biome::setSnowCovered()
 	return this;
 }
 
+Biome* Biome::setTemperatureAndDownfall(float temp, float dfall)
+{
+	temperature = temp;
+	downfall = dfall;
+	return this;
+}
+
 Biome* Biome::clearMobs( bool friendlies /*= true*/, bool waterFriendlies /*= true*/, bool enemies /*= true*/ )
 {
 	if (friendlies) _friendlies.clear();
@@ -108,17 +117,17 @@ void Biome::recalc()
 
 /*static*/
 void Biome::initBiomes() {
-	rainForest		= (new RainforestBiome())->setColor(0x08FA36)->setName("Rainforest")->setLeafColor(0x1FF458);
-	swampland		= (new SwampBiome())->setColor(0x07F9B2)->setName("Swampland")->setLeafColor(0x8BAF48);
-	seasonalForest	= (new Biome())->setColor(0x9BE023)->setName("Seasonal Forest");
-	forest			= (new ForestBiome())->setColor(0x056621)->setName("Forest")->setLeafColor(0x4EBA31);
-	savanna			= (new FlatBiome())->setColor(0xD9E023)->setName("Savanna");
-	shrubland		= (new Biome())->setColor(0xA1AD20)->setName("Shrubland");
-	taiga			= (new TaigaBiome())->setColor(0x2EB153)->setName("Taiga")->setSnowCovered()->setLeafColor(0x7BB731);
-	desert			= (new FlatBiome())->setColor(0xFA9418)->clearMobs(true, true, false)->setName("Desert");
-	plains			= (new FlatBiome())->setColor(0xFFD910)->setName("Plains");
-	iceDesert		= (new FlatBiome())->setColor(0xFFED93)->clearMobs(true, false, false)->setName("Ice Desert")->setSnowCovered()->setLeafColor(0xC4D339);
-	tundra			= (new Biome())->setColor(0x57EBF9)->setName("Tundra")->setSnowCovered()->setLeafColor(0xC4D339);
+	rainForest		= (new RainforestBiome())->setColor(0x08FA36)->setName("Rainforest")->setLeafColor(0x1FF458)->setTemperatureAndDownfall(0.95f, 0.9f);
+	swampland		= (new SwampBiome())->setColor(0x07F9B2)->setName("Swampland")->setLeafColor(0x8BAF48)->setTemperatureAndDownfall(0.8f, 0.9f);
+	seasonalForest	= (new Biome())->setColor(0x9BE023)->setName("Seasonal Forest")->setTemperatureAndDownfall(0.7f, 0.8f);
+	forest			= (new ForestBiome())->setColor(0x056621)->setName("Forest")->setLeafColor(0x4EBA31)->setTemperatureAndDownfall(0.7f, 0.8f);
+	savanna			= (new FlatBiome())->setColor(0xD9E023)->setName("Savanna")->setTemperatureAndDownfall(1.2f, 0.0f);
+	shrubland		= (new Biome())->setColor(0xA1AD20)->setName("Shrubland")->setTemperatureAndDownfall(0.7f, 0.4f);
+	taiga			= (new TaigaBiome())->setColor(0x2EB153)->setName("Taiga")->setSnowCovered()->setLeafColor(0x7BB731)->setTemperatureAndDownfall(0.05f, 0.8f);
+	desert			= (new FlatBiome())->setColor(0xFA9418)->clearMobs(true, true, false)->setName("Desert")->setTemperatureAndDownfall(2.0f, 0.0f);
+	plains			= (new FlatBiome())->setColor(0xFFD910)->setName("Plains")->setTemperatureAndDownfall(0.8f, 0.4f);
+	iceDesert		= (new FlatBiome())->setColor(0xFFED93)->clearMobs(true, false, false)->setName("Ice Desert")->setSnowCovered()->setLeafColor(0xC4D339)->setTemperatureAndDownfall(0.0f, 0.5f);
+	tundra			= (new Biome())->setColor(0x57EBF9)->setName("Tundra")->setSnowCovered()->setLeafColor(0xC4D339)->setTemperatureAndDownfall(0.0f, 0.5f);
 	
 	recalc();
 }

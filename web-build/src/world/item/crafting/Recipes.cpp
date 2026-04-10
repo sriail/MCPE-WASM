@@ -685,6 +685,20 @@ Recipes::Recipes()
 
 		definition('#', Tile::hayBlock));
 
+	// Green emerald block
+	addShapedRecipe(ItemInstance(Tile::greenEmeraldBlock, 1), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::greenEmerald));
+
+	// Green emerald from block
+	addShapedRecipe(ItemInstance(Item::greenEmerald, 9), //
+		"#", //
+
+		definition('#', Tile::greenEmeraldBlock));
+
 	LOGI("%d recipes\n", (int)recipes.size());
 }
 

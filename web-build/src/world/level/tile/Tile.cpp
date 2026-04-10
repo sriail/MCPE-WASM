@@ -190,6 +190,8 @@ Tile* Tile::stairs_andesite    = NULL;
 Tile* Tile::stairs_polGranite  = NULL;
 Tile* Tile::stairs_polDiorite  = NULL;
 Tile* Tile::stairs_polAndesite = NULL;
+Tile* Tile::greenEmeraldOre = NULL;
+Tile* Tile::greenEmeraldBlock = NULL;
 
 /*static*/
 void Tile::initTiles() {
@@ -311,6 +313,10 @@ void Tile::initTiles() {
 
 	// Hay bale
 	hayBlock = (new HayBlockTile(170))->init()->setDestroyTime(0.5f)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("hayBlock");
+
+	// Real emerald (green) ore and block
+	greenEmeraldOre = (new OreTile(137, 13 + 10 * 16))->init()->setDestroyTime(3.0f)->setExplodeable(5)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Decorations)->setDescriptionId("oreEmerald");
+	greenEmeraldBlock = (new MetalTile(138, 5 + 11 * 16))->init()->setDestroyTime(5.0f)->setExplodeable(10)->setSoundType(SOUND_METAL)->setCategory(ItemCategory::Decorations)->setDescriptionId("blockEmerald");
 
 	// Wood variant fences
 	fence_spruce = (new FenceTile(188, 3 + 8 * 16))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("spruceFence");
