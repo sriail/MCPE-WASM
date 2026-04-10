@@ -30,7 +30,7 @@ public:
 	bool isCubeShaped() { return false; }
 
 	int getRenderShape() {
-		return Tile::SHAPE_LEVER;
+		return Tile::SHAPE_TORCH; // Render like a torch for now
 	}
 
 	AABB* getAABB(Level* level, int x, int y, int z) {

@@ -36,7 +36,7 @@ public:
 	bool isCubeShaped() { return false; }
 
 	int getRenderShape() {
-		return Tile::SHAPE_DIODE;
+		return Tile::SHAPE_BLOCK; // Flat slab-like render for now
 	}
 
 	bool mayPlace(Level* level, int x, int y, int z) {
