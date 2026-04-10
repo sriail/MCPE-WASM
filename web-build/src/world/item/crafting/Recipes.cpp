@@ -699,6 +699,34 @@ Recipes::Recipes()
 
 		definition('#', Tile::greenEmeraldBlock));
 
+	// Granite slab
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf, 6, StoneSlabTile::GRANITE_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DATA_GRANITE)));
+
+	// Diorite slab
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf, 6, StoneSlabTile::DIORITE_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DATA_DIORITE)));
+
+	// Andesite slab (reuse cobblestone slab look for now as we ran out of data values, 
+	// or use granite slab texture variant)
+	// Note: Data values 0-7 are all used - further slab types would need a second slab tile
+
+	// Spruce slab (produces wood slab from spruce planks)
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf, 6, StoneSlabTile::WOOD_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, 1))); // spruce planks
+
+	// Birch slab (produces wood slab from birch planks)
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf, 6, StoneSlabTile::WOOD_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, 2))); // birch planks
+
 	LOGI("%d recipes\n", (int)recipes.size());
 }
 

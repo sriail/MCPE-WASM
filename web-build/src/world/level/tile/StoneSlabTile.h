@@ -18,6 +18,8 @@ public:
     static const int COBBLESTONE_SLAB = 3;
 	static const int BRICK_SLAB = 4;
 	static const int SMOOTHBRICK_SLAB = 5;
+	static const int GRANITE_SLAB = 6;
+	static const int DIORITE_SLAB = 7;
 
 	static const int TYPE_MASK = 7;
 	static const int TOP_SLOT_BIT = 8;
