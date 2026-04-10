@@ -22,6 +22,19 @@
 #include "../../world/level/tile/LeafTile.h"
 #include "entity/HumanoidMobRenderer.h"
 
+static const float TERRAIN_TEX_SIZE = 272.0f;
+
+static inline void texToPixel(int tex, int& xt, int& yt) {
+	if (tex >= 256) {
+		int ext = tex - 256;
+		xt = (ext % 17) * 16;
+		yt = (ext / 17) * 16;
+	} else {
+		xt = ((tex & 0xf) << 4);
+		yt = tex & 0xf0;
+	}
+}
+
 //static StopwatchHandler handler;
 
 ItemInHandRenderer::ItemInHandRenderer( Minecraft* mc )
@@ -131,12 +144,20 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			Tesselator& t = Tesselator::instance;
 			t.beginOverride();
 			t.color(0xff, 0xff, 0xff);
-			const int up = itemIcon & 15;
-			const int vp = itemIcon >> 4;
-			float u1 = (up * 16 + 0.00f) / 256.0f;
-			float u0 = (up * 16 + 15.99f) / 256.0f;
-			float v0 = (vp * 16 + 0.00f) / 256.0f;
-			float v1 = (vp * 16 + 15.99f) / 256.0f;
+			int xt, yt;
+			float texSize;
+			if (item->id < 256) {
+				texToPixel(itemIcon, xt, yt);
+				texSize = TERRAIN_TEX_SIZE;
+			} else {
+				xt = (itemIcon & 0xf) << 4;
+				yt = itemIcon & 0xf0;
+				texSize = 256.0f;
+			}
+			float u1 = (xt + 0.00f) / texSize;
+			float u0 = (xt + 15.99f) / texSize;
+			float v0 = (yt + 0.00f) / texSize;
+			float v1 = (yt + 15.99f) / texSize;
 
 			float r = 1.0f;
 //			float xo = 0.0f;
@@ -165,7 +186,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float uu = u0 + (u1 - u0) * p - 0.5f / 256.0f;
+				float uu = u0 + (u1 - u0) * p - 0.5f / texSize;
 				float xx = r * p;
 				t.vertexUV(xx, 0, 0 - dd, uu, v1);
 				t.vertexUV(xx, 0, 0, uu, v1);
@@ -174,7 +195,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			}
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float uu = u0 + (u1 - u0) * p - 0.5f / 256.0f;
+				float uu = u0 + (u1 - u0) * p - 0.5f / texSize;
 				float xx = r * p + 1 / 16.0f;
 				t.vertexUV(xx, 1, 0 - dd, uu, v0);
 				t.vertexUV(xx, 1, 0, uu, v0);
@@ -183,7 +204,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			}
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float vv = v1 + (v0 - v1) * p - 0.5f / 256.0f;
+				float vv = v1 + (v0 - v1) * p - 0.5f / texSize;
 				float yy = r * p + 1 / 16.0f;
 				t.vertexUV(0, yy, 0, u0, vv);
 				t.vertexUV(r, yy, 0, u1, vv);
@@ -192,7 +213,7 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 			}
 			for (int i = 0; i < 16; i++) {
 				float p = i / 16.0f;
-				float vv = v1 + (v0 - v1) * p - 0.5f / 256.0f;
+				float vv = v1 + (v0 - v1) * p - 0.5f / texSize;
 				float yy = r * p;
 				t.vertexUV(r, yy, 0, u1, vv);
 				t.vertexUV(0, yy, 0, u0, vv);
@@ -428,11 +449,13 @@ void ItemInHandRenderer::renderTex( float a, int tex )
 	float y1 = +1;
 	float z0 = -0.5f;
 
-	float r = 2 / 256.0f;
-	float u0 = (tex % 16) / 256.0f - r;
-	float u1 = (tex % 16 + 15.99f) / 256.0f + r;
-	float v0 = (tex / 16) / 256.0f - r;
-	float v1 = (tex / 16 + 15.99f) / 256.0f + r;
+	int xt, yt;
+	texToPixel(tex, xt, yt);
+	float r = 2 / TERRAIN_TEX_SIZE;
+	float u0 = (xt) / TERRAIN_TEX_SIZE - r;
+	float u1 = (xt + 15.99f) / TERRAIN_TEX_SIZE + r;
+	float v0 = (yt) / TERRAIN_TEX_SIZE - r;
+	float v1 = (yt + 15.99f) / TERRAIN_TEX_SIZE + r;
 
 	t.begin();
 	t.vertexUV(x0, y0, z0, u1, v1);
@@ -492,13 +515,13 @@ void ItemInHandRenderer::renderFire( float a )
 	for (int i = 0; i < 2; i++) {
 		glPushMatrix2();
 		int tex = ((Tile*)Tile::fire)->tex + i * 16;
-		int xt = (tex & 0xf) << 4;
-		int yt = tex & 0xf0;
+		int xt, yt;
+		texToPixel(tex, xt, yt);
 
-		float u0 = (xt) / 256.0f;
-		float u1 = (xt + 15.99f) / 256.0f;
-		float v0 = (yt) / 256.0f;
-		float v1 = (yt + 15.99f) / 256.0f;
+		float u0 = (xt) / TERRAIN_TEX_SIZE;
+		float u1 = (xt + 15.99f) / TERRAIN_TEX_SIZE;
+		float v0 = (yt) / TERRAIN_TEX_SIZE;
+		float v1 = (yt + 15.99f) / TERRAIN_TEX_SIZE;
 
 		float x0 = (0 - size) / 2;
 		float x1 = x0 + size;
