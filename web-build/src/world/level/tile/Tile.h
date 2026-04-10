@@ -235,6 +235,88 @@ public:
 	static Tile* info_updateGame2;
 	static Tile* info_reserved6;
 
+	static Tile* stoneVariant;
+	static Tile* woodSlab;
+	static Tile* woodSlabHalf;
+	static Tile* redstoneLamp;
+	static Tile* redstoneLamp_lit;
+	static Tile* redstoneBlock;
+	static Tile* comparator_off;
+	static Tile* comparator_on;
+	static Tile* pistonBase;
+	static Tile* pistonSticky;
+	static Tile* coalBlock;
+	static Tile* slimeBlock;
+	static Tile* hayBale;
+	static Tile* soulSand;
+	static Tile* smoothStone;
+	static Tile* smoothStoneSlab;
+	static Tile* smoothStoneSlabHalf;
+	static Tile* cocoaBlock;
+	static Tile* greenEmeraldOre;
+	static Tile* greenEmeraldBlock;
+	static Tile* netherQuartzOre;
+
+	// Wood variant stairs
+	static Tile* stairs_spruce;
+	static Tile* stairs_birch;
+	static Tile* stairs_jungle;
+
+	// Wood variant fences
+	static Tile* fence_spruce;
+	static Tile* fence_birch;
+	static Tile* fence_jungle;
+
+	// Wood variant fence gates
+	static Tile* fenceGate_spruce;
+	static Tile* fenceGate_birch;
+	static Tile* fenceGate_jungle;
+
+	// Wood variant doors
+	static Tile* door_spruce;
+	static Tile* door_birch;
+	static Tile* door_jungle;
+
+	// Wood variant trapdoors
+	static Tile* trapdoor_spruce;
+	static Tile* trapdoor_birch;
+	static Tile* trapdoor_jungle;
+
+	// Wood variant signs
+	static Tile* sign_spruce;
+	static Tile* wallSign_spruce;
+	static Tile* sign_birch;
+	static Tile* wallSign_birch;
+	static Tile* sign_jungle;
+	static Tile* wallSign_jungle;
+
+	// Stone variant stairs
+	static Tile* stairs_granite;
+	static Tile* stairs_polishedGranite;
+	static Tile* stairs_diorite;
+	static Tile* stairs_polishedDiorite;
+	static Tile* stairs_andesite;
+	static Tile* stairs_polishedAndesite;
+
+	// Sandstone variants
+	static Tile* smoothSandstone;
+	static Tile* stairs_smoothSandstone;
+
+	// Nether brick variants
+	static Tile* netherBrickFence;
+
+	// Walls
+	static Tile* wall_granite;
+	static Tile* wall_diorite;
+	static Tile* wall_andesite;
+	static Tile* wall_sandstone;
+	static Tile* wall_netherBrick;
+
+	// Jungle-specific
+	static Tile* jungleLog;
+	static Tile* jungleLeaves;
+	static Tile* jungleSapling;
+
 	static void initTiles();
 	static void teardownTiles();
 
