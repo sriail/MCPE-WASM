@@ -346,6 +346,101 @@ void Tile::initTiles() {
 	quartzBlock   = (new QuartzBlockTile(155))->init()->setSoundType(SOUND_STONE)->setDestroyTime(0.8f)->setCategory(ItemCategory::Structures)->setDescriptionId("quartzBlock");
 	stairs_quartz = (new StairTile(156, Tile::quartzBlock))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsQuartz");//->sendTileData();
 
+	// --- Stone variants (granite/diorite/andesite) ---
+	stoneVariant = (new StoneVariantTile(19))->init()->setDestroyTime(1.5f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("stoneVariant");
+
+	// --- Redstone components ---
+	redStoneDust = (new Tile(55, texCoord(3,16), Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneDust");
+	redstoneLamp = (new RedStoneLampTile(123, false))->init()->setDestroyTime(0.3f)->setSoundType(SOUND_GLASS)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneLamp");
+	redstoneLamp_lit = (new RedStoneLampTile(124, true))->init()->setDestroyTime(0.3f)->setLightEmission(1.0f)->setSoundType(SOUND_GLASS)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneLamp");
+	redstoneBlock = (new RedStoneBlockTile(152))->init()->setDestroyTime(5.0f)->setExplodeable(10)->setSoundType(SOUND_METAL)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneBlock");
+	diode_off = (new Tile(93, texCoord(5,16), Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
+	diode_on = (new Tile(94, texCoord(6,16), Material::decoration))->init()->setDestroyTime(0.0f)->setLightEmission(9/16.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
+	comparator_off = (new Tile(149, texCoord(7,16), Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
+	comparator_on = (new Tile(150, texCoord(8,16), Material::decoration))->init()->setDestroyTime(0.0f)->setLightEmission(9/16.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
+	pistonBase = (new PistonBaseTile(33, false))->init()->setDestroyTime(0.5f)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("piston");
+	pistonSticky = (new PistonBaseTile(29, true))->init()->setDestroyTime(0.5f)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("pistonSticky");
+
+	// --- Misc blocks ---
+	coalBlock = (new CoalBlockTile(173))->init()->setDestroyTime(5.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("coalBlock");
+	slimeBlock = (new SlimeBlockTile(165))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("slimeBlock");
+	hayBale = (new HayBaleTile(170))->init()->setDestroyTime(0.5f)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("hayBale");
+	smoothStone = (new SmoothStoneTile(174))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("smoothStone");
+	cocoaBlock = (new CocoaTile(127))->init()->setDestroyTime(0.2f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("cocoa");
+
+	// --- Green Emerald (not diamond) ---
+	greenEmeraldOre = (new OreTile(137, texCoord(0,15)))->init()->setDestroyTime(3.0f)->setExplodeable(5)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Decorations)->setDescriptionId("oreEmerald");
+	greenEmeraldBlock = (new MetalTile(138, texCoord(1,15)))->init()->setDestroyTime(5.0f)->setExplodeable(10)->setSoundType(SOUND_METAL)->setCategory(ItemCategory::Decorations)->setDescriptionId("blockEmerald");
+
+	// --- Nether ---
+	netherQuartzOre = (new OreTile(153, texCoord(15,16)))->init()->setDestroyTime(3.0f)->setExplodeable(5)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("oreQuartz");
+	netherBrickFence = (new FenceTile(113, texCoord(0,14)))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("netherBrickFence");
+
+	// --- Jungle-specific blocks ---
+	jungleLog = (new TreeTile(162))->init()->setDestroyTime(2.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("log2");
+	jungleLeaves = (new LeafTile(161, texCoord(4,3)))->init()->setDestroyTime(0.2f)->setLightBlock(1)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("leaves2");
+	jungleSapling = (new Sapling(163, texCoord(14,1)))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("sapling2");
+
+	// --- Wood slab variants ---
+	woodSlab = (new WoodSlabTile(125, true))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("woodSlab");
+	woodSlabHalf = (new WoodSlabTile(126, false))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("woodSlab");
+
+	// --- Smooth stone slabs (StoneSlabTile2) ---
+	smoothStoneSlab = (new StoneSlabTile2(175, true))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("stoneSlab2");
+	smoothStoneSlabHalf = (new StoneSlabTile2(176, false))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("stoneSlab2");
+
+	// --- Wood variant stairs ---
+	stairs_spruce = (new StairTile(134, wood))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsSpruce");
+	stairs_birch = (new StairTile(135, wood))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsBirch");
+	stairs_jungle = (new StairTile(136, wood))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsJungle");
+
+	// --- Wood variant fences ---
+	fence_spruce = (new FenceTile(188, texCoord(16,6)))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("fenceSpruce");
+	fence_birch = (new FenceTile(189, texCoord(16,7)))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("fenceBirch");
+	fence_jungle = (new FenceTile(190, texCoord(16,8)))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("fenceJungle");
+
+	// --- Wood variant fence gates ---
+	fenceGate_spruce = (new FenceGateTile(183, texCoord(16,6)))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("fenceGateSpruce");
+	fenceGate_birch = (new FenceGateTile(184, texCoord(16,7)))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("fenceGateBirch");
+	fenceGate_jungle = (new FenceGateTile(185, texCoord(16,8)))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("fenceGateJungle");
+
+	// --- Wood variant doors ---
+	door_spruce = (new DoorTile(193, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	door_birch = (new DoorTile(194, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	door_jungle = (new DoorTile(195, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
+
+	// --- Wood variant trapdoors ---
+	trapdoor_spruce = (new TrapDoorTile(196, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("trapdoorSpruce");
+	trapdoor_birch = (new TrapDoorTile(197, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("trapdoorBirch");
+	trapdoor_jungle = (new TrapDoorTile(198, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("trapdoorJungle");
+
+	// --- Wood variant signs ---
+	sign_spruce = (new SignTile(199, TileEntityType::Sign, true))->init()->setDestroyTime(1.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Decorations)->setDescriptionId("signSpruce");
+	wallSign_spruce = (new SignTile(200, TileEntityType::Sign, false))->init()->setDestroyTime(1.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Decorations)->setDescriptionId("signSpruce");
+	sign_birch = (new SignTile(201, TileEntityType::Sign, true))->init()->setDestroyTime(1.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Decorations)->setDescriptionId("signBirch");
+	wallSign_birch = (new SignTile(202, TileEntityType::Sign, false))->init()->setDestroyTime(1.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Decorations)->setDescriptionId("signBirch");
+	sign_jungle = (new SignTile(203, TileEntityType::Sign, true))->init()->setDestroyTime(1.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Decorations)->setDescriptionId("signJungle");
+	wallSign_jungle = (new SignTile(204, TileEntityType::Sign, false))->init()->setDestroyTime(1.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Decorations)->setDescriptionId("signJungle");
+
+	// --- Stone variant stairs ---
+	stairs_granite = (new StairTile(205, stoneVariant))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsGranite");
+	stairs_polishedGranite = (new StairTile(206, stoneVariant))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsPolishedGranite");
+	stairs_diorite = (new StairTile(207, stoneVariant))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsDiorite");
+	stairs_polishedDiorite = (new StairTile(208, stoneVariant))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsPolishedDiorite");
+	stairs_andesite = (new StairTile(209, stoneVariant))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsAndesite");
+	stairs_polishedAndesite = (new StairTile(210, stoneVariant))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsPolishedAndesite");
+
+	// --- Sandstone variants ---
+	smoothSandstone = (new Tile(211, texCoord(5,14), Material::stone))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("smoothSandstone");
+	stairs_smoothSandstone = (new StairTile(212, smoothSandstone))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsSmoothSandstone");
+
+	// --- Walls ---
+	wall_granite = (new WallTile(213, texCoord(16,0)))->init()->setDestroyTime(1.5f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallGranite");
+	wall_diorite = (new WallTile(214, texCoord(16,2)))->init()->setDestroyTime(1.5f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallDiorite");
+	wall_andesite = (new WallTile(215, texCoord(16,4)))->init()->setDestroyTime(1.5f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallAndesite");
+	wall_sandstone = (new WallTile(216, texCoord(0,12)))->init()->setDestroyTime(0.8f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallSandstone");
+	wall_netherBrick = (new WallTile(217, texCoord(0,14)))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallNetherBrick");
+
 	//
 	// Special tiles for Pocket Edition is placed at high IDs
 	//
@@ -376,6 +471,13 @@ void Tile::initTiles() {
 	Item::items[sandStone->id] = (new AuxDataTileItem(sandStone->id - 256, sandStone))->setCategory(ItemCategory::Structures)->setDescriptionId("sandStone");
 
 	Item::items[quartzBlock->id] = (new AuxDataTileItem(quartzBlock->id - 256, quartzBlock))->setCategory(ItemCategory::Structures)->setDescriptionId("quartzBlock");
+
+	// Stone variant item (granite/diorite/andesite sub-types)
+	Item::items[stoneVariant->id] = (new AuxDataTileItem(stoneVariant->id - 256, stoneVariant))->setCategory(ItemCategory::Structures)->setDescriptionId("stoneVariant");
+	// Wood planks variant item
+	Item::items[wood->id] = (new AuxDataTileItem(wood->id - 256, wood))->setCategory(ItemCategory::Structures)->setDescriptionId("wood");
+	// Wood slab variant item
+	Item::items[woodSlabHalf->id] = (new AuxDataTileItem(woodSlabHalf->id - 256, woodSlabHalf))->setCategory(ItemCategory::Structures)->setDescriptionId("woodSlab");
 
     for (int i = 0; i < 256; i++) {
         if (Tile::tiles[i] != NULL) {

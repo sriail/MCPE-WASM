@@ -72,5 +72,6 @@
 #include "SmoothStoneTile.h"
 #include "CocoaTile.h"
 #include "PistonBaseTile.h"
+#include "StoneSlabTile2.h"
 
 #endif /* TILE_INCLUDE_H__ */

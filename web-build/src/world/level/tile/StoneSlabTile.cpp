@@ -3,6 +3,7 @@
 #include "../material/Material.h"
 #include "../Level.h"
 #include "../../Facing.h"
+#include "../../client/renderer/TerrainAtlas.h"
 
 const std::string StoneSlabTile::SLAB_NAMES[] = {
 	"stone", "sand", "wood", "cobble", "brick", "smoothStoneBrick"
@@ -60,6 +61,10 @@ int StoneSlabTile::getTexture(int face, int data) {
 		return Tile::redBrick->tex;
 	} else if (data == SMOOTHBRICK_SLAB) {
 		return Tile::stoneBrickSmooth->tex;
+	} else if (data == GRANITE_SLAB) {
+		return texCoord(16, 0); // granite texture
+	} else if (data == DIORITE_SLAB) {
+		return texCoord(16, 2); // diorite texture
 	}
     return 6;
 }
