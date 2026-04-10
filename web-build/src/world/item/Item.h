@@ -206,6 +206,19 @@ public:
 
 	static Item* camera;
 
+	static Item* cookie;
+	static Item* mutton_raw;
+	static Item* mutton_cooked;
+	static Item* enderPearl;
+	static Item* greenEmerald;
+	static Item* sign_spruce;
+	static Item* sign_birch;
+	static Item* sign_jungle;
+	static Item* door_spruce;
+	static Item* door_birch;
+	static Item* door_jungle;
+	static Item* comparator;
+
 	static void initItems();
 	static void teardownItems();
 

@@ -32,5 +32,7 @@
 #include "SeedItem.h"
 #include "HangingEntityItem.h"
 #include "SignItem.h"
+#include "WoodDoorItem.h"
+#include "WoodSignItem.h"
 
 #endif /*NET_MINECRAFT_WORLD_ITEM__ItemInclude_H__*/
