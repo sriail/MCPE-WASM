@@ -64,7 +64,16 @@ public:
     }
 
     bool canSurvive(Level* level, int x, int y, int z) {
-        return true;
+        // Cocoa can only survive when attached to a jungle log
+        int data = level->getData(x, y, z);
+        int dir = getDirection(data);
+        int ax = x, az = z;
+        if (dir == 0) az++;
+        else if (dir == 1) ax--;
+        else if (dir == 2) az--;
+        else if (dir == 3) ax++;
+        int attachedTile = level->getTile(ax, y, az);
+        return attachedTile == Tile::jungleLog->id || attachedTile == Tile::treeTrunk->id;
     }
 
     void spawnResources(Level* level, int x, int y, int z, int data, float odds) {
