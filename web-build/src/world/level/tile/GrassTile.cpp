@@ -1,6 +1,8 @@
 #include "GrassTile.h"
 #include "../material/Material.h"
 #include "../../entity/item/ItemEntity.h"
+#include "../biome/Biome.h"
+#include "../FoliageColor.h"
 
 GrassTile::GrassTile(int id)
 :	super(id, Material::dirt)
@@ -24,11 +26,11 @@ int GrassTile::getTexture( int face, int data ) {
 }
 
 int GrassTile::getColor( LevelSource* level, int x, int y, int z ) {
-	//level.getBiomeSource().getBiomeBlock(x, z, 1, 1);
-	//float temp = level.getBiomeSource().temperatures[0];
-	//float rain = level.getBiomeSource().downfalls[0];
-
-	return 0x339933;//GrassColor.get(temp, rain);
+	Biome* biome = level->getBiome(x, z);
+	if (biome) {
+		return FoliageColor::get(biome->temperature, biome->downfall);
+	}
+	return 0x339933;
 }
 
 void GrassTile::tick( Level* level, int x, int y, int z, Random* random ) {

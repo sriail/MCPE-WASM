@@ -8,7 +8,7 @@
 #include "TouchAreaModel.h"
 #include "../../../../platform/input/Multitouch.h"
 #include "../../../../platform/time.h"
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include "../../../../platform/input/Keyboard.h"
 #endif
 #include "../../../../util/SmoothFloat.h"
@@ -16,7 +16,7 @@
 #include "../../../../world/entity/player/Player.h"
 #include "../../../../world/entity/player/Inventory.h"
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 extern "C" int emscripten_is_pointer_locked();
 #endif
 
@@ -158,7 +158,7 @@ public:
 	// Implementation for the ITurnInput part
 	//
 	TurnDelta getTurnDelta() {
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 		if (emscripten_is_pointer_locked()) {
 			_holder->alpha = 1.0f; // Keep feedback ring hidden/disabled via alpha
 			// Return unconstrained mouse delta directly for 360 rotation
@@ -322,7 +322,7 @@ public:
 	virtual bool tickBuild(Player* player, BuildActionIntention* bai) {
 		_lastPlayer = player;
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         if (emscripten_is_pointer_locked()) {
             if (Mouse::getButtonState(MouseAction::ACTION_LEFT) != 0) {
                 if (state != State_Destroy) {
@@ -451,7 +451,7 @@ class Minecraft;
 	#pragma warning( disable : 4355 ) // 'this' pointer in initialization list which is perfectly legal
 #endif
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 extern "C" int emscripten_is_pointer_locked();
 #endif
 
@@ -480,7 +480,7 @@ public:
 	}
 
 	virtual bool allowPicking() {
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 		// When pointer is locked, force center-screen raycast targeting
 		if (emscripten_is_pointer_locked()) {
 			mousex = (float)_mc->width  / 2.0f;

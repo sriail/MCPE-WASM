@@ -538,7 +538,7 @@ float Gui::cubeSmoothStep(float percentage, float min, float max) {
 	return (percentage) * (percentage) * (3 - 2 * (percentage));
 }
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 extern "C" int emscripten_is_pointer_locked();
 #endif
 
@@ -547,7 +547,7 @@ void Gui::renderProgressIndicator( const bool isTouchInterface, const int screen
 	bool bowEquipped = currentItem != NULL ? currentItem->getItem() == Item::bow : false;
 	bool itemInUse = currentItem != NULL ? currentItem->getItem() == minecraft->player->getUseItem()->getItem() : false;
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 	bool usingKeyboard = emscripten_is_pointer_locked() != 0;
 #else
 	bool usingKeyboard = false;

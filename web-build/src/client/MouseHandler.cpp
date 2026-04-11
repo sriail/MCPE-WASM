@@ -4,7 +4,7 @@
 #ifdef RPI
 #include <SDL/SDL.h>
 #endif
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
 
@@ -31,7 +31,7 @@ void MouseHandler::grab() {
 	//LOGI("Grabbing input!\n");
 	SDL_WM_GrabInput(SDL_GRAB_ON);
 	SDL_ShowCursor(0);
-#elif defined(EMSCRIPTEN)
+#elif defined(__EMSCRIPTEN__)
 	// Request pointer lock when game wants to grab mouse
 	EM_ASM(
 		var canvas = document.getElementById('canvas');
@@ -47,7 +47,7 @@ void MouseHandler::release() {
 	//LOGI("Releasing input!\n");
 	SDL_WM_GrabInput(SDL_GRAB_OFF);
 	SDL_ShowCursor(1);
-#elif defined(EMSCRIPTEN)
+#elif defined(__EMSCRIPTEN__)
 	EM_ASM(
 		if (document.exitPointerLock) {
 			document.exitPointerLock();

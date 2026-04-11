@@ -192,7 +192,7 @@ void IngameBlockSelectionScreen::keyPressed(int eventKey)
 	if (eventKey == o.keyMenuOk.key)
 		selectSlotAndClose();
 
-#if defined(RPI) || defined(EMSCRIPTEN)
+#if defined(RPI) || defined(__EMSCRIPTEN__)
 	if (eventKey == o.keyMenuCancel.key
 		||	eventKey == Keyboard::KEY_ESCAPE
 		||  eventKey == Keyboard::KEY_E)

@@ -170,7 +170,7 @@ void TouchscreenInput_TestFps::onConfigChanged(const Config& c) {
 
 void TouchscreenInput_TestFps::setKey( int key, bool state )
 {
-	#if defined(WIN32) || defined(EMSCRIPTEN)
+	#if defined(WIN32) || defined(__EMSCRIPTEN__)
 		//LOGI("key: %d, %d\n", key, state);
 
 		int id = -1;
@@ -194,7 +194,7 @@ void TouchscreenInput_TestFps::releaseAllKeys()
 
 	for (int i = 0; i<8; ++i)
 		_buttons[i] = false;
-#if defined(WIN32) || defined(EMSCRIPTEN)
+#if defined(WIN32) || defined(__EMSCRIPTEN__)
 	for (int i = 0; i<NumKeys; ++i)
 		_keys[i] = false;
 #endif
@@ -327,7 +327,7 @@ void TouchscreenInput_TestFps::tick( Player* player )
 	}
 	_renderFlightImage = player->abilities.flying;
 
-#if defined(WIN32) || defined(EMSCRIPTEN)
+#if defined(WIN32) || defined(__EMSCRIPTEN__)
 	if (_keys[KEY_UP]) ya++;
 	if (_keys[KEY_DOWN]) ya--;
 	if (_keys[KEY_LEFT]) xa++;

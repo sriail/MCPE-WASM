@@ -9,6 +9,7 @@
 #include "../../item/Item.h"
 #include "../../item/ItemInstance.h"
 #include "../FoliageColor.h"
+#include "../biome/Biome.h"
 
 class Entity;
 
@@ -27,6 +28,7 @@ public:
     static const int NORMAL_LEAF = 0;
     static const int EVERGREEN_LEAF = 1;
     static const int BIRCH_LEAF = 2;
+    static const int JUNGLE_LEAF = 3;
 
 	LeafTile(int id, int tex)
 	:	super(id, tex, Material::leaves, false),
@@ -48,11 +50,33 @@ public:
     int getColor(LevelSource* level, int x, int y, int z) {
 
         int data = (level->getData(x, y, z) & LEAF_TYPE_MASK);
+
+        // Spruce/evergreen leaves: fixed color regardless of biome
         if (data == EVERGREEN_LEAF) {
             return FoliageColor::getEvergreenColor();
         }
+
+        // Birch leaves: fixed color regardless of biome
         if (data == BIRCH_LEAF) {
             return FoliageColor::getBirchColor();
+        }
+
+        // Jungle leaves (data 3): slightly more saturated tropical green
+        if (data == JUNGLE_LEAF) {
+            Biome* biome = level->getBiome(x, z);
+            if (biome) {
+                // Jungle foliage is lush, use a warmer/greener tint
+                float temp = biome->temperature;
+                if (temp < 0.9f) temp = 0.9f; // jungle is always warm
+                return FoliageColor::get(temp, 0.9f);
+            }
+            return 0x30BB0B; // bright jungle green fallback
+        }
+
+        // Oak and default: use biome temperature-based color
+        Biome* biome = level->getBiome(x, z);
+        if (biome) {
+            return FoliageColor::get(biome->temperature, biome->downfall);
         }
 
         return FoliageColor::getDefaultColor();

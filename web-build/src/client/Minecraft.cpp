@@ -304,7 +304,7 @@ void Minecraft::setLevel(Level* level, const std::string& message /* ="" */, Loc
 		}
 		this->level = level;
 		_hasSignaledGeneratingLevelFinished = false;
-#if defined(STANDALONE_SERVER) || defined(EMSCRIPTEN)
+#if defined(STANDALONE_SERVER) || defined(__EMSCRIPTEN__)
 		const bool threadedLevelCreation = false;
 #else
 		const bool threadedLevelCreation = true;
@@ -747,7 +747,7 @@ void Minecraft::tickInput() {
 		if (isPressed) {
 			gui.handleKeyPressed(key);
 
-			#if defined(WIN32) || defined(RPI) || defined(EMSCRIPTEN)
+			#if defined(WIN32) || defined(RPI) || defined(__EMSCRIPTEN__)
 				if (key >= '0' && key <= '9') {
 					int digit = key - '0';
 					int slot = digit - 1;
@@ -771,12 +771,12 @@ void Minecraft::tickInput() {
 					#endif
 				}
 			#endif
-			#if defined(RPI) || defined(EMSCRIPTEN)
+			#if defined(RPI) || defined(__EMSCRIPTEN__)
 				if (key == Keyboard::KEY_E) {
 					screenChooser.setScreen(SCREEN_BLOCKSELECTION);
 				}
 			#endif
-			#if defined(EMSCRIPTEN)
+			#if defined(__EMSCRIPTEN__)
 				// Q - Drop the currently selected item
 				if (key == Keyboard::KEY_Q) {
 					ItemInstance* selected = player->inventory->getSelected();
@@ -917,7 +917,7 @@ void Minecraft::tickInput() {
 				}
 			#endif
 
-			#if defined(EMSCRIPTEN)
+			#if defined(__EMSCRIPTEN__)
 				if (key == Keyboard::KEY_ESCAPE)
 					pauseGame(false);
 			#elif !defined(RPI)
@@ -1267,14 +1267,14 @@ void Minecraft::setSize(int w, int h) {
 	height = h;
 
 	if (width >= 1000) {
-#if defined(__APPLE__) || defined(EMSCRIPTEN)
+#if defined(__APPLE__) || defined(__EMSCRIPTEN__)
             Gui::GuiScale = (width > 2000)? 8.0f : 4.0f;
 #else
             Gui::GuiScale = 4.0f;
 #endif
     }
 	else if (width >= 800) {
-#if defined(__APPLE__) || defined(EMSCRIPTEN)
+#if defined(__APPLE__) || defined(__EMSCRIPTEN__)
         Gui::GuiScale = 4.0f;
 #else
 		Gui::GuiScale = 3.0f;

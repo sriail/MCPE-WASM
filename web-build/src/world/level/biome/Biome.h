@@ -53,6 +53,7 @@ protected:
 	Biome* setLeafColor(int leafColor);
 	Biome* setColor(int color);
 	Biome* setSnowCovered();
+	Biome* setTemperatureAndDownfall(float temp, float down);
 	Biome* clearMobs(bool friendlies = true, bool waterFriendlies = true, bool enemies = true);
 
 	MobList _enemies;
@@ -88,6 +89,8 @@ public:
 	char topMaterial;
 	char material;
 	int leafColor;
+	float temperature;
+	float downfall;
 private:
 	static Biome* map[64*64];
 };

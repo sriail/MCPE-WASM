@@ -29,6 +29,26 @@ public:
         return 0x48b518;
     }
 
+    // Temperature-based foliage color computation
+    // Interpolates from warm green (tropical) to cold brown-green
+    static int get(float temp, float rain) {
+        // Clamp values
+        if (temp < 0.0f) temp = 0.0f;
+        if (temp > 1.0f) temp = 1.0f;
+        if (rain < 0.0f) rain = 0.0f;
+        if (rain > 1.0f) rain = 1.0f;
+        rain *= temp;
+
+        // Warm/wet = bright green, cold/dry = brown-green
+        int r = (int)(30 + 60 * (1.0f - temp) + 30 * (1.0f - rain));
+        int g = (int)(100 + 80 * temp + 40 * rain);
+        int b = (int)(10 + 20 * rain);
+        if (r > 255) r = 255;
+        if (g > 255) g = 255;
+        if (b > 255) b = 255;
+        return (r << 16) | (g << 8) | b;
+    }
+
 private:
     //static int pixels[256*256];
 };

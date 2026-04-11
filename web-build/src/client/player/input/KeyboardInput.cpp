@@ -52,7 +52,7 @@ void KeyboardInput::tick( Player* player )
 		ya *= 0.3f;
 	}
 
-	#if defined(RPI) || defined(EMSCRIPTEN)
+	#if defined(RPI) || defined(__EMSCRIPTEN__)
 		wantUp = jumping;
 		wantDown = sneaking;
 	#endif

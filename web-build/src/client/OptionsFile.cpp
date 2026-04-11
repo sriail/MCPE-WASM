@@ -5,7 +5,7 @@
 OptionsFile::OptionsFile() {
 #ifdef __APPLE__
 	settingsPath = "./Documents/options.txt";
-#elif defined(EMSCRIPTEN)
+#elif defined(__EMSCRIPTEN__)
 	settingsPath = "/games/options.txt";
 #elif defined(ANDROID)
 	settingsPath = "options.txt";
@@ -14,7 +14,7 @@ OptionsFile::OptionsFile() {
 #endif
 }
 
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
 extern "C" void syncSaves();
 #endif
 
@@ -25,7 +25,7 @@ void OptionsFile::save(const StringVector& settings) {
 			fprintf(pFile, "%s\n", it->c_str());
 		}
 		fclose(pFile);
-#ifdef EMSCRIPTEN
+#ifdef __EMSCRIPTEN__
         syncSaves();
 #endif
 	}
