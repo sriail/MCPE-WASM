@@ -36,7 +36,20 @@ public:
         base(base),
 		isClipping(false),
 		clipStep(0),
-		baseData(0) // when needed in the future, set this to necessary texture data
+		baseData(0)
+    {
+        setDestroyTime(base->destroySpeed);
+        setExplodeable(base->explosionResistance / 3);
+        setSoundType(*base->soundType);
+		setLightBlock(255);
+    }
+
+    StairTile(int id, Tile* base, int baseData)
+    :   super(id, base->tex, base->material),
+        base(base),
+		isClipping(false),
+		clipStep(0),
+		baseData(baseData)
     {
         setDestroyTime(base->destroySpeed);
         setExplodeable(base->explosionResistance / 3);

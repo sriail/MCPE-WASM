@@ -11,7 +11,7 @@ void OreRecipes::addRecipes(Recipes* r)
 		std::make_pair(Tile::goldBlock,    ItemInstance(Item::goldIngot, 9)),
 		std::make_pair(Tile::ironBlock,    ItemInstance(Item::ironIngot, 9)),
 		std::make_pair(Tile::emeraldBlock, ItemInstance(Item::emerald, 9)),
-		std::make_pair(Tile::lapisBlock,   ItemInstance(Item::dye_powder, 9, DyePowderItem::BLUE))
+		std::make_pair(Tile::lapisBlock,   ItemInstance(Item::dye_powder, 9, DyePowderItem::BLUE)),
 		std::make_pair(Tile::greenEmeraldBlock, ItemInstance(Item::greenEmerald, 9)),
 		std::make_pair(Tile::coalBlock,        ItemInstance(Item::coal, 9)),
 		std::make_pair(Tile::redstoneBlock,    ItemInstance(Item::redStone, 9))

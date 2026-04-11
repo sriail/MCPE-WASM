@@ -14,7 +14,7 @@ public:
     static const int TEX_SIDE = 218;   // 10 + 13*16
 
     HayBaleTile(int id)
-    :   super(id, TEX_SIDE, Material::grass)
+    :   super(id, TEX_SIDE, Material::plant)
     {
     }
 
