@@ -84,19 +84,27 @@ TextureId Textures::assignTexture( const std::string& resourceName, const Textur
 
 	bind(id);
 
-	if (MIPMAP) {
+	// WebGL 1 requires non-power-of-two textures to use CLAMP_TO_EDGE and no mipmaps
+	bool npot = (img.w & (img.w - 1)) != 0 || (img.h & (img.h - 1)) != 0;
+
+	if (npot) {
+		// NPOT textures cannot use mipmaps in WebGL 1
+		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	} else if (MIPMAP) {
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	} else {
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
-	if (blur) {
+	if (blur && !npot) {
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	}
 
-	if (clamp) {
+	if (clamp || npot) {
+		// NPOT textures must use CLAMP_TO_EDGE in WebGL 1
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri2(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	} else {
