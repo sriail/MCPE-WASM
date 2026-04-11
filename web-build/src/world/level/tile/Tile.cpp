@@ -213,6 +213,8 @@ Tile* Tile::glassPaneTile = NULL;
 Tile* Tile::cocoa = NULL;
 Tile* Tile::stoneSlab2 = NULL;
 Tile* Tile::stoneSlabHalf2 = NULL;
+Tile* Tile::diode_off = NULL;
+Tile* Tile::diode_on = NULL;
 
 /*static*/
 void Tile::initTiles() {
@@ -339,6 +341,12 @@ void Tile::initTiles() {
 
 	// Comparator On (ID 34)
 	comparator_on = (new Tile(34, 531, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
+
+	// Diode/Repeater Off (ID 136)
+	diode_off = (new Tile(136, 131, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
+
+	// Diode/Repeater On (ID 137)
+	diode_on = (new Tile(137, 147, Material::decoration))->init()->setDestroyTime(0.0f)->setLightEmission(0.625f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
 
 	// Green Emerald Ore (ID 36) - not to be confused with 'emeraldOre' which is diamond
 	greenEmeraldOre = (new OreTile(36, 532))->init()->setDestroyTime(3.0f)->setExplodeable(5)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Decorations)->setDescriptionId("oreEmerald");
