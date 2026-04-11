@@ -453,8 +453,8 @@ void Tile::initTiles() {
 	stairs_jungle = (new StairTile(133, wood))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsJungle");
 
 	// Second slab pair (ID 134/135) for new slab types
-	stoneSlab2 = (new StoneSlabTile(134, true))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("stoneSlab2");
-	stoneSlabHalf2 = (new StoneSlabTile(135, false))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("stoneSlab2");
+	stoneSlab2 = (new StoneSlabTile(134, true, 1))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("stoneSlab2");
+	stoneSlabHalf2 = (new StoneSlabTile(135, false, 1))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("stoneSlab2");
 
 	//
 	// Special tiles for Pocket Edition is placed at high IDs
@@ -489,6 +489,7 @@ void Tile::initTiles() {
 
 	Item::items[stoneVariant->id] = (new AuxDataTileItem(stoneVariant->id - 256, stoneVariant))->setCategory(ItemCategory::Structures)->setDescriptionId("stoneVariant");
 	Item::items[wood->id] = (new AuxDataTileItem(wood->id - 256, wood))->setCategory(ItemCategory::Structures)->setDescriptionId("wood");
+	Item::items[stoneSlabHalf2->id] = (new StoneSlabTileItem(stoneSlabHalf2->id - 256))->setCategory(ItemCategory::Structures)->setDescriptionId("stoneSlab2");
 
     for (int i = 0; i < 256; i++) {
         if (Tile::tiles[i] != NULL) {

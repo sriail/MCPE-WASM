@@ -127,7 +127,7 @@ void Enderman::aiStep() {
 	if (teleportCooldown > 0) teleportCooldown--;
 
 	if (!isCreepy) {
-		Player* nearestPlayer = level->getNearestPlayer(this, 64.0);
+		Player* nearestPlayer = level->getNearestPlayer(this, 64.0f);
 		if (nearestPlayer && isLookingAtMe(nearestPlayer)) {
 			stareTimer++;
 			if (stareTimer >= 5) {

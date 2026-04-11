@@ -18,6 +18,17 @@ public:
     static const int COBBLESTONE_SLAB = 3;
 	static const int BRICK_SLAB = 4;
 	static const int SMOOTHBRICK_SLAB = 5;
+	static const int GRANITE_SLAB = 6;
+	static const int DIORITE_SLAB = 7;
+
+	// Slab set 2 types (IDs 134/135)
+	static const int ANDESITE_SLAB2 = 0;
+	static const int SMOOTH_STONE_SLAB2 = 1;
+	static const int POLISHED_GRANITE_SLAB2 = 2;
+	static const int POLISHED_DIORITE_SLAB2 = 3;
+	static const int POLISHED_ANDESITE_SLAB2 = 4;
+	static const int SMOOTH_SANDSTONE_SLAB2 = 5;
+	static const int NETHER_BRICK_SLAB2 = 6;
 
 	static const int TYPE_MASK = 7;
 	static const int TOP_SLOT_BIT = 8;
@@ -26,7 +37,7 @@ public:
     static const std::string SLAB_NAMES[];
 	static const int SLAB_NAMES_COUNT;
 
-    StoneSlabTile(int id, bool fullSize);
+    StoneSlabTile(int id, bool fullSize, int slabSet = 0);
 
 	int getTexture(int face, int data);
     int getTexture(int face);
@@ -51,6 +62,7 @@ protected:
     int getSpawnResourcesAuxValue(int data);
 private:
 	bool fullSize;
+	int slabSet;
 };
 
 #endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__StoneSlabTile_H__*/

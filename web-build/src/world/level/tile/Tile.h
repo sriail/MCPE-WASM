@@ -292,7 +292,6 @@ public:
 
 	// Nether
 	static Tile* netherBrickFence;
-	static Tile* hellSand;
 	static Tile* netherQuartzOre;
 
 	// Misc blocks

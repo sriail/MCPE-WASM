@@ -5,14 +5,15 @@
 #include "../../Facing.h"
 
 const std::string StoneSlabTile::SLAB_NAMES[] = {
-	"stone", "sand", "wood", "cobble", "brick", "smoothStoneBrick"
+	"stone", "sand", "wood", "cobble", "brick", "smoothStoneBrick", "granite", "diorite"
 };
 const int StoneSlabTile::SLAB_NAMES_COUNT = sizeof(SLAB_NAMES) / sizeof(std::string);
 
-StoneSlabTile::StoneSlabTile(int id, bool fullSize)
+StoneSlabTile::StoneSlabTile(int id, bool fullSize, int slabSet)
 :	Tile(id, 6, Material::stone)
 {
     this->fullSize = fullSize;
+    this->slabSet = slabSet;
 
     if (!fullSize) {
         setShape(0, 0, 0, 1, 0.5f, 1);
@@ -45,6 +46,25 @@ void StoneSlabTile::updateDefaultShape()
 
 int StoneSlabTile::getTexture(int face, int data) {
 	data = data & TYPE_MASK;
+
+	if (slabSet == 1) {
+		// Second slab set (IDs 134/135)
+		switch (data) {
+			case ANDESITE_SLAB2:         return 134; // andesite texture
+			case SMOOTH_STONE_SLAB2:     return 6;   // smooth stone (top)
+			case POLISHED_GRANITE_SLAB2: return 131;  // polished granite
+			case POLISHED_DIORITE_SLAB2: return 133;  // polished diorite
+			case POLISHED_ANDESITE_SLAB2: return 135; // polished andesite
+			case SMOOTH_SANDSTONE_SLAB2: {
+				if (face == Facing::DOWN) return 13 * 16;
+				if (face == Facing::UP) return 11 * 16;
+				return 12 * 16;
+			}
+			case NETHER_BRICK_SLAB2:     return 0 + 14 * 16; // nether brick
+			default: return 6;
+		}
+	}
+
     if (data == STONE_SLAB) {
         if (face <= 1) return 6;
         return 5;
@@ -60,6 +80,10 @@ int StoneSlabTile::getTexture(int face, int data) {
 		return Tile::redBrick->tex;
 	} else if (data == SMOOTHBRICK_SLAB) {
 		return Tile::stoneBrickSmooth->tex;
+	} else if (data == GRANITE_SLAB) {
+		return 130; // granite texture
+	} else if (data == DIORITE_SLAB) {
+		return 132; // diorite texture
 	}
     return 6;
 }
@@ -102,6 +126,7 @@ void StoneSlabTile::onPlace(Level* level, int x, int y, int z) {
 */
 
 int StoneSlabTile::getResource(int data, Random* random) {
+    if (slabSet == 1) return Tile::stoneSlabHalf2->id;
     return Tile::stoneSlabHalf->id;
 }
 
@@ -122,7 +147,7 @@ void StoneSlabTile::addAABBs( Level* level, int x, int y, int z, const AABB* box
 }
 
 static bool isHalfSlab(int tileId) {
-	return tileId == Tile::stoneSlabHalf->id;// || tileId == Tile::woodSlabHalf->id;
+	return tileId == Tile::stoneSlabHalf->id || tileId == Tile::stoneSlabHalf2->id;
 }
 
 bool StoneSlabTile::shouldRenderFace(LevelSource* level, int x, int y, int z, int face) {
