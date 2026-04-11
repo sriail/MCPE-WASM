@@ -240,7 +240,7 @@ void NinecraftApp::initGLStates()
 	glCullFace(GL_BACK);
 
 	glEnable2(GL_TEXTURE_2D);
-#ifndef EMSCRIPTEN
+#ifndef __EMSCRIPTEN__
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
 #endif
 
