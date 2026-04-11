@@ -240,7 +240,9 @@ void NinecraftApp::initGLStates()
 	glCullFace(GL_BACK);
 
 	glEnable2(GL_TEXTURE_2D);
+#ifndef EMSCRIPTEN
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+#endif
 
 	// Both updates isPowerVR flag in java and returns if the graphics chip is PowerVR SGX or not
 	_powerVr = platform()->isPowerVR();

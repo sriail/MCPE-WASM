@@ -22,7 +22,7 @@
 #include "../../world/level/tile/LeafTile.h"
 #include "entity/HumanoidMobRenderer.h"
 
-static const float TERRAIN_TEX_SIZE = 272.0f;
+static const float TERRAIN_TEX_SIZE = 512.0f;
 
 static inline void texToPixel(int tex, int& xt, int& yt) {
 	if (tex >= 256) {

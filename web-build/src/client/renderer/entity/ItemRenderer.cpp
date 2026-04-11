@@ -14,7 +14,7 @@
 #include "../../gui/Gui.h"
 #include "../../../world/item/Item.h"
 
-static const float TERRAIN_TEX_SIZE = 272.0f;
+static const float TERRAIN_TEX_SIZE = 512.0f;
 
 static inline void texToPixel(int tex, int& xt, int& yt) {
 	if (tex >= 256) {
