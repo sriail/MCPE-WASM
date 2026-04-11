@@ -61,9 +61,10 @@ public:
             return FoliageColor::getBirchColor();
         }
 
+        Biome* biome = level->getBiome(x, z);
+
         // Jungle leaves (data 3): slightly more saturated tropical green
         if (data == JUNGLE_LEAF) {
-            Biome* biome = level->getBiome(x, z);
             if (biome) {
                 // Jungle foliage is lush, use a warmer/greener tint
                 float temp = biome->temperature;
@@ -74,7 +75,6 @@ public:
         }
 
         // Oak and default: use biome temperature-based color
-        Biome* biome = level->getBiome(x, z);
         if (biome) {
             return FoliageColor::get(biome->temperature, biome->downfall);
         }
