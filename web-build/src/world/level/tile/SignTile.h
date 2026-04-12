@@ -16,7 +16,8 @@ public:
     SignTile(int id, int tileEntityClassId, bool onGround)
 	:	super(id, Material::wood),
 		tileEntityClassId(tileEntityClassId),
-        onGround(onGround)
+        onGround(onGround),
+        dropItem(NULL)
 	{
         tex = 4;
         float r = 4 / 16.0f;
@@ -82,8 +83,11 @@ public:
 
     /*@Override*/
     int getResource(int data, Random* random/*, int playerBonusLevel*/) {
+        if (dropItem) return dropItem->id;
         return Item::sign->id;
     }
+
+    void setDropItem(Item* item) { dropItem = item; }
 
     /*@Override*/
     void neighborChanged(Level* level, int x, int y, int z, int type) {
@@ -108,6 +112,7 @@ public:
 private:
     bool onGround;
     int tileEntityClassId;
+    Item* dropItem;
 };
 
 #endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__SignTile_H__*/

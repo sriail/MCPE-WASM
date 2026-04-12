@@ -2,6 +2,7 @@
 #include "ItemCategory.h"
 #include "../level/tile/Tile.h"
 #include "../level/tile/DoorTile.h"
+#include "../level/tile/SignTile.h"
 #include "ItemInstance.h"
 
 const std::string Item::ICON_DESCRIPTION_PREFIX("item.");
@@ -318,6 +319,14 @@ void Item::initItems() {
 	((DoorTile*)Tile::door_spruce)->setDropItem(Item::door_spruce);
 	((DoorTile*)Tile::door_birch)->setDropItem(Item::door_birch);
 	((DoorTile*)Tile::door_jungle)->setDropItem(Item::door_jungle);
+
+	// Set sign drop items for variant signs
+	((SignTile*)Tile::sign_spruce)->setDropItem(Item::sign_spruce);
+	((SignTile*)Tile::wallSign_spruce)->setDropItem(Item::sign_spruce);
+	((SignTile*)Tile::sign_birch)->setDropItem(Item::sign_birch);
+	((SignTile*)Tile::wallSign_birch)->setDropItem(Item::sign_birch);
+	((SignTile*)Tile::sign_jungle)->setDropItem(Item::sign_jungle);
+	((SignTile*)Tile::wallSign_jungle)->setDropItem(Item::sign_jungle);
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)
