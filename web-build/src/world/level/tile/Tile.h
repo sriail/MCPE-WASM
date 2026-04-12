@@ -130,7 +130,7 @@ public:
     static Tile* coalOre;
     static Tile* treeTrunk;
 	static LeafTile* leaves;
-    static Tile* sponge;
+    static Tile* stoneVariant;   // ID 19 (granite/diorite/andesite variants)
 	static Tile* web;
     static Tile* glass;
 	static Tile* thinGlass;
@@ -140,15 +140,15 @@ public:
     static Tile* sandStone;
     static Tile* musicBlock;
     static Tile* bed;
-    static Tile* unused_27;
-    static Tile* unused_28;
-    static Tile* unused_29;
+    static Tile* stairs_spruce;  // ID 27
+    static Tile* stairs_birch;   // ID 28
+    static Tile* stairs_jungle;  // ID 29
     static Tile* unused_30;
     static Tile* tallgrass;
-    static Tile* unused_32;
-    static Tile* unused_33;
-    static Tile* unused_34;
-    static Tile* unused_36;
+    static Tile* fence_spruce;   // ID 32
+    static Tile* fence_birch;    // ID 33
+    static Tile* fence_jungle;   // ID 34
+    static Tile* fenceGate_spruce; // ID 36
 
 	static Tile* cloth;
 	static Tile* flower;
@@ -228,6 +228,81 @@ public:
 	static Tile* stairs_sandStone;
 	static Tile* quartzBlock;
 	static Tile* stairs_quartz;
+
+	// --- World & Block System Overhaul ---
+	static Tile* jungleLog;              // ID 52
+	static Tile* door_spruce;            // ID 66
+	static Tile* door_birch;             // ID 69
+	static Tile* door_jungle;            // ID 70
+	static Tile* fenceGate_birch;        // ID 72
+	static Tile* redstoneTorch_off;      // ID 75
+	static Tile* redstoneTorch_on;       // ID 76
+	static Tile* fenceGate_jungle;       // ID 77
+	static LeafTile* jungleLeaves;       // ID 84
+	static Tile* trapdoor_spruce;        // ID 86
+	static Tile* soulSand;               // ID 88
+	static Tile* trapdoor_birch;         // ID 90
+	static Tile* trapdoor_jungle;        // ID 91
+	static Tile* sign_spruce;            // ID 92
+	static Tile* wallSign_spruce;        // ID 93
+	static Tile* sign_birch;             // ID 94
+	static Tile* wallSign_birch;         // ID 97
+	static Tile* sign_jungle;            // ID 99
+	static Tile* wallSign_jungle;        // ID 100
+	static Tile* jungleSapling;          // ID 101
+	static Tile* netherQuartzOre;        // ID 104
+	static Tile* hayBale;                // ID 106
+	static Tile* stairs_granite;         // ID 110
+	static Tile* stairs_polishedGranite; // ID 111
+	static Tile* stairs_andesite;        // ID 113
+	static Tile* stairs_polishedAndesite;// ID 115
+	static Tile* stairs_diorite;         // ID 116
+	static Tile* stairs_polishedDiorite; // ID 117
+	static Tile* graniteSlabHalf;        // ID 119
+	static Tile* graniteSlabFull;        // ID 120
+	static Tile* wall_granite;           // ID 121
+	static Tile* polishedGraniteSlabHalf;  // ID 122
+	static Tile* polishedGraniteSlabFull;  // ID 123
+	static Tile* andesiteSlabHalf;       // ID 124
+	static Tile* andesiteSlabFull;       // ID 125
+	static Tile* wall_andesite;          // ID 126
+	static Tile* polishedAndesiteSlabHalf; // ID 127
+	static Tile* polishedAndesiteSlabFull; // ID 129
+	static Tile* dioriteSlabHalf;        // ID 130
+	static Tile* dioriteSlabFull;        // ID 131
+	static Tile* wall_diorite;           // ID 132
+	static Tile* polishedDioriteSlabHalf;  // ID 133
+	static Tile* polishedDioriteSlabFull;  // ID 134
+	static Tile* sandstoneSlabHalf;      // ID 135
+	static Tile* sandstoneSlabFull;      // ID 136
+	static Tile* greenEmeraldOre;        // ID 137
+	static Tile* greenEmeraldBlock;      // ID 138
+	static Tile* redstoneBlock;          // ID 139
+	static Tile* coalBlock;              // ID 140
+	static Tile* redstoneLamp;           // ID 141
+	static Tile* redstoneLamp_lit;       // ID 142
+	static Tile* piston;                 // ID 143
+	static Tile* stickyPiston;           // ID 144
+	static Tile* slimeBlock;             // ID 145
+	static Tile* wetFarmland;            // ID 146
+	static Tile* dryFarmland;            // ID 147
+	static Tile* cocoaBlock;             // ID 148
+	static Tile* wall_sandstone;         // ID 150
+	static Tile* polishedSandstone;      // ID 151
+	static Tile* stairs_polishedSandstone; // ID 152
+	static Tile* polishedSandstoneSlabHalf; // ID 153
+	static Tile* polishedSandstoneSlabFull; // ID 154
+	static Tile* netherBrickFence;       // ID 157
+	static Tile* wall_netherBrick;       // ID 158
+	static Tile* netherBrickSlabHalf;    // ID 159
+	static Tile* netherBrickSlabFull;    // ID 160
+	static Tile* smoothStone;            // ID 161
+	static Tile* smoothStoneSlabHalf;    // ID 162
+	static Tile* smoothStoneSlabFull;    // ID 163
+	static Tile* repeater_off;           // ID 164
+	static Tile* repeater_on;            // ID 165
+	static Tile* comparator_off;         // ID 166
+	static Tile* comparator_on;          // ID 167
 
 	// invisible bedrock is used to block off empty chunks (i.e. prevent player movement)
 	static Tile* invisible_bedrock;
