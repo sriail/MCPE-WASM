@@ -388,19 +388,19 @@ void Tile::initTiles() {
 	glassPaneTile = thinGlass;
 
 	// Spruce Fence (ID 88)
-	fence_spruce = (new FenceTile(88, 198))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("spruceFence");
+	fence_spruce = (new FenceTile(88, 199))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("spruceFence");
 
 	// Birch Fence (ID 90)
-	fence_birch = (new FenceTile(90, 199))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("birchFence");
+	fence_birch = (new FenceTile(90, 198))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("birchFence");
 
 	// Jungle Fence (ID 91)
 	fence_jungle = (new FenceTile(91, 200))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("jungleFence");
 
 	// Spruce Fence Gate (ID 92)
-	fenceGate_spruce = (new FenceGateTile(92, 198))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("spruceFenceGate");
+	fenceGate_spruce = (new FenceGateTile(92, 199))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("spruceFenceGate");
 
 	// Birch Fence Gate (ID 93)
-	fenceGate_birch = (new FenceGateTile(93, 199))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("birchFenceGate");
+	fenceGate_birch = (new FenceGateTile(93, 198))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("birchFenceGate");
 
 	// Jungle Fence Gate (ID 94)
 	fenceGate_jungle = (new FenceGateTile(94, 200))->init()->setDestroyTime(2.0f)->setExplodeable(5)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("jungleFenceGate");

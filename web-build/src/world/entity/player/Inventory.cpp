@@ -3,6 +3,7 @@
 #include "../../level/tile/QuartzBlockTile.h"
 #include "../../level/tile/TreeTile.h"
 #include "../../level/tile/StoneSlabTile.h"
+#include "../../level/tile/WoodPlanks.h"
 #include "../../item/DyePowderItem.h"
 #include "../../item/crafting/Recipe.h"
 #include "../../item/CoalItem.h"
@@ -128,6 +129,9 @@ void Inventory::setupDefault() {
 		addItem(new ItemInstance(Tile::stoneBrickSmooth, 1, 2));
 		addItem(new ItemInstance(Tile::mossStone));
 		Sel[5] =  addItem(new ItemInstance(Tile::wood));
+		addItem(new ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE));
+		addItem(new ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH));
+		addItem(new ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE));
 		Sel[2] = addItem(new ItemInstance(Tile::redBrick));
 
 #ifdef RPI
@@ -151,6 +155,9 @@ void Inventory::setupDefault() {
 		addItem(new ItemInstance(Tile::netherrack));
 		addItem(new ItemInstance(Tile::stairs_stone));
 		addItem(new ItemInstance(Tile::stairs_wood));
+		addItem(new ItemInstance(Tile::stairs_spruce));
+		addItem(new ItemInstance(Tile::stairs_birch));
+		addItem(new ItemInstance(Tile::stairs_jungle));
 		Sel[6] = addItem(new ItemInstance(Tile::stairs_brick));
 		addItem(new ItemInstance(Tile::stairs_sandStone));
 		addItem(new ItemInstance(Tile::stairs_stoneBrickSmooth));
@@ -214,9 +221,21 @@ void Inventory::setupDefault() {
 		addItem(new ItemInstance(Tile::thinGlass));
 
 		addItem(new ItemInstance(Item::door_wood));
+		addItem(new ItemInstance(Item::door_spruce));
+		addItem(new ItemInstance(Item::door_birch));
+		addItem(new ItemInstance(Item::door_jungle));
 		addItem(new ItemInstance(Tile::trapdoor));
+		addItem(new ItemInstance(Tile::trapdoor_spruce));
+		addItem(new ItemInstance(Tile::trapdoor_birch));
+		addItem(new ItemInstance(Tile::trapdoor_jungle));
 		addItem(new ItemInstance(Tile::fence));
+		addItem(new ItemInstance(Tile::fence_spruce));
+		addItem(new ItemInstance(Tile::fence_birch));
+		addItem(new ItemInstance(Tile::fence_jungle));
 		addItem(new ItemInstance(Tile::fenceGate));
+		addItem(new ItemInstance(Tile::fenceGate_spruce));
+		addItem(new ItemInstance(Tile::fenceGate_birch));
+		addItem(new ItemInstance(Tile::fenceGate_jungle));
 
 		addItem(new ItemInstance(Item::bed));
 		addItem(new ItemInstance(Tile::bookshelf));
@@ -252,6 +271,9 @@ void Inventory::setupDefault() {
 #endif
 		addItem(new ItemInstance(Item::bow));
 		addItem(new ItemInstance(Item::sign));
+		addItem(new ItemInstance(Item::sign_spruce));
+		addItem(new ItemInstance(Item::sign_birch));
+		addItem(new ItemInstance(Item::sign_jungle));
 	} else {
 #if defined(WIN32)
 		// Survival

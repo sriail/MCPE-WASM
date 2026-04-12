@@ -24,8 +24,8 @@ public:
     int getTexture(int face, int data) {
         switch (data & TYPE_MASK) {
             case OAK:     return 4;
-            case SPRUCE:  return 198; // 6 + 12*16
-            case BIRCH:   return 199; // 7 + 12*16
+            case SPRUCE:  return 199; // 7 + 12*16 (dark)
+            case BIRCH:   return 198; // 6 + 12*16 (light)
             case JUNGLE:  return 200; // 8 + 12*16
             default:      return 4;
         }
