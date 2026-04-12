@@ -37,7 +37,9 @@
 #include "../Minecraft.Client/TexturePackRepository.h"
 #include "../Minecraft.Client/DLCTexturePack.h"
 #include "../Minecraft.Client/Common/DLC/DLCPack.h"
+#if defined(__PS3__)
 #include "../Minecraft.Client/PS3/PS3Extras/ShutdownManager.h"
+#endif
 #include "../Minecraft.Client/MinecraftServer.h"
 
 

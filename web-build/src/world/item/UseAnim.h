@@ -1,15 +1,3 @@
-#ifndef NET_MINECRAFT_WORLD_ITEM__UseAnim_H__
-#define NET_MINECRAFT_WORLD_ITEM__UseAnim_H__
-class UseAnim {
-public:
-	enum UseAnimation {
-		none,
-		eat,
-		drink,
-		block,
-		bow
-	};
-};
-
-
-#endif /* NET_MINECRAFT_WORLD_ITEM__UseAnim_H__ */
+#pragma once
+// Redirect header: maps old world system path to new Minecraft.World module
+#include "../../Minecraft.World/UseAnim.h"

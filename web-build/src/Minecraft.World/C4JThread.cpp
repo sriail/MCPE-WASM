@@ -12,7 +12,9 @@ extern void user_registerthread();
 extern void user_removethread();
 }
 #else
+#if defined(__PS3__)
 #include "../Minecraft.Client/PS3/PS3Extras/ShutdownManager.h"
+#endif
 
 #endif
 

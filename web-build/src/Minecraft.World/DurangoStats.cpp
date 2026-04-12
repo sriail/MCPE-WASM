@@ -21,7 +21,9 @@
 
 #include "EntityIO.h"
 
+#if defined(_DURANGO)
 #include "../Minecraft.Client/Durango/ServiceConfig/Events-XBLA.8-149E11AEEvents.h"
+#endif
 
 #include "DurangoStats.h"
 

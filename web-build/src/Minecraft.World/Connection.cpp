@@ -4,7 +4,9 @@
 #include "Connection.h"
 #include "ThreadName.h"
 #include "compression.h"
+#if defined(__PS3__)
 #include "../Minecraft.Client/PS3/PS3Extras/ShutdownManager.h"
+#endif
 
 // This should always be enabled, except for debugging use
 #ifndef _DEBUG

@@ -24,8 +24,21 @@ $COMPILE_FLAGS = @(
     "-Wno-register",
     "-Wno-unused-value",
     "-Wno-comment",
+    "-Wno-reorder-ctor",
+    "-Wno-unknown-pragmas",
+    "-Wno-unused-private-field",
+    "-Wno-overloaded-virtual",
+    "-Wno-unused-variable",
+    "-Wno-missing-braces",
+    "-Wno-tautological-compare",
+    "-Wno-parentheses",
+    "-Wno-writable-strings",
+    "-Wno-switch",
     "-sUSE_SDL=2",
-    "-sUSE_LIBPNG=1"
+    "-sUSE_LIBPNG=1",
+    "-I../../src/Minecraft.World",
+    "-I../../src/Minecraft.Client",
+    "-I../../src/Minecraft.Client/Common"
 )
 
 $LINK_FLAGS = @(
@@ -54,7 +67,7 @@ $basePathFwd = $basePath.Replace("\", "/")
 $rawSources = Get-ChildItem -Path $basePath -Recurse -Filter "*.cpp"
 $SOURCES = @()
 foreach ($sObj in $rawSources) {
-    if ($sObj.FullName -match "main_win|main_android|main_iOS|main_rpi|main_dedicated|AppPlatform_win32|AppPlatform_android|AppPlatform_iOS|AppPlatform_rpi|[/\\]main\.cpp|SoundSystemSL|[/\\]rhi[/\\]") {
+    if ($sObj.FullName -match "main_win|main_android|main_iOS|main_rpi|main_dedicated|AppPlatform_win32|AppPlatform_android|AppPlatform_iOS|AppPlatform_rpi|[/\\]main\.cpp|SoundSystemSL|[/\\]rhi[/\\]|Minecraft\.Client[/\\]") {
         continue
     }
     $SOURCES += $sObj.FullName
