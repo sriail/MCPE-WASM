@@ -40,11 +40,11 @@ Recipes::Recipes()
 
 		definition('#', Item::paper));
 
-	addShapedRecipe(ItemInstance(Tile::fence, 2), //
-		"###", //
-		"###", //
+	addShapedRecipe(ItemInstance(Tile::fence, 3), //
+		"#X#", //
+		"#X#", //
 
-		definition('#', Item::stick));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK), 'X', Item::stick));
 
 	//addShapedRecipe(ItemInstance(Tile::netherFence, 6), //
 	//	"###", //
@@ -53,10 +53,10 @@ Recipes::Recipes()
 	//	'#', Tile::netherBrick);
 
 	addShapedRecipe(ItemInstance(Tile::fenceGate, 1), //
-		"#W#", //
-		"#W#", //
+		"X#X", //
+		"X#X", //
 
-		definition('#', Item::stick, 'W', Tile::wood));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK), 'X', Item::stick));
 
 	//addShapedRecipe(ItemInstance(Tile::recordPlayer, 1), //
 	//	"###", //
@@ -205,13 +205,13 @@ Recipes::Recipes()
 		"##", //
 		"##", //
 
-		definition('#', Tile::wood));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
 
 	addShapedRecipe(ItemInstance(Tile::trapdoor, 2), //
 		"###", //
 		"###", //
 
-		definition('#', Tile::wood));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
 
 	//addShapedRecipe(ItemInstance(Item::door_iron, 1), //
 	//	"##", //
@@ -225,7 +225,7 @@ Recipes::Recipes()
 		"###", //
 		" X ", //
 
-		definition('#', Tile::wood, 'X', Item::stick));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK), 'X', Item::stick));
 
 	//addShapedRecipe(ItemInstance(Item::cake, 1), //
 	//	"AAA", //
@@ -387,7 +387,7 @@ Recipes::Recipes()
 		"## ", //
 		"###", //
 
-		definition('#', Tile::wood));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
 
 	//addShapedRecipe(ItemInstance(Item::fishingRod, 1), //
 	//	"  #", //

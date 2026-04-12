@@ -56,6 +56,12 @@ public:
     bool mayPlace(Level* level, int x, int y, int z, unsigned char face);
 
 	static int getCompositeData(LevelSource* level, int x, int y, int z);
+
+	void setTextures(int lower, int upper) { tex = lower; texUpper = upper; }
+	void setDropItem(Item* item) { dropItem = item; }
+
+	int texUpper;
+	Item* dropItem;
 };
 
 #endif /*NET_MINECRAFT_WORLD_LEVEL_TILE__DoorTile_H__*/

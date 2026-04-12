@@ -38,10 +38,20 @@ public:
     }
 
     void render(Tesselator& t, float a, float xa, float ya, float za, float xa2, float za2) {
-        float u0 = ((tex & 15) + uo / 4.0f) / 16.0f;
-        float u1 = u0 + 0.999f / 16.0f / 4;
-        float v0 = ((tex >> 4) + vo / 4.0f) / 16.0f;
-        float v1 = v0 + 0.999f / 16.0f / 4;
+        int absTex = tex < 0 ? -tex : tex;
+        int texCol, texRow;
+        if (absTex >= 256) {
+            int ext = absTex - 256;
+            texCol = ext % 17;
+            texRow = ext / 17;
+        } else {
+            texCol = absTex & 15;
+            texRow = absTex >> 4;
+        }
+        float u0 = (texCol + uo / 4.0f) / 32.0f;
+        float u1 = u0 + 0.999f / 32.0f / 4;
+        float v0 = (texRow + vo / 4.0f) / 32.0f;
+        float v1 = v0 + 0.999f / 32.0f / 4;
         float r = 0.1f * size;
 
         float x = (float) (xo + (this->x - xo) * a - xOff);

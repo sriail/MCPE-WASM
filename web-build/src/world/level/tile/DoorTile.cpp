@@ -5,10 +5,13 @@
 #include "../../entity/player/Player.h"
 
 DoorTile::DoorTile(int id, const Material* material)
-:	super(id, material)
+:	super(id, material),
+	texUpper(-1),
+	dropItem(NULL)
 {
 	tex = 1 + 6 * 16;
 	if (material == Material::metal) tex++;
+	texUpper = tex - 16;
 
 	float r = 0.5f;
 	float h = 1.0f;
@@ -20,7 +23,7 @@ int DoorTile::getTexture(LevelSource* level, int x, int y, int z, int face) {
 
 	int compositeData = getCompositeData(level, x, y, z);
 	int texture = tex;
-	if ((compositeData & C_IS_UPPER_MASK) != 0) texture -= 16;
+	if ((compositeData & C_IS_UPPER_MASK) != 0) texture = texUpper;
 
 	int dir = compositeData & C_DIR_MASK;
 	bool isOpen = (compositeData & C_OPEN_MASK) != 0;
@@ -178,6 +181,8 @@ void DoorTile::neighborChanged(Level* level, int x, int y, int z, int type) {
 			level->setTile(x, y, z, 0);
 			if(material == Material::metal) {
 				popResource(level, x, y, z, ItemInstance(Item::door_iron));
+			} else if (dropItem) {
+				popResource(level, x, y, z, ItemInstance(dropItem));
 			} else {
 				popResource(level, x, y, z, ItemInstance(Item::door_wood));
 			}
@@ -191,6 +196,7 @@ void DoorTile::neighborChanged(Level* level, int x, int y, int z, int type) {
 int DoorTile::getResource(int data, Random* random) {
 	if ((data & 8) != 0) return 0;
 	if (material == Material::metal) return Item::door_iron->id;
+	if (dropItem) return dropItem->id;
 	return Item::door_wood->id;
 }
 

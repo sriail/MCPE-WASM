@@ -435,13 +435,19 @@ void Tile::initTiles() {
 
 	// Doors (spruce, birch, jungle)
 	door_spruce = (new DoorTile(118, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	((DoorTile*)door_spruce)->setTextures(306, 306); // solid dark spruce (no windows)
 	door_birch = (new DoorTile(119, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	((DoorTile*)door_birch)->setTextures(289, 289); // solid light birch (no windows)
 	door_jungle = (new DoorTile(120, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
+	((DoorTile*)door_jungle)->setTextures(561, 323); // jungle lower solid, upper diamond windows
 
 	// Trapdoors (spruce, birch, jungle)
 	trapdoor_spruce = (new TrapDoorTile(121, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("trapdoorSpruce");
+	trapdoor_spruce->tex = 578; // dark spruce trapdoor
 	trapdoor_birch = (new TrapDoorTile(122, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("trapdoorBirch");
+	trapdoor_birch->tex = 272; // light birch trapdoor
 	trapdoor_jungle = (new TrapDoorTile(123, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("trapdoorJungle");
+	trapdoor_jungle->tex = 595; // jungle trapdoor
 
 	// Signs (spruce)
 	sign_spruce = (new SignTile(124, TileEntityType::Sign, true))->init()->setDestroyTime(1.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Decorations)->setDescriptionId("signSpruce");

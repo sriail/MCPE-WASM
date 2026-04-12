@@ -1,6 +1,7 @@
 #include "ItemInclude.h"
 #include "ItemCategory.h"
 #include "../level/tile/Tile.h"
+#include "../level/tile/DoorTile.h"
 #include "ItemInstance.h"
 
 const std::string Item::ICON_DESCRIPTION_PREFIX("item.");
@@ -305,13 +306,18 @@ void Item::initItems() {
 	Item::mutton_cooked = (new FoodItem(113, 6, true))->setIcon(10, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
 	Item::enderPearl = (new Item(114))->setMaxStackSize(16)->setIcon(11, 5)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
 	Item::greenEmerald = (new Item(115))->setIcon(10, 9)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
-	Item::sign_spruce = (new WoodSignItem(117, Tile::sign_spruce, Tile::wallSign_spruce))->setIcon(10, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("signSpruce");
-	Item::sign_birch = (new WoodSignItem(118, Tile::sign_birch, Tile::wallSign_birch))->setIcon(10, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("signBirch");
-	Item::sign_jungle = (new WoodSignItem(119, Tile::sign_jungle, Tile::wallSign_jungle))->setIcon(10, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("signJungle");
-	Item::door_spruce = (new WoodDoorItem(120, Tile::door_spruce))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
-	Item::door_birch = (new WoodDoorItem(121, Tile::door_birch))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
-	Item::door_jungle = (new WoodDoorItem(122, Tile::door_jungle))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
+	Item::sign_spruce = (new WoodSignItem(117, Tile::sign_spruce, Tile::wallSign_spruce))->setIcon(4, 13)->setCategory(ItemCategory::Decorations)->setDescriptionId("signSpruce");
+	Item::sign_birch = (new WoodSignItem(118, Tile::sign_birch, Tile::wallSign_birch))->setIcon(3, 13)->setCategory(ItemCategory::Decorations)->setDescriptionId("signBirch");
+	Item::sign_jungle = (new WoodSignItem(119, Tile::sign_jungle, Tile::wallSign_jungle))->setIcon(5, 13)->setCategory(ItemCategory::Decorations)->setDescriptionId("signJungle");
+	Item::door_spruce = (new WoodDoorItem(120, Tile::door_spruce))->setIcon(2, 13)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	Item::door_birch = (new WoodDoorItem(121, Tile::door_birch))->setIcon(1, 13)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	Item::door_jungle = (new WoodDoorItem(122, Tile::door_jungle))->setIcon(0, 13)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
 	Item::comparator = (new TilePlanterItem(123, Tile::comparator_off))->setIcon(6, 5)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
+
+	// Set door drop items for variant doors
+	((DoorTile*)Tile::door_spruce)->setDropItem(Item::door_spruce);
+	((DoorTile*)Tile::door_birch)->setDropItem(Item::door_birch);
+	((DoorTile*)Tile::door_jungle)->setDropItem(Item::door_jungle);
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)

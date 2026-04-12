@@ -43,10 +43,7 @@ void OreRecipes::addRecipes(Recipes* r)
 
 		definition('#', Item::slimeBall));
 
-	r->addShapedRecipe(ItemInstance(Item::slimeBall, 9), //
-		"#", //
-
-		definition('#', Tile::slimeBlock));
+	// Slime ball crafting removed - slime balls come from slimes only
 
 	// Hay bale
 	r->addShapedRecipe(ItemInstance(Tile::hayBale), //
