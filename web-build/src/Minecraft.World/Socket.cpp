@@ -100,7 +100,7 @@ Socket::Socket(INetworkPlayer *player, bool response /* = false*/, bool hostLoca
 		m_end = SOCKET_SERVER_END;
 	}
 	m_socketClosedEvent = new C4JThread::Event;
-	//printf("New socket made %s/n", player->GetGamertag() );
+	//printf("New socket made %s\n", player->GetGamertag() );
 	networkPlayerSmallId = player->GetSmallId();
 	createdOk = true;
 }
@@ -135,7 +135,7 @@ void Socket::pushDataToQueue(const BYTE * pbData, DWORD dwDataSize, bool fromHos
 
 	if( queueIdx != m_end && !m_hostLocal )
 	{
-		app.DebugPrintf("SOCKET: Error pushing data to queue. End is %d but queue idx id %d/n", m_end, queueIdx);
+		app.DebugPrintf("SOCKET: Error pushing data to queue. End is %d but queue idx id %d\n", m_end, queueIdx);
 		return;
 	}
 
@@ -492,13 +492,13 @@ void Socket::SocketOutputStreamNetwork::writeWithFlags(byteArray b, unsigned int
 		INetworkPlayer *hostPlayer = g_NetworkManager.GetHostPlayer();
 		if(hostPlayer == NULL)
 		{
-			app.DebugPrintf("Trying to write to network, but the hostPlayer is NULL/n");
+			app.DebugPrintf("Trying to write to network, but the hostPlayer is NULL\n");
 			return;
 		}
 		INetworkPlayer *socketPlayer = m_socket->getPlayer();
 		if(socketPlayer == NULL)
 		{
-			app.DebugPrintf("Trying to write to network, but the socketPlayer is NULL/n");
+			app.DebugPrintf("Trying to write to network, but the socketPlayer is NULL\n");
 			return;
 		}
 
@@ -512,7 +512,7 @@ void Socket::SocketOutputStreamNetwork::writeWithFlags(byteArray b, unsigned int
 
 		if( m_queueIdx == SOCKET_SERVER_END )
 		{
-			//printf( "Sent %u bytes of data from /"%ls/" to /"%ls/"/n",
+			//printf( "Sent %u bytes of data from \"%ls\" to \"%ls\"\n",
 			//buffer.dwDataSize,
 			//hostPlayer->GetGamertag(),
 			//m_socket->networkPlayer->GetGamertag());
@@ -522,13 +522,13 @@ void Socket::SocketOutputStreamNetwork::writeWithFlags(byteArray b, unsigned int
 	// 		DWORD queueSize = hostPlayer->GetSendQueueSize( NULL, QNET_GETSENDQUEUESIZE_BYTES  );
 	// 		if( queueSize > 24000 )
 	// 		{
-	// 			//printf("Queue size is: %d, forcing doWork()/n",queueSize);
+	// 			//printf("Queue size is: %d, forcing doWork()\n",queueSize);
 	// 			g_NetworkManager.DoWork();
 	// 		}
 		}
 		else
 		{
-			//printf( "Sent %u bytes of data from /"%ls/" to /"%ls/"/n",
+			//printf( "Sent %u bytes of data from \"%ls\" to \"%ls\"\n",
 			//buffer.dwDataSize,
 			//m_socket->networkPlayer->GetGamertag(),
 			//hostPlayer->GetGamertag());

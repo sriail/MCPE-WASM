@@ -20,7 +20,7 @@ bool SwampTreeFeature::place(Level *level, Random *random, int x, int y, int z)
 		bool intersects = levelGenOptions->checkIntersects(x - 3, y - 1, z - 3, x + 3, y + treeHeight, z + 3);
 		if(intersects)
 		{
-			//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure/n");
+			//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure\n");
 			return false;
 		}
 	}

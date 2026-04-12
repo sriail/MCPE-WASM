@@ -127,7 +127,7 @@ void LoginPacket::read(DataInputStream *dis) //throws IOException
 	m_xzSize = dis->readShort();
 	m_hellScale = dis->read();
 #endif
-	app.DebugPrintf("LoginPacket::read - Difficulty = %d/n",difficulty);
+	app.DebugPrintf("LoginPacket::read - Difficulty = %d\n",difficulty);
 
 }
 

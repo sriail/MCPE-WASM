@@ -183,7 +183,7 @@ void BiomeSource::getRawBiomeBlock(BiomeArray &biomes, int x, int z, int w, int 
 #ifndef _CONTENT_PACKAGE
 		if(biomes[i] == NULL)
 		{
-			app.DebugPrintf("Tried to assign null biome %d/n", result[i]);
+			app.DebugPrintf("Tried to assign null biome %d\n", result[i]);
 			__debugbreak();
 		}
 #endif
@@ -480,7 +480,7 @@ int64_t BiomeSource::findSeed(LevelType *generator)
 			delete indices.data;
 
 #ifdef DEBUG_SEEDS
-			app.DebugPrintf("%d: %d tries taken, seed used is %lld/n", k, tryCount, bestSeed);
+			app.DebugPrintf("%d: %d tries taken, seed used is %lld\n", k, tryCount, bestSeed);
 
 			BiomeSource *biomeSource = new BiomeSource(bestSeed);
 			BiomeArray biomes = biomeSource->getBiomeBlock(-27 * 16, -27 * 16, 54 * 16, 54 * 16);
@@ -525,7 +525,7 @@ int64_t BiomeSource::findSeed(LevelType *generator)
 			srcInfo.Height = 54 * 16;
 
 			char buf[256];
-			sprintf(buf,"GAME://BiomeTest%d.bmp",k);
+			sprintf(buf,"GAME:\\BiomeTest%d.bmp",k);
 			RenderManager.SaveTextureData(buf, &srcInfo, (int *)pixels);
 
 			delete [] pixels;

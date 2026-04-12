@@ -29,11 +29,11 @@ CustomMessage_GetSlotItem_Struct;
 // Sig: HRESULT OnCustomMessage_GetSlotItem(CustomMessage_GetSlotItem_Struct *pData, BOOL& bHandled)
 
 // Define the message map macro
-#define XUI_ON_XM_GETSLOTITEM_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_GETSLOTITEM_MESSAGE)/
-{/
-	CustomMessage_GetSlotItem_Struct *pData = (CustomMessage_GetSlotItem_Struct *) pMessage->pvData;/
-	return MemberFunc(pData, pMessage->bHandled);/
+#define XUI_ON_XM_GETSLOTITEM_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_GETSLOTITEM_MESSAGE)\
+{\
+	CustomMessage_GetSlotItem_Struct *pData = (CustomMessage_GetSlotItem_Struct *) pMessage->pvData;\
+	return MemberFunc(pData, pMessage->bHandled);\
 }
 
 static __declspec(noinline) void CustomMessage_GetSlotItem(XUIMessage *pMsg, CustomMessage_GetSlotItem_Struct* pData, int iDataBitField, int iItemBitField)
@@ -58,11 +58,11 @@ CustomMessage_Splitscreenplayer_Struct;
 // Sig: HRESULT OnCustomMessage_Splitscreenplayer(bool bJoining, BOOL& bHandled)
 
 // Define the message map macro
-#define XUI_ON_XM_SPLITSCREENPLAYER_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_SPLITSCREENPLAYER_MESSAGE)/
-{/
-	CustomMessage_Splitscreenplayer_Struct *pData = (CustomMessage_Splitscreenplayer_Struct *) pMessage->pvData;/
-	return MemberFunc(pData->bJoining, pMessage->bHandled);/
+#define XUI_ON_XM_SPLITSCREENPLAYER_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_SPLITSCREENPLAYER_MESSAGE)\
+{\
+	CustomMessage_Splitscreenplayer_Struct *pData = (CustomMessage_Splitscreenplayer_Struct *) pMessage->pvData;\
+	return MemberFunc(pData->bJoining, pMessage->bHandled);\
 }
 
 static __declspec(noinline) void CustomMessage_Splitscreenplayer(XUIMessage *pMsg, CustomMessage_Splitscreenplayer_Struct* pData, bool bJoining)
@@ -76,10 +76,10 @@ static __declspec(noinline) void CustomMessage_Splitscreenplayer(XUIMessage *pMs
 // Sig: HRESULT OnFontRendererChange()
 
 // Define the message map macro
-#define XUI_ON_XM_FONTRENDERERCHANGE_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_FONTRENDERERCHANGE_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_FONTRENDERERCHANGE_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_FONTRENDERERCHANGE_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_FontRendererChange(XUIMessage *pMsg)
@@ -91,10 +91,10 @@ static __declspec(noinline) void CustomMessage_FontRendererChange(XUIMessage *pM
 // Sig: HRESULT OnDLCMounted()
 
 // Define the message map macro
-#define XUI_ON_XM_DLCLOADED_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_DLCMOUNTED_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_DLCLOADED_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_DLCMOUNTED_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_DLCMountingComplete(XUIMessage *pMsg)
@@ -106,10 +106,10 @@ static __declspec(noinline) void CustomMessage_DLCMountingComplete(XUIMessage *p
 // Sig: HRESULT OnBasePositionChanged()
 
 // Define the message map macro
-#define XUI_ON_XM_BASE_POSITION_CHANGED_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_BASE_POSITION_CHANGED_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_BASE_POSITION_CHANGED_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_BASE_POSITION_CHANGED_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_BasePositionChanged(XUIMessage *pMsg)
@@ -121,10 +121,10 @@ static __declspec(noinline) void CustomMessage_BasePositionChanged(XUIMessage *p
 // Sig: HRESULT OnDLCInstalled()
 
 // Define the message map macro
-#define XUI_ON_XM_DLCINSTALLED_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_DLCSINSTALLED_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_DLCINSTALLED_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_DLCSINSTALLED_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_DLCInstalled(XUIMessage *pMsg)
@@ -136,10 +136,10 @@ static __declspec(noinline) void CustomMessage_DLCInstalled(XUIMessage *pMsg)
 // Sig: HRESULT OnCustomMessage_InventoryUpdated()
 
 // Define the message map macro
-#define XUI_ON_XM_INVENTORYUPDATED_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_INVENTORYUPDATED_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_INVENTORYUPDATED_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_INVENTORYUPDATED_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_InventoryUpdated(XUIMessage *pMsg)
@@ -151,10 +151,10 @@ static __declspec(noinline) void CustomMessage_InventoryUpdated(XUIMessage *pMsg
 // Sig: HRESULT OnCustomMessage_()
 
 // Define the message map macro
-#define XUI_ON_XM_TMS_DLCFILE_RETRIEVED_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_TMS_DLCFILE_RETRIEVED_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_TMS_DLCFILE_RETRIEVED_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_TMS_DLCFILE_RETRIEVED_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_TMS_DLCFileRetrieved(XUIMessage *pMsg)
@@ -166,10 +166,10 @@ static __declspec(noinline) void CustomMessage_TMS_DLCFileRetrieved(XUIMessage *
 // Sig: HRESULT OnCustomMessage_()
 
 // Define the message map macro
-#define XUI_ON_XM_TMS_BANFILE_RETRIEVED_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_TMS_BANFILE_RETRIEVED_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_TMS_BANFILE_RETRIEVED_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_TMS_BANFILE_RETRIEVED_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_TMS_BanFileRetrieved(XUIMessage *pMsg)
@@ -181,10 +181,10 @@ static __declspec(noinline) void CustomMessage_TMS_BanFileRetrieved(XUIMessage *
 // Sig: HRESULT OnCustomMessage_TickScene()
 
 // Define the message map macro
-#define XUI_ON_XM_CUSTOMTICKSCENE_MESSAGE(MemberFunc)/
-	if (pMessage->dwMessage == XM_CUSTOMTICKSCENE_MESSAGE)/
-{/
-	return MemberFunc();/
+#define XUI_ON_XM_CUSTOMTICKSCENE_MESSAGE(MemberFunc)\
+	if (pMessage->dwMessage == XM_CUSTOMTICKSCENE_MESSAGE)\
+{\
+	return MemberFunc();\
 }
 
 static __declspec(noinline) void CustomMessage_TickScene(XUIMessage *pMsg)

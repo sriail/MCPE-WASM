@@ -81,7 +81,7 @@ SparseDataStorage::~SparseDataStorage()
 	{
 		free(indicesAndData);
 	}
-//	printf("Free (in dtor) 0x%x/n", indicesAndData);
+//	printf("Free (in dtor) 0x%x\n", indicesAndData);
 }
 
 SparseDataStorage::SparseDataStorage(SparseDataStorage *copyFrom)
@@ -414,7 +414,7 @@ void SparseDataStorage::addNewPlane(int y)
 			success = true;
 			// Queue old data to be deleted
 			queueForDelete( lastDataPointer );
-//			printf("Marking for delete 0x%x/n", lastDataPointer);
+//			printf("Marking for delete 0x%x\n", lastDataPointer);
 #ifdef DATA_COMPRESSION_STATS
 			count = linesUsed;
 #endif
@@ -423,7 +423,7 @@ void SparseDataStorage::addNewPlane(int y)
 		{
 			// If we didn't succeed, queue data that we made to be deleted, and try again
 			queueForDelete( dataPointer );
-//			printf("Marking for delete (fail) 0x%x/n", dataPointer);
+//			printf("Marking for delete (fail) 0x%x\n", dataPointer);
 		}
 	} while( !success );
 }
@@ -450,12 +450,12 @@ void SparseDataStorage::tick()
 	// before we ever delete something, from when the request to delete it came in
 	int freeIndex = ( deleteQueueIndex + 1 ) % 3;
 
-//	printf("Free queue: %d, %d/n",deleteQueue[freeIndex].GetEntryCount(),deleteQueue[freeIndex].GetAllocated());
+//	printf("Free queue: %d, %d\n",deleteQueue[freeIndex].GetEntryCount(),deleteQueue[freeIndex].GetAllocated());
 	unsigned char *toFree = NULL;
 	do
 	{
 		toFree = deleteQueue[freeIndex].Pop();
-//		if( toFree ) printf("Deleting 0x%x/n", toFree);
+//		if( toFree ) printf("Deleting 0x%x\n", toFree);
 		// Determine correct means to free this data - could have been allocated either with XPhysicalAlloc or malloc
 #ifdef _XBOX
 		if( (unsigned int)toFree >= MM_PHYSICAL_4KB_BASE )
@@ -491,7 +491,7 @@ void SparseDataStorage::updateDataAndCount(int64_t newDataAndCount)
 		{
 			success = true;
 			// Queue old data to be deleted
-//			printf("Marking for delete 0x%x (full replace)/n", lastDataPointer);
+//			printf("Marking for delete 0x%x (full replace)\n", lastDataPointer);
 			queueForDelete( lastDataPointer );
 		}
 	} while( !success);
@@ -569,14 +569,14 @@ int SparseDataStorage::compress()
 		if( lastDataAndCount2 != lastDataAndCount )
 		{
 			// Failed to write. Don't bother trying again... being very conservative here.
-//			printf("Marking for delete 0x%x (compress fail)/n", newIndicesAndData);
+//			printf("Marking for delete 0x%x (compress fail)\n", newIndicesAndData);
 			queueForDelete( newIndicesAndData );
 		}
 		else
 		{
 			// Success
 			queueForDelete( planeIndices );
-//			printf("Successfully compressed to %d planes, to delete 0x%x/n", planesToAlloc, planeIndices);
+//			printf("Successfully compressed to %d planes, to delete 0x%x\n", planesToAlloc, planeIndices);
 #ifdef DATA_COMPRESSION_STATS
 			count = planesToAlloc;
 #endif

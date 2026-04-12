@@ -172,7 +172,7 @@ void Arrow::lerpMotion(double xd, double yd, double zd)
 		xRotO = xRot = (float) (atan2( yd, sd) * 180 / PI);
 		xRotO = xRot;
 		yRotO = yRot;
-		app.DebugPrintf("%f %f : 0x%x/n",xRot,yRot,&yRot);
+		app.DebugPrintf("%f %f : 0x%x\n",xRot,yRot,&yRot);
 		moveTo(x, y, z, yRot, xRot);
 		life = 0;
 	}

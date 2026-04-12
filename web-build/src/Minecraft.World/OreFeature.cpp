@@ -88,7 +88,7 @@ bool OreFeature::place(Level *level, Random *random, int x, int y, int z)
 			bool intersects = levelGenOptions->checkIntersects(xt0, yt0, zt0, xt1, yt1, zt1);
 			if(intersects)
 			{
-				//app.DebugPrintf("Skipping ore feature generation as it overlaps a game rule structure/n");
+				//app.DebugPrintf("Skipping ore feature generation as it overlaps a game rule structure\n");
 				continue;
 			}
 		}

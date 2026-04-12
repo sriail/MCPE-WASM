@@ -17,7 +17,7 @@ bool SpringFeature::place(Level *level, Random *random, int x, int y, int z)
 		bool intersects = levelGenOptions->checkIntersects(x, y, z, x, y, z);
 		if(intersects)
 		{
-			//app.DebugPrintf("Skipping spring feature generation as it overlaps a game rule structure/n");
+			//app.DebugPrintf("Skipping spring feature generation as it overlaps a game rule structure\n");
 			return false;
 		}
 	}

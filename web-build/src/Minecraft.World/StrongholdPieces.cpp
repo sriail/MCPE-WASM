@@ -218,7 +218,7 @@ StructurePiece *StrongholdPieces::generateAndAddPiece(StartPiece *startPiece, li
 				if(piece->pieceClass != EPieceClass_PortalRoom) continue;
 
 #ifndef _CONTENT_PACKAGE
-				printf("Portal room forcing attempt/n");
+				printf("Portal room forcing attempt\n");
 #endif
 				StrongholdPiece *strongholdPiece = PortalRoom::createPiece(pieces, random, footX, footY, footZ, direction, depth);
 				if (strongholdPiece != NULL)
@@ -231,7 +231,7 @@ StructurePiece *StrongholdPieces::generateAndAddPiece(StartPiece *startPiece, li
 						currentPieces.remove(piece);
 					}
 #ifndef _CONTENT_PACKAGE
-					printf("Success/n");
+					printf("Success\n");
 #endif
 					return strongholdPiece;
 				}

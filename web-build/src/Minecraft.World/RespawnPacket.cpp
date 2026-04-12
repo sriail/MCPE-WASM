@@ -31,7 +31,7 @@ RespawnPacket::RespawnPacket(char dimension, int64_t mapSeed, int mapHeight, Gam
 	this->m_newEntityId = newEntityId;
 	m_xzSize = xzSize;
 	m_hellScale = hellScale;
-	app.DebugPrintf("RespawnPacket - Difficulty = %d/n",difficulty);
+	app.DebugPrintf("RespawnPacket - Difficulty = %d\n",difficulty);
 
 }
 
@@ -59,7 +59,7 @@ void RespawnPacket::read(DataInputStream *dis) //throws IOException
 	m_xzSize = dis->readShort();
 	m_hellScale = dis->read();
 #endif
-	app.DebugPrintf("RespawnPacket::read - Difficulty = %d/n",difficulty);
+	app.DebugPrintf("RespawnPacket::read - Difficulty = %d\n",difficulty);
 
 }
 

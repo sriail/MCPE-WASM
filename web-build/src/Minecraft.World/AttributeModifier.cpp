@@ -75,7 +75,7 @@ wstring AttributeModifier::toString()
 	/*return L"AttributeModifier{" +
 	L"amount=" + amount +
 	L", operation=" + operation +
-	L", name='" + name + '/'' +
+	L", name='" + name + '\'' +
 	L", id=" + id +
 	L", serialize=" + serialize +
 	L'}';*/

@@ -329,7 +329,7 @@ shared_ptr<Packet> Packet::readPacket(DataInputStream *dis, bool isServer) // th
 
 	if ((isServer && serverReceivedPackets.find(id) == serverReceivedPackets.end()) || (!isServer && clientReceivedPackets.find(id) == clientReceivedPackets.end()))
 	{
-		//app.DebugPrintf("Bad packet id %d/n", id);
+		//app.DebugPrintf("Bad packet id %d\n", id);
 		__debugbreak();
 		assert(false);
 		//            throw new IOException(wstring(L"Bad packet id ") + std::to_wstring(id));
@@ -338,7 +338,7 @@ shared_ptr<Packet> Packet::readPacket(DataInputStream *dis, bool isServer) // th
 	packet = getPacket(id);
 	if (packet == NULL) assert(false);//throw new IOException(wstring(L"Bad packet id ") + std::to_wstring(id));
 
-	//app.DebugPrintf("%s reading packet %d/n", isServer ? "Server" : "Client", packet->getId());
+	//app.DebugPrintf("%s reading packet %d\n", isServer ? "Server" : "Client", packet->getId());
 	packet->read(dis);
 	//    }
 	//	catch (EOFException e)
@@ -372,7 +372,7 @@ shared_ptr<Packet> Packet::readPacket(DataInputStream *dis, bool isServer) // th
 
 void Packet::writePacket(shared_ptr<Packet> packet, DataOutputStream *dos) // throws IOException TODO 4J JEV, should this declare a throws?
 {
-	//app.DebugPrintf("Writing packet %d/n", packet->getId());
+	//app.DebugPrintf("Writing packet %d\n", packet->getId());
 	dos->write(packet->getId());
 	packet->write(dos);
 }

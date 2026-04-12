@@ -62,7 +62,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 	ConsoleSavePath ldatPath( wstring(L"level.dat") );
 	FileEntry *sourceLdatFe = sourceSave->createFile( ldatPath );
 	FileEntry *targetLdatFe = targetSave->createFile( ldatPath );
-	app.DebugPrintf("Processing level.dat/n");
+	app.DebugPrintf("Processing level.dat\n");
 	ProcessSimpleFile(sourceSave, sourceLdatFe, targetSave, targetLdatFe);
 
 	// Process game rules
@@ -72,7 +72,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 		{
 			FileEntry *sourceFe = sourceSave->createFile( gameRulesPath );
 			FileEntry *targetFe = targetSave->createFile( gameRulesPath );
-			app.DebugPrintf("Processing game rules/n");
+			app.DebugPrintf("Processing game rules\n");
 			ProcessSimpleFile(sourceSave, sourceFe, targetSave, targetFe);
 		}
 	}
@@ -102,7 +102,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 			{
 				FileEntry *sourceFe = sourceSave->createFile( sourcePlayerDatPath );
 				FileEntry *targetFe = targetSave->createFile( targetPlayerDatPath );
-				app.DebugPrintf("Processing player dat file %s/n", playerFiles->at(fileIdx)->data.filename);
+				app.DebugPrintf("Processing player dat file %s\n", playerFiles->at(fileIdx)->data.filename);
 				ProcessSimpleFile(sourceSave, sourceFe, targetSave, targetFe);
 
 				targetFe->data.lastModifiedTime = sourceFe->data.lastModifiedTime;
@@ -140,7 +140,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 
 	// Overworld
 	{
-		app.DebugPrintf("Processing the overworld/n");
+		app.DebugPrintf("Processing the overworld\n");
 		int halfXZSize = xzSize / 2;
 
 		int progressTarget = (xzSize) * (xzSize);
@@ -151,7 +151,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 		{
 			for(int z = -halfXZSize; z < halfXZSize; ++z)
 			{
-				//app.DebugPrintf("Processing overworld chunk %d,%d/n",x,z);
+				//app.DebugPrintf("Processing overworld chunk %d,%d\n",x,z);
 				DataInputStream *dis = sourceCache._getChunkDataInputStream(sourceSave,L"",x,z);
 
 				if(dis)
@@ -184,7 +184,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 
 	// Nether
 	{
-		app.DebugPrintf("Processing the nether/n");
+		app.DebugPrintf("Processing the nether\n");
 		int hellSize = xzSize / hellScale;
 		int halfXZSize = hellSize / 2;
 
@@ -196,7 +196,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 		{
 			for(int z = -halfXZSize; z < halfXZSize; ++z)
 			{
-				//app.DebugPrintf("Processing nether chunk %d,%d/n",x,z);
+				//app.DebugPrintf("Processing nether chunk %d,%d\n",x,z);
 				DataInputStream *dis = sourceCache._getChunkDataInputStream(sourceSave,L"DIM-1",x,z);
 
 				if(dis)
@@ -228,7 +228,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 
 	// End
 	{
-		app.DebugPrintf("Processing the end/n");
+		app.DebugPrintf("Processing the end\n");
 		int halfXZSize = END_LEVEL_MAX_WIDTH / 2;
 
 		int progressTarget = (END_LEVEL_MAX_WIDTH) * (END_LEVEL_MAX_WIDTH);
@@ -239,7 +239,7 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 		{
 			for(int z = -halfXZSize; z < halfXZSize; ++z)
 			{
-				//app.DebugPrintf("Processing end chunk %d,%d/n",x,z);
+				//app.DebugPrintf("Processing end chunk %d,%d\n",x,z);
 				DataInputStream *dis = sourceCache._getChunkDataInputStream(sourceSave,L"DIM1/",x,z);
 
 				if(dis)
@@ -284,14 +284,14 @@ void ConsoleSaveFileConverter::ConvertSave(ConsoleSaveFile *sourceSave, ConsoleS
 				if (fName.compare(fName.length() - suffix.length(), suffix.length(), suffix) == 0)
 				{
 #ifndef _CONTENT_PACKAGE
-					wprintf(L"Processing a region file: %s/n", fe->data.filename);
+					wprintf(L"Processing a region file: %s\n", fe->data.filename);
 #endif
 					ProcessStandardRegionFile(sourceSave, File(fe->data.filename), targetSave, File(fe->data.filename));
 				}
 				else
 				{
 #ifndef _CONTENT_PACKAGE
-					wprintf(L"%s is not a region file, ignoring/n", fe->data.filename);
+					wprintf(L"%s is not a region file, ignoring\n", fe->data.filename);
 #endif
 				}
 			}

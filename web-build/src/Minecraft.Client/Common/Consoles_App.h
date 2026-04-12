@@ -128,7 +128,7 @@ public:
 	void			SetAppPaused(bool val);
 	static int		DisplaySavingMessage(LPVOID pParam,const C4JStorage::ESavingMessage eMsg, int iPad);
 	bool			GetGameStarted()																								{return m_bGameStarted;}
-	void			SetGameStarted(bool bVal)																						{ if(bVal) DebugPrintf("SetGameStarted - true/n"); else DebugPrintf("SetGameStarted - false/n"); m_bGameStarted = bVal; m_bIsAppPaused = !bVal;}
+	void			SetGameStarted(bool bVal)																						{ if(bVal) DebugPrintf("SetGameStarted - true\n"); else DebugPrintf("SetGameStarted - false\n"); m_bGameStarted = bVal; m_bIsAppPaused = !bVal;}
 	int				GetLocalPlayerCount(void);
 	bool			LoadInventoryMenu(int iPad,shared_ptr<LocalPlayer> player, bool bNavigateBack=false);
 	bool			LoadCreativeMenu(int iPad,shared_ptr<LocalPlayer> player,bool bNavigateBack=false);

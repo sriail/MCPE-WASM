@@ -59,7 +59,7 @@ int Entity::getSmallId()
 			if( removedFound )
 			{
 				// Has set up the entityIdRemovingFlags vector in this case, so we should check against this when allocating new ids
-				//				app.DebugPrintf("getSmallId: Removed entities found/n");
+				//				app.DebugPrintf("getSmallId: Removed entities found\n");
 				puiRemovedFlags = entityIdRemovingFlags;
 			}
 		}
@@ -79,7 +79,7 @@ int Entity::getSmallId()
 				{
 					if( puiRemovedFlags[i] & uiMask )
 					{
-						//						app.DebugPrintf("Avoiding using ID %d (0x%x)/n", i * 32 + j,puiRemovedFlags[i]);
+						//						app.DebugPrintf("Avoiding using ID %d (0x%x)\n", i * 32 + j,puiRemovedFlags[i]);
 						uiMask >>= 1;
 						continue;
 					}
@@ -96,7 +96,7 @@ int Entity::getSmallId()
 		puiUsedFlags++;
 	}
 
-	app.DebugPrintf("Out of small entity Ids... possible leak?/n");
+	app.DebugPrintf("Out of small entity Ids... possible leak?\n");
 	__debugbreak();
 	return -1;
 }
@@ -232,7 +232,7 @@ void Entity::tickExtraWandering()
 
 			entityId = ( entityId + 1 ) % 2048;
 		}
-		//		printf("/n");
+		//		printf("\n");
 	}
 }
 
@@ -2103,7 +2103,7 @@ wstring Entity::getNetworkName()
 void Entity::setAnimOverrideBitmask(unsigned int uiBitmask)
 {
 	m_uiAnimOverrideBitmask=uiBitmask;
-	app.DebugPrintf("!!! Setting anim override bitmask to %d/n",uiBitmask);
+	app.DebugPrintf("!!! Setting anim override bitmask to %d\n",uiBitmask);
 }
 unsigned int Entity::getAnimOverrideBitmask()
 {

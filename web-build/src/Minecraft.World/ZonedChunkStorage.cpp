@@ -161,7 +161,7 @@ void ZonedChunkStorage::tick()
 		for ( int64_t key : toClose )
 		{
 			char buf[256];
-			sprintf(buf,"Closing zone %I64d/n",key);
+			sprintf(buf,"Closing zone %I64d\n",key);
 			app.DebugPrintf(buf);
             zoneFiles[key]->close();
 			zoneFiles.erase(zoneFiles.find(key));

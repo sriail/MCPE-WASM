@@ -132,7 +132,7 @@ void Fireball::tick()
 	{
 		if((owner != NULL && owner->removed) || !level->hasChunkAt((int) x, (int) y, (int) z))
 		{
-			app.DebugPrintf("Fireball removed - owner is null or removed is true for owner/n");
+			app.DebugPrintf("Fireball removed - owner is null or removed is true for owner\n");
 			remove();
 			return;
 		}
@@ -145,7 +145,7 @@ void Fireball::tick()
 			if ((x<=minXZ) || (x>=maxXZ) || (z<=minXZ) || (z>=maxXZ)) 
 			{
 				remove();
-				app.DebugPrintf("Fireball removed - end of world/n");
+				app.DebugPrintf("Fireball removed - end of world\n");
 				return;
 			}
 		}
@@ -153,7 +153,7 @@ void Fireball::tick()
 
     Entity::tick();
 
-	//app.DebugPrintf("Fireball x %d, y %d, z%d/n",(int)x,(int)y,(int)z);
+	//app.DebugPrintf("Fireball x %d, y %d, z%d\n",(int)x,(int)y,(int)z);
 
     if(shouldBurn()) setOnFire(1);
 
@@ -166,7 +166,7 @@ void Fireball::tick()
             if (life == SharedConstants::TICKS_PER_SECOND * 30) 
 			{
 				remove();
-				app.DebugPrintf("Fireball removed - life is 20*60/n");
+				app.DebugPrintf("Fireball removed - life is 20*60\n");
 			}
             return;
         }
@@ -280,7 +280,7 @@ void Fireball::tick()
 			xd=0.0;
 			zd=0.0;
 			yd=0.0;
-			app.DebugPrintf("Removing a fireball with zero velocity/n");
+			app.DebugPrintf("Removing a fireball with zero velocity\n");
 			remove();
 		}
 	}

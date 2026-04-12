@@ -165,14 +165,14 @@ bool EnderEyeItem::TestUse(shared_ptr<ItemInstance> itemInstance, Level *level, 
 // 				level->getLevelData()->setZStronghold(z);
 // 				level->getLevelData()->setHasStronghold();
 // 
-// 				app.DebugPrintf("=== FOUND stronghold in terrain features list/n");
+// 				app.DebugPrintf("=== FOUND stronghold in terrain features list\n");
 // 				
 // 				app.SetXuiServerAction(ProfileManager.GetPrimaryPad(),eXuiServerAction_StrongholdPosition);
 // 			}
 // 			else
 			{
 				// can't find the stronghold position in the terrain feature list. Do we have to run a post-process?
-				app.DebugPrintf("=== Can't find stronghold in terrain features list/n");
+				app.DebugPrintf("=== Can't find stronghold in terrain features list\n");
 			}
 
 		}

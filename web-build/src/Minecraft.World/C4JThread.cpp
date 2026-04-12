@@ -11,10 +11,8 @@ extern "C" {
 extern void user_registerthread();
 extern void user_removethread();
 }
-#else
-#if defined(__PS3__)
+#elif defined(__PS3__)
 #include "../Minecraft.Client/PS3/PS3Extras/ShutdownManager.h"
-#endif
 
 #endif
 
@@ -112,7 +110,7 @@ C4JThread::C4JThread( C4JThreadStartFunc* startFunc, void* param, const char* th
 	}
 
 	m_threadID = sceKernelCreateThread(m_threadName, entryPoint, g_DefaultPriority, m_stackSize, 0, CPU, NULL);
-	app.DebugPrintf("***************************** start thread %s **************************/n", m_threadName);
+	app.DebugPrintf("***************************** start thread %s **************************\n", m_threadName);
 #else
 	m_threadID = 0;
 	m_threadHandle = 0;
@@ -227,7 +225,7 @@ SceInt32 C4JThread::entryPoint(SceSize argSize, void *pArgBlock)
 	C4JThread* pThread = strArg->Thread;
 	user_registerthread();
 	pThread->m_exitCode = (*pThread->m_startFunc)(pThread->m_threadParam);
-	app.DebugPrintf("***************************** thread exit %s **************************/n", pThread->m_threadName);
+	app.DebugPrintf("***************************** thread exit %s **************************\n", pThread->m_threadName);
 	pThread->m_completionFlag->Set();
 	pThread->m_isRunning = false;
 
@@ -294,7 +292,7 @@ void C4JThread::SetProcessor( int proc )
 	//m_CPUMask = Mask;
 //	int err = sceKernelChangeThreadCpuAffinityMask(m_threadID, Mask);
 	int Newmask = sceKernelGetThreadCpuAffinityMask(m_threadID);
-	app.DebugPrintf("***************************** set thread proc %s %d %d %d **************************/n", m_threadName, proc, Mask, Newmask);
+	app.DebugPrintf("***************************** set thread proc %s %d %d %d **************************\n", m_threadName, proc, Mask, Newmask);
 #elif defined _DURANGO
 	SetThreadAffinityMask(m_threadHandle, 1 << proc );
 #else
@@ -353,7 +351,7 @@ void C4JThread::SetPriority( int priority )
 	}
 
 //	sceKernelChangeThreadPriority(m_threadID, m_priority);
-	app.DebugPrintf("***************************** set thread prio %s %d %d **************************/n", m_threadName, priority, m_priority);
+	app.DebugPrintf("***************************** set thread prio %s %d %d **************************\n", m_threadName, priority, m_priority);
 #else
 	SetThreadPriority(m_threadHandle, priority);
 #endif // __PS3__
@@ -475,7 +473,7 @@ C4JThread::Event::Event(EMode mode/* = e_modeAutoClear*/)
 	attr.key = 0;
 	attr.flags = 0;
 	attr.type = SYS_SYNC_WAITER_SINGLE; 
-	attr.name[0] = '/0';
+	attr.name[0] = '\0';
 	sys_event_flag_attribute_initialize(attr);
 	
 	int err = sys_event_flag_create(&m_event, &attr, 0);
@@ -619,7 +617,7 @@ C4JThread::EventArray::EventArray( int size, EMode mode/* = e_modeAutoClear*/)
 	attr.key = 0;
 	attr.flags = 0;
 	attr.type = SYS_SYNC_WAITER_SINGLE; 
-	attr.name[0] = '/0';
+	attr.name[0] = '\0';
 	sys_event_flag_attribute_initialize(attr);
 	int err = sys_event_flag_create(&m_events, &attr, 0);
 	assert(err == CELL_OK);

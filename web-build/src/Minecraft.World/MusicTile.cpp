@@ -10,10 +10,10 @@ MusicTile::MusicTile(int id) : EntityTile(id, Material::wood)
 
 void MusicTile::neighborChanged(Level *level, int x, int y, int z, int type)
 {
-	app.DebugPrintf("-------- Neighbour changed type %d/n", type);
+	app.DebugPrintf("-------- Neighbour changed type %d\n", type);
 	bool signal = level->hasNeighborSignal(x, y, z);
 	shared_ptr<MusicTileEntity> mte = dynamic_pointer_cast<MusicTileEntity>( level->getTileEntity(x, y, z) );
-	app.DebugPrintf("-------- Signal is %s, tile is currently %s/n",signal?"TRUE":"FALSE", mte->on?"ON":"OFF");
+	app.DebugPrintf("-------- Signal is %s, tile is currently %s\n",signal?"TRUE":"FALSE", mte->on?"ON":"OFF");
 	if (mte != NULL && mte->on != signal)
 	{
 		if (signal)
@@ -78,7 +78,7 @@ void MusicTile::triggerEvent(Level *level, int x, int y, int z, int i, int note)
 		iSound=eSoundType_NOTE_HARP;
 		break;
 	}
-	app.DebugPrintf("MusicTile::triggerEvent - playSound - pitch = %f/n",pitch);
+	app.DebugPrintf("MusicTile::triggerEvent - playSound - pitch = %f\n",pitch);
 	level->playSound(x + 0.5, y + 0.5, z + 0.5, iSound, 3, pitch);
 	level->addParticle(eParticleType_note, x + 0.5, y + 1.2, z + 0.5, note / 24.0, 0, 0);
 }

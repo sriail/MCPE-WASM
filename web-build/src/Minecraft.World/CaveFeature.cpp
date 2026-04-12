@@ -41,7 +41,7 @@ bool CaveFeature::place(Level *level, Random *random, int x, int y, int z)
 			bool intersects = levelGenOptions->checkIntersects((xx - r / 2), (yy - hr / 2), (zz - r / 2), (xx + r / 2), (yy + hr / 2), (zz + r / 2));
 			if(intersects)
 			{
-				//app.DebugPrintf("Skipping cave feature generation as it overlaps a game rule structure/n");
+				//app.DebugPrintf("Skipping cave feature generation as it overlaps a game rule structure\n");
 				return false;
 			}
 		}

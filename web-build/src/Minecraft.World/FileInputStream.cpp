@@ -162,7 +162,7 @@ void FileInputStream::close()
 {
 	if(m_fileHandle==INVALID_HANDLE_VALUE)
 	{
-		//printf("/n/nFileInputStream::close - TRYING TO CLOSE AN INVALID FILE HANDLE/n/n");
+		//printf("\n\nFileInputStream::close - TRYING TO CLOSE AN INVALID FILE HANDLE\n\n");
 		return;
 	}
 

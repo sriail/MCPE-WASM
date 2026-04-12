@@ -53,7 +53,7 @@ bool ReedTile::mayPlace(Level *level, int x, int y, int z)
 	if (level->getMaterial(x + 1, y - 1, z) == Material::water) return true;
 	if (level->getMaterial(x, y - 1, z - 1) == Material::water) return true;
 	if (level->getMaterial(x, y - 1, z + 1) == Material::water) return true;
-	//printf("no water/n");
+	//printf("no water\n");
 	return false;
 }
 

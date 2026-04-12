@@ -49,7 +49,7 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
 
 #define ERR_MSG(err) z_errmsg[Z_NEED_DICT-(err)]
 
-#define ERR_RETURN(strm,err) /
+#define ERR_RETURN(strm,err) \
   return (strm->msg = ERR_MSG(err), (err))
 /* To be used only when the state is known to be valid */
 
@@ -103,7 +103,7 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
 
 #if defined(VAXC) || defined(VMS)
 #  define OS_CODE  0x02
-#  define F_OPEN(name, mode) /
+#  define F_OPEN(name, mode) \
      fopen((name), (mode), "mbc=60", "ctx=stm", "rfm=fix", "mrs=512")
 #endif
 
@@ -168,7 +168,7 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
 #endif
 
 /* provide prototypes for these when building zlib without LFS */
-#if !defined(_WIN32) && /
+#if !defined(_WIN32) && \
     (!defined(_LARGEFILE64_SOURCE) || _LFS64_LARGEFILE-0 == 0)
     ZEXTERN uLong ZEXPORT adler32_combine64 OF((uLong, uLong, z_off_t));
     ZEXTERN uLong ZEXPORT crc32_combine64 OF((uLong, uLong, z_off_t));
@@ -241,13 +241,13 @@ extern z_const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
    void ZLIB_INTERNAL zcfree  OF((voidpf opaque, voidpf ptr));
 #endif
 
-#define ZALLOC(strm, items, size) /
+#define ZALLOC(strm, items, size) \
            (*((strm)->zalloc))((strm)->opaque, (items), (size))
 #define ZFREE(strm, addr)  (*((strm)->zfree))((strm)->opaque, (voidpf)(addr))
 #define TRY_FREE(s, p) {if (p) ZFREE(s, p);}
 
 /* Reverse the bytes in a 32-bit value */
-#define ZSWAP32(q) ((((q) >> 24) & 0xff) + (((q) >> 8) & 0xff00) + /
+#define ZSWAP32(q) ((((q) >> 24) & 0xff) + (((q) >> 8) & 0xff00) + \
                     (((q) & 0xff00) << 8) + (((q) & 0xff) << 24))
 
 #endif /* ZUTIL_H */

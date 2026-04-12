@@ -284,7 +284,7 @@ shared_ptr<ItemInstance> ItemEntity::getItem()
 	{
 		if (level != NULL)
 		{
-			app.DebugPrintf("Item entity %d has no item?!/n", entityId);
+			app.DebugPrintf("Item entity %d has no item?!\n", entityId);
 			//level.getLogger().severe("Item entity " + entityId + " has no item?!");
 		}
 		return shared_ptr<ItemInstance>(new ItemInstance(Tile::stone));

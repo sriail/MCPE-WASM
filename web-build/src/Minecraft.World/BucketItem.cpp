@@ -115,11 +115,11 @@ shared_ptr<ItemInstance> BucketItem::use(shared_ptr<ItemInstance> itemInstance, 
 
 		if (!level->mayInteract(player, xt, yt, zt,content))
 		{
-			app.DebugPrintf("!!!!!!!!!!! Can't place that here/n");
+			app.DebugPrintf("!!!!!!!!!!! Can't place that here\n");
 			shared_ptr<ServerPlayer> servPlayer = dynamic_pointer_cast<ServerPlayer>(player);
 			if( servPlayer != NULL )
 			{
-				app.DebugPrintf("Sending ChatPacket::e_ChatCannotPlaceLava to player/n");
+				app.DebugPrintf("Sending ChatPacket::e_ChatCannotPlaceLava to player\n");
 				servPlayer->connection->send( shared_ptr<ChatPacket>( new ChatPacket(L"", ChatPacket::e_ChatCannotPlaceLava ) ) );
 			}
 

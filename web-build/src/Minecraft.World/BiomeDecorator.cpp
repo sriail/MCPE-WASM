@@ -21,7 +21,7 @@ void BiomeDecorator::decorate(Level *level, Random *random, int xo, int zo)
 {
 	if (this->level != NULL)
 	{
-		app.DebugPrintf("BiomeDecorator::decorate - Already decorating!!/n");
+		app.DebugPrintf("BiomeDecorator::decorate - Already decorating!!\n");
 #ifndef _CONTENT_PACKAGE
 		__debugbreak();
 		//throw new RuntimeException("Already decorating!!");

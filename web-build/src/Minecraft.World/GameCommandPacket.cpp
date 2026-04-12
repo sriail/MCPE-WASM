@@ -21,7 +21,7 @@ GameCommandPacket::GameCommandPacket(EGameCommand command, byteArray data)
 
 		if (length > Short::MAX_VALUE)
 		{
-			app.DebugPrintf("Payload may not be larger than 32K/n");
+			app.DebugPrintf("Payload may not be larger than 32K\n");
 #ifndef _CONTENT_PACKAGE
 			__debugbreak();
 #endif

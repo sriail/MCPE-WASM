@@ -16,9 +16,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PlayerSelector {
-    private static final Pattern PATTERN_TARGETS = Pattern.compile("^@([parf])(?://[([//w=,!-]*)//])?$");
-    private static final Pattern PATTERN_SHORT_ARGUMENT = Pattern.compile("//G([-!]?[//w-]*)(?:$|,)");
-    private static final Pattern PATTERN_LONG_ARGUMENT = Pattern.compile("//G(//w+)=([-!]?[//w-]*)(?:$|,)");
+    private static final Pattern PATTERN_TARGETS = Pattern.compile("^@([parf])(?:\\[([\\w=,!-]*)\\])?$");
+    private static final Pattern PATTERN_SHORT_ARGUMENT = Pattern.compile("\\G([-!]?[\\w-]*)(?:$|,)");
+    private static final Pattern PATTERN_LONG_ARGUMENT = Pattern.compile("\\G(\\w+)=([-!]?[\\w-]*)(?:$|,)");
 
     private static final int TARGETS_GROUP_TYPE = 1;
     private static final int TARGETS_GROUP_ARGS = 2; // Null if not specified

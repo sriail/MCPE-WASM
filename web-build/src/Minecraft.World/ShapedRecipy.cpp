@@ -108,7 +108,7 @@ int ShapedRecipy::size()
 // 4J-PB
 bool ShapedRecipy::requires(int iRecipe) 
 {
-	app.DebugPrintf("ShapedRecipy %d/n",iRecipe);
+	app.DebugPrintf("ShapedRecipy %d\n",iRecipe);
 	int iCount=0;
 	for (int x = 0; x < 3; x++) 
 	{
@@ -119,7 +119,7 @@ bool ShapedRecipy::requires(int iRecipe)
 				ItemInstance *expected = recipeItems[x+y*width];
 				if (expected!=NULL) 
 				{			
-					//printf("/tIngredient %d is %d/n",iCount++,expected->id);
+					//printf("\tIngredient %d is %d\n",iCount++,expected->id);
 				}
 			}
 		}
@@ -132,7 +132,7 @@ bool ShapedRecipy::requires(int iRecipe)
 
 void ShapedRecipy::requires(INGREDIENTS_REQUIRED *pIngReq) 
 {
-	//printf("ShapedRecipy %d/n",iRecipe);
+	//printf("ShapedRecipy %d\n",iRecipe);
 
 	int iCount=0;
 	bool bFound;
@@ -183,7 +183,7 @@ void ShapedRecipy::requires(INGREDIENTS_REQUIRED *pIngReq)
 						TempIngReq.iIngAuxValA[TempIngReq.iIngC]=iAuxVal;
 						TempIngReq.iIngValA[TempIngReq.iIngC++]++;
 					}
-					//printf("/tIngredient %d is %d/n",iCount++,expected->id);
+					//printf("\tIngredient %d is %d\n",iCount++,expected->id);
 				}
 
 			}

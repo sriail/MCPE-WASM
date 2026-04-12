@@ -23,7 +23,7 @@ int Connection::writeSizes[256];
 
 void Connection::_init()
 {
-//	printf("Con:0x%x init/n",this);
+//	printf("Con:0x%x init\n",this);
 	InitializeCriticalSection(&writeLock);
 	InitializeCriticalSection(&threadCounterLock);
 	InitializeCriticalSection(&incoming_cs);
@@ -110,8 +110,8 @@ Connection::Connection(Socket *socket, const wstring& id, PacketListener *packet
 	const char *szId = wstringtofilename(id);
 	char readThreadName[256];
 	char writeThreadName[256];
-	sprintf(readThreadName,"%s read/n",szId);
-	sprintf(writeThreadName,"%s write/n",szId);
+	sprintf(readThreadName,"%s read\n",szId);
+	sprintf(writeThreadName,"%s write\n",szId);
 
 	readThread = new C4JThread(runRead, (void*)this, readThreadName, READ_STACK_SIZE);
 	writeThread = new C4JThread(runWrite, this, writeThreadName, WRITE_STACK_SIZE);
@@ -340,10 +340,10 @@ bool Connection::readTick()
 	} 
 	else
 	{
-//		printf("Con:0x%x readTick close EOS/n",this);
+//		printf("Con:0x%x readTick close EOS\n",this);
 
 		// 4J Stu - Remove this line
-		// Fix for #10410 - UI: If the player is removed from a splitscreened host’s game, the next game that player joins will produce a message stating that the host has left.
+		// Fix for #10410 - UI: If the player is removed from a splitscreened hostï¿½s game, the next game that player joins will produce a message stating that the host has left.
 		//close(DisconnectPacket::eDisconnect_EndOfStream);
 	}
 
@@ -368,9 +368,9 @@ close("disconnect.genericReason", "Internal exception: " + e.toString());
 
 void Connection::close(DisconnectPacket::eDisconnectReason reason, ...)
 {
-//	printf("Con:0x%x close/n",this);
+//	printf("Con:0x%x close\n",this);
 	if (!running) return;
-//	printf("Con:0x%x close doing something/n",this);
+//	printf("Con:0x%x close doing something\n",this);
 	disconnected = true;
 
 	va_list input;
@@ -502,7 +502,7 @@ void Connection::tick()
 	// MGH - moved the packet handling outside of the incoming_cs block, as it was locking up sometimes when disconnecting
 	for(int i=0; i<packetsToHandle.size();i++)
 	{
-		PIXBeginNamedEvent(0,"Handling packet %d/n",packetsToHandle[i]->getId());
+		PIXBeginNamedEvent(0,"Handling packet %d\n",packetsToHandle[i]->getId());
 		packetsToHandle[i]->handle(packetListener);
 		PIXEndNamedEvent();
 	}
@@ -539,7 +539,7 @@ void Connection::sendAndQuit()
 	{
 		return;
 	}
-//	printf("Con:0x%x send & quit/n",this);
+//	printf("Con:0x%x send & quit\n",this);
 	flush();
 	quitting = true;
 	// TODO 4J Stu - How to interrupt threads? Or do we need to change the multithreaded functions a bit more
@@ -686,7 +686,7 @@ int Connection::runClose(void* lpParam)
 int Connection::runSendAndQuit(void* lpParam)
 {
 	Connection *con = dynamic_cast<Connection *>((Connection *) lpParam);
-//	printf("Con:0x%x runSendAndQuit/n",con);
+//	printf("Con:0x%x runSendAndQuit\n",con);
 
 	if (con == NULL) return 0;
 
@@ -697,10 +697,10 @@ int Connection::runSendAndQuit(void* lpParam)
 	{
 		// 4J TODO writeThread.interrupt();
 		con->close(DisconnectPacket::eDisconnect_Closed);
-//		printf("Con:0x%x runSendAndQuit close/n",con);
+//		printf("Con:0x%x runSendAndQuit close\n",con);
 	}
 
-//	printf("Con:0x%x runSendAndQuit end/n",con);
+//	printf("Con:0x%x runSendAndQuit end\n",con);
 	/* 4J Jev, removed try/catch
 	} catch (Exception e) {
 	e.printStackTrace();

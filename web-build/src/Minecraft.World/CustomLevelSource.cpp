@@ -21,13 +21,13 @@ CustomLevelSource::CustomLevelSource(Level *level, int64_t seed, bool generateSt
 	m_heightmapOverride = byteArray( (m_XZSize*16) * (m_XZSize*16) );
 
 #ifdef _UNICODE
-	wstring path = L"GAME://GameRules//heightmap.bin";
+	wstring path = L"GAME:\\GameRules\\heightmap.bin";
 
 #else
 #ifdef _WINDOWS64
-	string path = "GameRules//heightmap.bin";
+	string path = "GameRules\\heightmap.bin";
 #else
-	string path = "GAME://GameRules//heightmap.bin";
+	string path = "GAME:\\GameRules\\heightmap.bin";
 #endif
 #endif
 	HANDLE file = CreateFile(path.c_str(), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -48,7 +48,7 @@ CustomLevelSource::CustomLevelSource(Level *level, int64_t seed, bool generateSt
 #endif
 		if(dwFileSize > m_heightmapOverride.length)
 		{
-			app.DebugPrintf("Heightmap binary is too large!!/n");
+			app.DebugPrintf("Heightmap binary is too large!!\n");
 			__debugbreak();
 		}
 		BOOL bSuccess = ReadFile(file,m_heightmapOverride.data,dwFileSize,&bytesRead,NULL);
@@ -63,13 +63,13 @@ CustomLevelSource::CustomLevelSource(Level *level, int64_t seed, bool generateSt
 	m_waterheightOverride = byteArray( (m_XZSize*16) * (m_XZSize*16) );
 
 #ifdef _UNICODE
-	wstring waterHeightPath = L"GAME://GameRules//waterheight.bin";
+	wstring waterHeightPath = L"GAME:\\GameRules\\waterheight.bin";
 
 #else
 #ifdef _WINDOWS64
-	string waterHeightPath = "GameRules//waterheight.bin";
+	string waterHeightPath = "GameRules\\waterheight.bin";
 #else
-	string waterHeightPath = "GAME://GameRules//waterheight.bin";
+	string waterHeightPath = "GAME:\\GameRules\\waterheight.bin";
 #endif
 #endif
 	file = CreateFile(waterHeightPath.c_str(), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -90,7 +90,7 @@ CustomLevelSource::CustomLevelSource(Level *level, int64_t seed, bool generateSt
 #endif
 		if(dwFileSize > m_waterheightOverride.length)
 		{
-			app.DebugPrintf("waterheight binary is too large!!/n");
+			app.DebugPrintf("waterheight binary is too large!!\n");
 			__debugbreak();
 		}
 		BOOL bSuccess = ReadFile(file,m_waterheightOverride.data,dwFileSize,&bytesRead,NULL);
@@ -161,7 +161,7 @@ void CustomLevelSource::prepareHeights(int xOffs, int zOffs, byteArray blocks)
 							int mapIndex = (zMapStart * 16 + z + ( zc * CHUNK_WIDTH )) * (m_XZSize * 16) + (xMapStart * 16 + x + ( xc * CHUNK_WIDTH ));
 							int mapHeight = m_heightmapOverride[mapIndex];
 							waterHeight = m_waterheightOverride[mapIndex];
-							//app.DebugPrintf("MapHeight = %d, y = %d/n", mapHeight, yc * CHUNK_HEIGHT + y);
+							//app.DebugPrintf("MapHeight = %d, y = %d\n", mapHeight, yc * CHUNK_HEIGHT + y);
 							///////////////////////////////////////////////////////////////////
 							// 4J - add this chunk of code to make land "fall-off" at the edges of
 							// a finite world - size of that world is currently hard-coded in here

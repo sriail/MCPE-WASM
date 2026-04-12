@@ -16,13 +16,13 @@ int CommandDispatcher::performCommand(shared_ptr<CommandSender> sender, EGameCom
 		else
 		{
 #ifndef _CONTENT_PACKAGE
-			sender->sendMessage(L"/u00A7cYou do not have permission to use this command.");
+			sender->sendMessage(L"\u00A7cYou do not have permission to use this command.");
 #endif
 		}
 	}
 	else
 	{
-		app.DebugPrintf("Command %d not found!/n", command);
+		app.DebugPrintf("Command %d not found!\n", command);
 	}
 
 	return 0;

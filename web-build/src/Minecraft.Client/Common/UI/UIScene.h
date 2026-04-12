@@ -13,33 +13,33 @@ class UILayer;
 
 // 4J Stu - Setup some defines for quickly mapping elements in the scene
 
-#define UI_BEGIN_MAP_ELEMENTS_AND_NAMES(parentClass) /
-	virtual bool mapElementsAndNames() /
-	{ /
-		parentClass::mapElementsAndNames(); /
-		IggyValuePath *currentRoot = IggyPlayerRootPath ( getMovie() ); /
+#define UI_BEGIN_MAP_ELEMENTS_AND_NAMES(parentClass) \
+	virtual bool mapElementsAndNames() \
+	{ \
+		parentClass::mapElementsAndNames(); \
+		IggyValuePath *currentRoot = IggyPlayerRootPath ( getMovie() ); \
 		UIControl *_mapPanel = NULL;
 
-#define UI_END_MAP_ELEMENTS_AND_NAMES() /
-		return true; /
+#define UI_END_MAP_ELEMENTS_AND_NAMES() \
+		return true; \
 	}
 
-#define UI_MAP_ELEMENT( var, name) /
+#define UI_MAP_ELEMENT( var, name) \
 	{ var.setupControl(this, currentRoot , name ); var.m_pParentPanel = _mapPanel; m_controls.push_back(&var); }
 
-#define UI_BEGIN_MAP_CHILD_ELEMENTS( parent ) /
-	{ /
-		IggyValuePath *lastRoot = currentRoot; /
-		UIControl *_lastPanel = _mapPanel; /
-		currentRoot = parent.getIggyValuePath(); /
+#define UI_BEGIN_MAP_CHILD_ELEMENTS( parent ) \
+	{ \
+		IggyValuePath *lastRoot = currentRoot; \
+		UIControl *_lastPanel = _mapPanel; \
+		currentRoot = parent.getIggyValuePath(); \
 		_mapPanel = &parent;
 
-#define UI_END_MAP_CHILD_ELEMENTS() /
-		currentRoot = lastRoot; /
-		_mapPanel = _lastPanel; /
+#define UI_END_MAP_CHILD_ELEMENTS() \
+		currentRoot = lastRoot; \
+		_mapPanel = _lastPanel; \
 	}
 
-#define UI_MAP_NAME( var, name ) /
+#define UI_MAP_NAME( var, name ) \
 	{ var = registerFastName(name); }
 
 class UIScene

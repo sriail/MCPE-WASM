@@ -1059,11 +1059,11 @@ ShapedRecipy *Recipes::addShapedRecipy(ItemInstance *result, ...)
 
 	wchTypes = va_arg(vl,wchar_t *);
 
-	for(int i = 0; wchTypes[i] != L'/0'; ++i )
+	for(int i = 0; wchTypes[i] != L'\0'; ++i )
 	{
-		if(wchTypes[i+1]==L'/0' && wchTypes[i]!=L'g')
+		if(wchTypes[i+1]==L'\0' && wchTypes[i]!=L'g')
 		{
-			app.DebugPrintf("Missing group type/n");
+			app.DebugPrintf("Missing group type\n");
 		}
 
 		switch(wchTypes[i])
@@ -1194,7 +1194,7 @@ void Recipes::addShapelessRecipy(ItemInstance *result,... )
 	// t - Tile *
 	szTypes = va_arg(vl,wchar_t *);
 
-	for(int i = 0; szTypes[i] != L'/0'; ++i )
+	for(int i = 0; szTypes[i] != L'\0'; ++i )
 	{
 		switch(szTypes[i])
 		{

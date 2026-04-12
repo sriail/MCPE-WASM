@@ -58,7 +58,7 @@ AddMobPacket::AddMobPacket(shared_ptr<LivingEntity> mob, int yRotp, int xRotp, i
 	this->yd = (int) (yd * 8000.0);
 	this->zd = (int) (zd * 8000.0);
 
-	//	printf("%d: New add mob rot %d/n",id,yRot);
+	//	printf("%d: New add mob rot %d\n",id,yRot);
 
 	entityData = mob->getEntityData();
 	unpack = NULL;

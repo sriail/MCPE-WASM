@@ -9,7 +9,7 @@ const bool SharedConstants::TEXTURE_LIGHTING = true;
 wstring SharedConstants::readAcceptableChars()
 {
 	// 4J-PB - I've added ã in (for Portuguese in bed string) and added the character at the same place in the default.png font
-	wstring result = L" !/"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[//]^_'abcdefghijklmnopqrstuvwxyz{|}~ ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»ã";
+	wstring result = L" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~ ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»ã";
 #if 0 // 4J - do we actually really need to get this from a file?
 	//try {
 	//BufferedReader br = new BufferedReader(new InputStreamReader(SharedConstants.class.getResourceAsStream("/font.txt"), "UTF-8"));
@@ -47,5 +47,5 @@ void SharedConstants::staticCtor()
 const wchar_t SharedConstants::ILLEGAL_FILE_CHARACTERS[ILLEGAL_FILE_CHARACTERS_LENGTH] =
 {
 	// 4J-PB  - corrected
-	L'/', L'/n', L'/r', L'/t', L'/0', L'/f', L'`', L'?', L'*', L'//', L'<', L'>', L'|', L'/"', L':'
+	L'/', L'\n', L'\r', L'\t', L'\0', L'\f', L'`', L'?', L'*', L'\\', L'<', L'>', L'|', L'\"', L':'
 };

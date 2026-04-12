@@ -9,45 +9,45 @@ class InputStream;
 
 //		 0b FFFF CCCC CCCC CCCC CCCC CCCC CCEE EEEE
 //			|||| |||| |||| |||| |||| |||| |||| ||||
-//          |||| |||| |||| |||| |||| |||| |||| |||/- BIT00: ENUM:
-//          |||| |||| |||| |||| |||| |||| |||| ||/-- BIT01: ENUM:
-//          |||| |||| |||| |||| |||| |||| |||| |/--- BIT02: ENUM:
-//          |||| |||| |||| |||| |||| |||| |||| /---- BIT03: ENUM:
+//          |||| |||| |||| |||| |||| |||| |||| |||\- BIT00: ENUM:
+//          |||| |||| |||| |||| |||| |||| |||| ||\-- BIT01: ENUM:
+//          |||| |||| |||| |||| |||| |||| |||| |\--- BIT02: ENUM:
+//          |||| |||| |||| |||| |||| |||| |||| \---- BIT03: ENUM:
 //          |||| |||| |||| |||| |||| |||| ||||
-//          |||| |||| |||| |||| |||| |||| |||/------ BIT04: ENUM:
-//          |||| |||| |||| |||| |||| |||| ||/------- BIT05: ENUM:
-//          |||| |||| |||| |||| |||| |||| |/-------- BIT06: CLASS: WATER_MOB
-//          |||| |||| |||| |||| |||| |||| /--------- BIT07: CLASS: AMBIENT_MOB
+//          |||| |||| |||| |||| |||| |||| |||\------ BIT04: ENUM:
+//          |||| |||| |||| |||| |||| |||| ||\------- BIT05: ENUM:
+//          |||| |||| |||| |||| |||| |||| |\-------- BIT06: CLASS: WATER_MOB
+//          |||| |||| |||| |||| |||| |||| \--------- BIT07: CLASS: AMBIENT_MOB
 //          |||| |||| |||| |||| |||| |||| 							
-//          |||| |||| |||| |||| |||| |||/----------- BIT08: CLASS: !ENTITY (so we can hide TILE_ENTITY and DISPENSER_TILE_ENTITY bits which aren't relevant for entities)
-//          |||| |||| |||| |||| |||| ||/------------ BIT09: CLASS: MINECART_CONTAINER
-//          |||| |||| |||| |||| |||| |/------------- BIT10: CLASS: SLIME			
-//          |||| |||| |||| |||| |||| /-------------- BIT11: CLASS: ZOMBIE			
+//          |||| |||| |||| |||| |||| |||\----------- BIT08: CLASS: !ENTITY (so we can hide TILE_ENTITY and DISPENSER_TILE_ENTITY bits which aren't relevant for entities)
+//          |||| |||| |||| |||| |||| ||\------------ BIT09: CLASS: MINECART_CONTAINER
+//          |||| |||| |||| |||| |||| |\------------- BIT10: CLASS: SLIME			
+//          |||| |||| |||| |||| |||| \-------------- BIT11: CLASS: ZOMBIE			
 //          |||| |||| |||| |||| ||||       		    	  
-//          |||| |||| |||| |||| |||/---------------- BIT12: CLASS: SPIDER			
-//          |||| |||| |||| |||| ||/----------------- BIT13: CLASS: COW				
-//          |||| |||| |||| |||| |/------------------ BIT14: CLASS: TAMABLE			
-//          |||| |||| |||| |||| /------------------- BIT15: CLASS: ANIMAL			
+//          |||| |||| |||| |||| |||\---------------- BIT12: CLASS: SPIDER			
+//          |||| |||| |||| |||| ||\----------------- BIT13: CLASS: COW				
+//          |||| |||| |||| |||| |\------------------ BIT14: CLASS: TAMABLE			
+//          |||| |||| |||| |||| \------------------- BIT15: CLASS: ANIMAL			
 //			|||| |||| |||| ||||									   
-//			|||| |||| |||| |||/--------------------- BIT16: CLASS: MONSTER			
-//			|||| |||| |||| ||/---------------------- BIT17: CLASS: GOLEM			
-//          |||| |||| |||| |/----------------------- BIT18: CLASS: AGABLE_MOB		
-//			|||| |||| |||| /------------------------ BIT19: CLASS: PATHFINDER_MOB	
+//			|||| |||| |||| |||\--------------------- BIT16: CLASS: MONSTER			
+//			|||| |||| |||| ||\---------------------- BIT17: CLASS: GOLEM			
+//          |||| |||| |||| |\----------------------- BIT18: CLASS: AGABLE_MOB		
+//			|||| |||| |||| \------------------------ BIT19: CLASS: PATHFINDER_MOB	
 //			|||| |||| ||||  									   
-//			|||| |||| |||/-------------------------- BIT20: CLASS: PLAYER			
-//			|||| |||| ||/--------------------------- BIT21: CLASS: MOB				
-//			|||| |||| |/---------------------------- BIT22: CLASS: HANGING_ENTITY	
-//			|||| |||| /----------------------------- BIT23: CLASS: THROWABLE		
+//			|||| |||| |||\-------------------------- BIT20: CLASS: PLAYER			
+//			|||| |||| ||\--------------------------- BIT21: CLASS: MOB				
+//			|||| |||| |\---------------------------- BIT22: CLASS: HANGING_ENTITY	
+//			|||| |||| \----------------------------- BIT23: CLASS: THROWABLE		
 //			|||| ||||            								   
-//          |||| |||/------------------------------- BIT24: CLASS: FIREBALL			
-//          |||| ||/-------------------------------- BIT25: CLASS: MINECART			
-//          |||| |/--------------------------------- BIT26: CLASS: LIVING_ENTITY	
-//          |||| /---------------------------------- BIT27: CLASS: ENTITY			
+//          |||| |||\------------------------------- BIT24: CLASS: FIREBALL			
+//          |||| ||\-------------------------------- BIT25: CLASS: MINECART			
+//          |||| |\--------------------------------- BIT26: CLASS: LIVING_ENTITY	
+//          |||| \---------------------------------- BIT27: CLASS: ENTITY			
 //          ||||                		    
-//          |||/------------------------------------ BIT28: FLAGS: valid in spawner flag
-//          ||/------------------------------------- BIT29: FLAGS: Spawnlimitcheck
-//          |/-------------------------------------- BIT30: FLAGS: Enemy
-//          /--------------------------------------- BIT31: FLAGS: projectile
+//          |||\------------------------------------ BIT28: FLAGS: valid in spawner flag
+//          ||\------------------------------------- BIT29: FLAGS: Spawnlimitcheck
+//          |\-------------------------------------- BIT30: FLAGS: Enemy
+//          \--------------------------------------- BIT31: FLAGS: projectile
 
 
 #define Bit(a) ((1)<<(a))
@@ -588,12 +588,12 @@ public:
 		for (itrErr = m_falsePositives.begin(); itrErr != m_falsePositives.end(); itrErr++)
 		{
 			SubClass *sub = itrErr->first, *super = itrErr->second;
-			printf( "[Class.h] Error: '%s' incorrectly derives from '%s'./n", sub->m_name.c_str(), super->m_name.c_str() );
+			printf( "[Class.h] Error: '%s' incorrectly derives from '%s'.\n", sub->m_name.c_str(), super->m_name.c_str() );
 		}
 		for (itrErr = m_falseNegatives.begin(); itrErr != m_falseNegatives.end(); itrErr++)
 		{
 			SubClass *sub = itrErr->first, *super = itrErr->second;
-			printf( "[Class.h] Error: '%s' doesn't derive '%s'./n", sub->m_name.c_str(), super->m_name.c_str() );
+			printf( "[Class.h] Error: '%s' doesn't derive '%s'.\n", sub->m_name.c_str(), super->m_name.c_str() );
 		}
 
 		if ( (m_falsePositives.size() > 0) || (m_falseNegatives.size() > 0) )

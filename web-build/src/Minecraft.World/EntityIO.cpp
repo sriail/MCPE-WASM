@@ -187,7 +187,7 @@ shared_ptr<Entity> EntityIO::loadStatic(CompoundTag *tag, Level *level)
 	else
 	{
 #ifdef _DEBUG
-		app.DebugPrintf("Skipping Entity with id %ls/n", tag->getString(L"id").c_str() );
+		app.DebugPrintf("Skipping Entity with id %ls\n", tag->getString(L"id").c_str() );
 #endif
 	}
 	return entity;
@@ -213,7 +213,7 @@ shared_ptr<Entity> EntityIO::newById(int id, Level *level)
 	}
 	else
 	{
-		//printf("Skipping Entity with id %d/n", id ) ;
+		//printf("Skipping Entity with id %d\n", id ) ;
 	}
 	return entity;
 }

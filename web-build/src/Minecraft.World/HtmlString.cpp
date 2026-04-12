@@ -26,7 +26,7 @@ wstring HtmlString::ToString()
 
 	eMinecraftColour color = this->color == eMinecraftColour_NOT_SET ? eHTMLColor_7 : this->color;
 
-	ss << L"<font color=/"#" << std::setfill(L'0') << std::setw(6) << std::hex << app.GetHTMLColor(color) << L"/">" << text << "</font>";
+	ss << L"<font color=\"#" << std::setfill(L'0') << std::setw(6) << std::hex << app.GetHTMLColor(color) << L"\">" << text << "</font>";
 
 	if (italics)
 	{

@@ -50,11 +50,11 @@ void SignTileEntity::save(CompoundTag *tag)
 	tag->putString(L"Text3", m_wsmessages[2] );
 	tag->putString(L"Text4", m_wsmessages[3] );
 #ifndef _CONTENT_PACKAGE
-	OutputDebugStringW(L"### - Saving a sign with text - /n");
+	OutputDebugStringW(L"### - Saving a sign with text - \n");
 	for(int i=0;i<4;i++)
 	{
 		OutputDebugStringW(m_wsmessages[i].c_str());
-		OutputDebugStringW(L"/n");
+		OutputDebugStringW(L"\n");
 	}
 #endif
 }
@@ -71,11 +71,11 @@ void SignTileEntity::load(CompoundTag *tag)
 		if (m_wsmessages[i].length() > MAX_LINE_LENGTH) m_wsmessages[i] = m_wsmessages[i].substr(0, MAX_LINE_LENGTH);
 	}
 #ifndef _CONTENT_PACKAGE
-	OutputDebugStringW(L"### - Loaded a sign with text - /n");
+	OutputDebugStringW(L"### - Loaded a sign with text - \n");
 	for(int i=0;i<4;i++)
 	{
 		OutputDebugStringW(m_wsmessages[i].c_str());
-		OutputDebugStringW(L"/n");
+		OutputDebugStringW(L"\n");
 	}
 #endif
 
@@ -171,7 +171,7 @@ void SignTileEntity::SetMessage(int iIndex,wstring &wsText)
     {
         wsText = wsText.substr(0, MAX_LINE_LENGTH);
 #ifdef _DEBUG
-        OutputDebugStringW(L"Sign text truncated to 15 characters/n");
+        OutputDebugStringW(L"Sign text truncated to 15 characters\n");
 #endif
     }
 	m_wsmessages[iIndex]=wsText;

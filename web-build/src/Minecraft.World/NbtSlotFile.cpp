@@ -168,7 +168,7 @@ void NbtSlotFile::replaceSlot(int slot, vector<CompoundTag *> *tags)
 			wchar_t buf[256];
             largest = compressed.length;
 #ifndef _CONTENT_PACKAGE
-			swprintf(buf, 256, L"New largest: %I64d (%ls)/n",largest,tag->getString(L"id").c_str() );
+			swprintf(buf, 256, L"New largest: %I64d (%ls)\n",largest,tag->getString(L"id").c_str() );
 			OutputDebugStringW(buf);
 #endif
         }

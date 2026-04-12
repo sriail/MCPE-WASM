@@ -995,7 +995,7 @@ bool EntityHorse::mobInteract(shared_ptr<Player> player)
 		}
 		doPlayerRide(player);
 
-		app.DebugPrintf("<EntityHorse::mobInteract> Horse speed: %f/n", (float) (getAttribute(SharedMonsterAttributes::MOVEMENT_SPEED)->getValue()));
+		app.DebugPrintf("<EntityHorse::mobInteract> Horse speed: %f\n", (float) (getAttribute(SharedMonsterAttributes::MOVEMENT_SPEED)->getValue()));
 
 		return true;
 	}
@@ -1813,7 +1813,7 @@ double EntityHorse::generateRandomJumpStrength()
 double EntityHorse::generateRandomSpeed()
 {
 	double speed = (0.45f + random->nextDouble() * .3 + random->nextDouble() * .3 + random->nextDouble() * .3) * 0.25f;
-	app.DebugPrintf("<EntityHorse::generateRandomSpeed> Speed: %f/n", speed);
+	app.DebugPrintf("<EntityHorse::generateRandomSpeed> Speed: %f\n", speed);
 	return speed;
 }
 

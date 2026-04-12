@@ -132,7 +132,7 @@ void FireworksChargeItem::appendHoverText(CompoundTag *expTag, vector<HtmlString
 			int c = colorList[i];
 			if (!first)
 			{
-				output += L",/n"; // 4J-PB  - without the newline, they tend to go offscreen in split-screen or localised languages
+				output += L",\n"; // 4J-PB  - without the newline, they tend to go offscreen in split-screen or localised languages
 			}
 			first = false;
 
@@ -166,7 +166,7 @@ void FireworksChargeItem::appendHoverText(CompoundTag *expTag, vector<HtmlString
 			int c = fadeList[i];
 			if (!first)
 			{
-				output += L",/n";// 4J-PB  - without the newline, they tend to go offscreen in split-screen or localised languages
+				output += L",\n";// 4J-PB  - without the newline, they tend to go offscreen in split-screen or localised languages
 			}
 			first = false;
 

@@ -108,7 +108,7 @@ shared_ptr<TileEntity> TileEntity::loadStatic(CompoundTag *tag)
 	else
 	{
 #ifdef _DEBUG
-		app.DebugPrintf("Skipping TileEntity with id %ls./n" , tag->getString(L"id").c_str() );
+		app.DebugPrintf("Skipping TileEntity with id %ls.\n" , tag->getString(L"id").c_str() );
 #endif
 	}
 

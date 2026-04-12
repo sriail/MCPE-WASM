@@ -184,11 +184,11 @@ void FurnaceTile::onRemove(Level *level, int x, int y, int z, int id, int data)
 #ifndef _CONTENT_PACKAGE
 						if(level->isClientSide)
 						{
-							printf("Client furnace dropping %d of %d/%d/n", count, item->id, item->getAuxValue() );
+							printf("Client furnace dropping %d of %d/%d\n", count, item->id, item->getAuxValue() );
 						}
 						else
 						{
-							printf("Server furnace dropping %d of %d/%d/n", count, item->id, item->getAuxValue() );
+							printf("Server furnace dropping %d of %d/%d\n", count, item->id, item->getAuxValue() );
 						}
 #endif
 						

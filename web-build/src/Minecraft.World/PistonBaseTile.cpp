@@ -228,7 +228,7 @@ bool PistonBaseTile::triggerEvent(Level *level, int x, int y, int z, int param1,
 
 	if (param1 == TRIGGER_EXTEND)
 	{
-		PIXBeginNamedEvent(0,"Create push/n");
+		PIXBeginNamedEvent(0,"Create push\n");
 		if (createPush(level, x, y, z, facing))
 		{
 			// 4J - it is (currently) critical that this setData sends data to the client, so have added a bool to the method so that it sends data even if the data was already set to the same value
@@ -253,7 +253,7 @@ bool PistonBaseTile::triggerEvent(Level *level, int x, int y, int z, int param1,
 	}
 	else if (param1 == TRIGGER_CONTRACT)
 	{
-		PIXBeginNamedEvent(0,"Contract phase A/n");
+		PIXBeginNamedEvent(0,"Contract phase A\n");
 		shared_ptr<TileEntity> prevTileEntity = level->getTileEntity(x + Facing::STEP_X[facing], y + Facing::STEP_Y[facing], z + Facing::STEP_Z[facing]);
 		if (prevTileEntity != NULL && dynamic_pointer_cast<PistonPieceEntity>(prevTileEntity) != NULL)
 		{
@@ -269,7 +269,7 @@ bool PistonBaseTile::triggerEvent(Level *level, int x, int y, int z, int param1,
 		// sticky movement
 		if (isSticky)
 		{
-			PIXBeginNamedEvent(0,"Contract sticky phase A/n");
+			PIXBeginNamedEvent(0,"Contract sticky phase A\n");
 			int twoX = x + Facing::STEP_X[facing] * 2;
 			int twoY = y + Facing::STEP_Y[facing] * 2;
 			int twoZ = z + Facing::STEP_Z[facing] * 2;
@@ -281,7 +281,7 @@ bool PistonBaseTile::triggerEvent(Level *level, int x, int y, int z, int param1,
 
 			if (block == Tile::pistonMovingPiece_Id)
 			{
-				PIXBeginNamedEvent(0,"Contract sticky phase B/n");
+				PIXBeginNamedEvent(0,"Contract sticky phase B\n");
 				// the block two steps away is a moving piston block piece, so replace it with the real data,
 				// since it's probably this piston which is changing too fast
 				shared_ptr<TileEntity> tileEntity = level->getTileEntity(twoX, twoY, twoZ);
@@ -301,7 +301,7 @@ bool PistonBaseTile::triggerEvent(Level *level, int x, int y, int z, int param1,
 				PIXEndNamedEvent();
 			}
 
-			PIXBeginNamedEvent(0,"Contract sticky phase C/n");
+			PIXBeginNamedEvent(0,"Contract sticky phase C\n");
 			if (!pistonPiece && block > 0 && (isPushable(block, level, twoX, twoY, twoZ, false))
 				&& (Tile::tiles[block]->getPistonPushReaction() == Material::PUSH_NORMAL || block == Tile::pistonBase_Id || block == Tile::pistonStickyBase_Id))
 			{

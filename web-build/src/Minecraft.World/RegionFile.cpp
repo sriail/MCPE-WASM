@@ -282,7 +282,7 @@ void RegionFile::write(int x, int z, byte *data, int length)		// TODO - was sync
 
 	int sectorsNeeded = (compLength + CHUNK_HEADER_SIZE) / SECTOR_BYTES + 1;
 
-//	app.DebugPrintf(">>>>>>>>>>>>>> writing compressed data for 0x%.8x, %d %d/n",fileEntry->data.regionIndex,x,z);
+//	app.DebugPrintf(">>>>>>>>>>>>>> writing compressed data for 0x%.8x, %d %d\n",fileEntry->data.regionIndex,x,z);
 
 	// maximum chunk size is 1MB
 	if (sectorsNeeded >= 256)
@@ -308,7 +308,7 @@ void RegionFile::write(int x, int z, byte *data, int length)		// TODO - was sync
 			/* we can simply overwrite the old sectors */
 	//        debug("SAVE", x, z, length, "rewrite");
 	#ifndef _CONTENT_PACKAGE
-			//wprintf(L"Writing chunk (%d,%d) in %ls from current sector %d to %d/n", x,z, fileEntry->data.filename, sectorNumber, sectorNumber + sectorsNeeded - 1);
+			//wprintf(L"Writing chunk (%d,%d) in %ls from current sector %d to %d\n", x,z, fileEntry->data.filename, sectorNumber, sectorNumber + sectorsNeeded - 1);
 	#endif
 			write(sectorNumber, compData, length, compLength);
 		}
@@ -324,7 +324,7 @@ void RegionFile::write(int x, int z, byte *data, int length)		// TODO - was sync
 			// 4J added - zero this now unused region of the file, so it can be better compressed until it is reused
 			zero(sectorNumber, SECTOR_BYTES * sectorsAllocated);
 
-			PIXBeginNamedEvent(0,"Scanning for free space/n");
+			PIXBeginNamedEvent(0,"Scanning for free space\n");
 			/* scan for a free space large enough to store this chunk */
 			int runStart = (int)(find(sectorFree->begin(),sectorFree->end(),true) - sectorFree->begin());  // 4J - was sectorFree.indexOf(true)
 			int runLength = 0;
@@ -356,7 +356,7 @@ void RegionFile::write(int x, int z, byte *data, int length)		// TODO - was sync
 				sectorNumber = runStart;
 				setOffset(x, z, (sectorNumber << 8) | sectorsNeeded);
 	#ifndef _CONTENT_PACKAGE
-				//wprintf(L"Writing chunk (%d,%d) in %ls from old sector %d to %d/n", x,z, fileEntry->data.filename, sectorNumber, sectorNumber + sectorsNeeded - 1);
+				//wprintf(L"Writing chunk (%d,%d) in %ls from old sector %d to %d\n", x,z, fileEntry->data.filename, sectorNumber, sectorNumber + sectorsNeeded - 1);
 	#endif
 				for (int i = 0; i < sectorsNeeded; ++i)
 				{
@@ -366,7 +366,7 @@ void RegionFile::write(int x, int z, byte *data, int length)		// TODO - was sync
 			}
 			else
 			{
-				PIXBeginNamedEvent(0,"Expanding storage for %d sectors/n", sectorsNeeded);
+				PIXBeginNamedEvent(0,"Expanding storage for %d sectors\n", sectorsNeeded);
 				/*
 					* no free space large enough found -- we need to grow the
 					* file
@@ -377,7 +377,7 @@ void RegionFile::write(int x, int z, byte *data, int length)		// TODO - was sync
 
 				sectorNumber = (int)sectorFree->size();
 	#ifndef _CONTENT_PACAKGE
-				//wprintf(L"Writing chunk (%d,%d) in %ls from new sector %d to %d/n", x,z, fileEntry->data.filename, sectorNumber, sectorNumber + sectorsNeeded - 1);
+				//wprintf(L"Writing chunk (%d,%d) in %ls from new sector %d to %d\n", x,z, fileEntry->data.filename, sectorNumber, sectorNumber + sectorsNeeded - 1);
 	#endif
 				DWORD numberOfBytesWritten = 0;
 				for (int i = 0; i < sectorsNeeded; ++i)

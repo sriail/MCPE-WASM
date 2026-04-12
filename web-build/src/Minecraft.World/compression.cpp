@@ -108,7 +108,7 @@ HRESULT Compression::CompressLZXRLE(void *pDestination, unsigned int *pDestSize,
 	Compress(pDestination, pDestSize, rleCompressBuf, rleSize);
 	PIXEndNamedEvent();
 	LeaveCriticalSection(&rleCompressLock);
-//	printf("Compressed from %d to %d to %d/n",SrcSize,rleSize,*pDestSize);
+//	printf("Compressed from %d to %d to %d\n",SrcSize,rleSize,*pDestSize);
 
 	return S_OK;
 }
@@ -244,7 +244,7 @@ HRESULT Compression::DecompressLZXRLE(void *pDestination, unsigned int *pDestSiz
 	}
 	*pDestSize = (unsigned int)(pucOut - (unsigned char *)pDestination);
 
-//	printf("Decompressed from %d to %d to %d/n",SrcSize,rleSize,*pDestSize);
+//	printf("Decompressed from %d to %d to %d\n",SrcSize,rleSize,*pDestSize);
 
 	if(dynamicRleBuf != NULL) delete [] dynamicRleBuf;
 

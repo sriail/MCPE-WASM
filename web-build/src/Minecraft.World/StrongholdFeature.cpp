@@ -152,7 +152,7 @@ bool StrongholdFeature::isFeatureChunk(int x, int z,bool bIsSuperflat)
 					}
 #endif
 
-					app.DebugPrintf("Placed stronghold in valid biome at (%d, %d), (%d, %d)/n", selectedX, selectedZ, position->x, position->z);
+					app.DebugPrintf("Placed stronghold in valid biome at (%d, %d), (%d, %d)\n", selectedX, selectedZ, position->x, position->z);
 					// 4J added
 					app.AddTerrainFeaturePosition(eTerrainFeature_Stronghold,selectedX,selectedZ);
 

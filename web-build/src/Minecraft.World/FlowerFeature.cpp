@@ -18,7 +18,7 @@ bool FlowerFeature::place(Level *level, Random *random, int x, int y, int z)
 		bool intersects = levelGenOptions->checkIntersects(x - 8, y - 4, z - 8, x + 8, y + 4, z + 8);
 		if(intersects)
 		{
-			//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure/n");
+			//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure\n");
 			return false;
 		}
 	}

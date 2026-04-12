@@ -61,7 +61,7 @@ void FileHeader::RemoveFile( FileEntry *file )
 	}
 
 #ifndef _CONTENT_PACKAGE
-	wprintf(L"Removed file %ls/n", file->data.filename);
+	wprintf(L"Removed file %ls\n", file->data.filename);
 #endif
 	
 	delete file;
@@ -112,19 +112,19 @@ void FileHeader::WriteHeader( LPVOID saveMem )
 #endif
 
 #ifdef _DEBUG_FILE_HEADER
-	app.DebugPrintf("Write save file with original version: %d, and current version %d/n", m_originalSaveVersion, versionNumber);
+	app.DebugPrintf("Write save file with original version: %d, and current version %d\n", m_originalSaveVersion, versionNumber);
 #endif
 
 	char *headerPosition = (char *)saveMem + headerOffset;
 
 #ifdef _DEBUG_FILE_HEADER
-	app.DebugPrintf("/n/nWrite file Header: Offset = %d, Size = %d/n", headerOffset, headerSize);
+	app.DebugPrintf("\n\nWrite file Header: Offset = %d, Size = %d\n", headerOffset, headerSize);
 #endif
 
 	// Write the header
 	for( unsigned int i = 0; i < fileTable.size(); ++i )
 	{
-		//wprintf(L"File: %ls, Start = %d, Length = %d, End = %d/n", fileTable[i]->data.filename, fileTable[i]->data.startOffset, fileTable[i]->data.length, fileTable[i]->data.startOffset + fileTable[i]->data.length);
+		//wprintf(L"File: %ls, Start = %d, Length = %d, End = %d\n", fileTable[i]->data.filename, fileTable[i]->data.startOffset, fileTable[i]->data.length, fileTable[i]->data.startOffset + fileTable[i]->data.length);
 #ifdef __PSVITA__
 		VirtualCopyTo((void *)headerPosition, &fileTable[i]->data, sizeof(FileEntrySaveData));
 #else
@@ -201,8 +201,8 @@ void FileHeader::ReadHeader( LPVOID saveMem, ESavePlatform plat /*= SAVE_FILE_PL
 	if(isSaveEndianDifferent()) System::ReverseSHORT(&m_saveVersion);
 
 #ifdef _DEBUG_FILE_HEADER
-	app.DebugPrintf("Read save file with orignal version: %d, and current version %d/n", m_originalSaveVersion, m_saveVersion);
-	app.DebugPrintf("/n/nRead file Header: Offset = %d, Size = %d/n", headerOffset, headerSize);
+	app.DebugPrintf("Read save file with orignal version: %d, and current version %d\n", m_originalSaveVersion, m_saveVersion);
+	app.DebugPrintf("\n\nRead file Header: Offset = %d, Size = %d\n", headerOffset, headerSize);
 #endif
 
 	char *headerPosition = (char *)saveMem + headerOffset;
@@ -257,7 +257,7 @@ void FileHeader::ReadHeader( LPVOID saveMem, ESavePlatform plat /*= SAVE_FILE_PL
 				lastFile = entry;
 				fileTable.push_back( entry );
 #ifdef _DEBUG_FILE_HEADER
-				app.DebugPrintf("File: %ls, Start = %d, Length = %d, End = %d, Timestamp = %lld/n", entry->data.filename, entry->data.startOffset, entry->data.length, entry->data.startOffset + entry->data.length, entry->data.lastModifiedTime);
+				app.DebugPrintf("File: %ls, Start = %d, Length = %d, End = %d, Timestamp = %lld\n", entry->data.filename, entry->data.startOffset, entry->data.length, entry->data.startOffset + entry->data.length, entry->data.lastModifiedTime);
 #endif
 
 				fesdHeaderPosition++;
@@ -287,7 +287,7 @@ void FileHeader::ReadHeader( LPVOID saveMem, ESavePlatform plat /*= SAVE_FILE_PL
 				lastFile = entry;
 				fileTable.push_back( entry );
 #ifdef _DEBUG_FILE_HEADER
-				app.DebugPrintf("File: %ls, Start = %d, Length = %d, End = %d/n", entry->data.filename, entry->data.startOffset, entry->data.length, entry->data.startOffset + entry->data.length);
+				app.DebugPrintf("File: %ls, Start = %d, Length = %d, End = %d\n", entry->data.filename, entry->data.startOffset, entry->data.length, entry->data.startOffset + entry->data.length);
 #endif
 
 				i += sizeof(FileEntrySaveDataV1);
@@ -297,7 +297,7 @@ void FileHeader::ReadHeader( LPVOID saveMem, ESavePlatform plat /*= SAVE_FILE_PL
 		break;
 	default:
 #ifndef _CONTENT_PACKAGE
-		app.DebugPrintf("**********  Invalid save version %d/n",m_saveVersion);
+		app.DebugPrintf("**********  Invalid save version %d\n",m_saveVersion);
 		__debugbreak();
 #endif
 		break;
@@ -553,7 +553,7 @@ vector<FileEntry *> *FileHeader::getDatFilesWithOnlineID(const PlayerUID& pUID)
 	{
 		wchar_t* filenameOnly = findFilenameStart(datFiles->at(i)->data.filename);
 		wcstombs(tempStr,filenameOnly, 128);
-		app.DebugPrintf("file : %s/n", tempStr);
+		app.DebugPrintf("file : %s\n", tempStr);
 
 #ifdef __ORBIS__
 		int onlineIDStart = wcslen(filenameOnly) - onlineIDSize;
@@ -601,7 +601,7 @@ vector<FileEntry *> *FileHeader::getDatFilesWithMacAndUserID(const PlayerUID& pU
 	{
 		wchar_t* filenameOnly = findFilenameStart(datFiles->at(i)->data.filename);
 		wcstombs(tempStr,filenameOnly, 128);
-		app.DebugPrintf("file : %s/n", tempStr);
+		app.DebugPrintf("file : %s\n", tempStr);
 
 		// check the mac address matches
 		if(wcsncmp(&filenameOnly[macAddrStart], pMacStr, macStr.size()) == 0)
@@ -639,7 +639,7 @@ vector<FileEntry *> *FileHeader::getDatFilesWithPrimaryUser()
 	{
 		wchar_t* filenameOnly = findFilenameStart(datFiles->at(i)->data.filename);
 		wcstombs(tempStr,filenameOnly, 128);
-		app.DebugPrintf("file : %s/n", tempStr);
+		app.DebugPrintf("file : %s\n", tempStr);
 
 		// check for "P_" prefix
 		if(wcsncmp(&filenameOnly[0], L"P_", 2) == 0)

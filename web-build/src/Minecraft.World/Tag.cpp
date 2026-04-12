@@ -60,7 +60,7 @@ void Tag::print(char *prefix, wostream out)
 	out << getTagName(getId());
 	if ( name.length() > 0)
 	{
-		out << L"(/"" << name << L"/")";
+		out << L"(\"" << name << L"\")";
 	}
 	out << L": ";
 	out << toString() << endl;
@@ -90,7 +90,7 @@ Tag *Tag::readNamedTag(DataInput *dis, int tagDepth)
 	// 4J Stu - readByte can return -1, so if it's that then also mark as the end tag
 	if(type == 255)
 	{
-		app.DebugPrintf("readNamedTag read a type of 255/n");
+		app.DebugPrintf("readNamedTag read a type of 255\n");
 #ifndef _CONTENT_PACKAGE
 		__debugbreak();
 #endif

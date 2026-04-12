@@ -129,7 +129,7 @@ void NotGateTile::tick(Level *level, int x, int y, int z, Random *random)
 
 			if (isToggledTooFrequently(level, x, y, z, true))
 			{
-				app.DebugPrintf("Torch at (%d,%d,%d) has toggled too many times/n",x,y,z);
+				app.DebugPrintf("Torch at (%d,%d,%d) has toggled too many times\n",x,y,z);
 
 				level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, eSoundType_RANDOM_FIZZ, 0.5f, 2.6f + (level->random->nextFloat() - level->random->nextFloat()) * 0.8f);
 				for (int i = 0; i < 5; i++)
@@ -153,7 +153,7 @@ void NotGateTile::tick(Level *level, int x, int y, int z, Random *random)
 			}
 			else
 			{
-				app.DebugPrintf("Torch at (%d,%d,%d) has toggled too many times/n",x,y,z);
+				app.DebugPrintf("Torch at (%d,%d,%d) has toggled too many times\n",x,y,z);
 			}
 		}
 	}

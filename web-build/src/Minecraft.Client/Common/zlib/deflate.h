@@ -302,7 +302,7 @@ void ZLIB_INTERNAL _tr_align OF((deflate_state *s));
 void ZLIB_INTERNAL _tr_stored_block OF((deflate_state *s, charf *buf,
                         ulg stored_len, int last));
 
-#define d_code(dist) /
+#define d_code(dist) \
    ((dist) < 256 ? _dist_code[dist] : _dist_code[256+((dist)>>7)])
 /* Mapping from a distance to a distance code. dist is the distance - 1 and
  * must not have side effects. _dist_code[256] and _dist_code[257] are never
@@ -320,26 +320,26 @@ void ZLIB_INTERNAL _tr_stored_block OF((deflate_state *s, charf *buf,
   extern const uch ZLIB_INTERNAL _dist_code[];
 #endif
 
-# define _tr_tally_lit(s, c, flush) /
-  { uch cc = (c); /
-    s->d_buf[s->last_lit] = 0; /
-    s->l_buf[s->last_lit++] = cc; /
-    s->dyn_ltree[cc].Freq++; /
-    flush = (s->last_lit == s->lit_bufsize-1); /
+# define _tr_tally_lit(s, c, flush) \
+  { uch cc = (c); \
+    s->d_buf[s->last_lit] = 0; \
+    s->l_buf[s->last_lit++] = cc; \
+    s->dyn_ltree[cc].Freq++; \
+    flush = (s->last_lit == s->lit_bufsize-1); \
    }
-# define _tr_tally_dist(s, distance, length, flush) /
-  { uch len = (length); /
-    ush dist = (distance); /
-    s->d_buf[s->last_lit] = dist; /
-    s->l_buf[s->last_lit++] = len; /
-    dist--; /
-    s->dyn_ltree[_length_code[len]+LITERALS+1].Freq++; /
-    s->dyn_dtree[d_code(dist)].Freq++; /
-    flush = (s->last_lit == s->lit_bufsize-1); /
+# define _tr_tally_dist(s, distance, length, flush) \
+  { uch len = (length); \
+    ush dist = (distance); \
+    s->d_buf[s->last_lit] = dist; \
+    s->l_buf[s->last_lit++] = len; \
+    dist--; \
+    s->dyn_ltree[_length_code[len]+LITERALS+1].Freq++; \
+    s->dyn_dtree[d_code(dist)].Freq++; \
+    flush = (s->last_lit == s->lit_bufsize-1); \
   }
 #else
 # define _tr_tally_lit(s, c, flush) flush = _tr_tally(s, 0, c)
-# define _tr_tally_dist(s, distance, length, flush) /
+# define _tr_tally_dist(s, distance, length, flush) \
               flush = _tr_tally(s, distance, length)
 #endif
 

@@ -48,7 +48,7 @@ AddPlayerPacket::AddPlayerPacket(shared_ptr<Player> player, PlayerUID xuid, Play
 	//    yRot = (byte) (player->yRot * 256 / 360);
 	//    xRot = (byte) (player->xRot * 256 / 360);
 
-	//printf("%d: New add player (%f,%f,%f) : (%d,%d,%d) : xRot %d, yRot %d/n",id,player->x,player->y,player->z,x,y,z,xRot,yRot);
+	//printf("%d: New add player (%f,%f,%f) : (%d,%d,%d) : xRot %d, yRot %d\n",id,player->x,player->y,player->z,x,y,z,xRot,yRot);
 
 	shared_ptr<ItemInstance> itemInstance = player->inventory->getSelected();
 	carriedItem = itemInstance == NULL ? 0 : itemInstance->id;

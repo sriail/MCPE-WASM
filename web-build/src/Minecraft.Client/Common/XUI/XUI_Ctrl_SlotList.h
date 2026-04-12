@@ -1,19 +1,19 @@
 #pragma once
 
 // Sig: HRESULT OnGetItemCountMaxLines(XUIMessageGetItemCount *pGetItemCountData, BOOL& bHandled)
-#define XUI_ON_XM_GET_ITEMCOUNT_MAX_LINES(MemberFunc)/
-	if (pMessage->dwMessage == XM_GET_ITEMCOUNT && ((XUIMessageGetItemCount *) pMessage->pvData)->nType == XUI_ITEMCOUNT_MAX_LINES)/
-	{/
-		XUIMessageGetItemCount *pData = (XUIMessageGetItemCount *) pMessage->pvData;/
-		return MemberFunc(pData, pMessage->bHandled);/
+#define XUI_ON_XM_GET_ITEMCOUNT_MAX_LINES(MemberFunc)\
+	if (pMessage->dwMessage == XM_GET_ITEMCOUNT && ((XUIMessageGetItemCount *) pMessage->pvData)->nType == XUI_ITEMCOUNT_MAX_LINES)\
+	{\
+		XUIMessageGetItemCount *pData = (XUIMessageGetItemCount *) pMessage->pvData;\
+		return MemberFunc(pData, pMessage->bHandled);\
 	}
 
 // Sig: HRESULT OnGetItemCountMaxPerLine(XUIMessageGetItemCount *pGetItemCountData, BOOL& bHandled)
-#define XUI_ON_XM_GET_ITEMCOUNT_MAX_PER_LINE(MemberFunc)/
-	if (pMessage->dwMessage == XM_GET_ITEMCOUNT && ((XUIMessageGetItemCount *) pMessage->pvData)->nType == XUI_ITEMCOUNT_MAX_PER_LINE)/
-	{/
-		XUIMessageGetItemCount *pData = (XUIMessageGetItemCount *) pMessage->pvData;/
-		return MemberFunc(pData, pMessage->bHandled);/
+#define XUI_ON_XM_GET_ITEMCOUNT_MAX_PER_LINE(MemberFunc)\
+	if (pMessage->dwMessage == XM_GET_ITEMCOUNT && ((XUIMessageGetItemCount *) pMessage->pvData)->nType == XUI_ITEMCOUNT_MAX_PER_LINE)\
+	{\
+		XUIMessageGetItemCount *pData = (XUIMessageGetItemCount *) pMessage->pvData;\
+		return MemberFunc(pData, pMessage->bHandled);\
 	}
 
 class AbstractContainerMenu;

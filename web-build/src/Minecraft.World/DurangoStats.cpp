@@ -124,7 +124,7 @@ void DsItemEvent::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray para
 				eLeaderboardId_FARMING, // ScoreboardId
 				param->itemCount);
 
-			app.DebugPrintf("<%ls>/tscoreboardFarming(%i:%i:%i)/n", DurangoStats::getUserId(player),
+			app.DebugPrintf("<%ls>\tscoreboardFarming(%i:%i:%i)\n", DurangoStats::getUserId(player),
 				player->level->difficulty, eLeaderboardId_FARMING, param->itemCount);
 		}
 
@@ -137,13 +137,13 @@ void DsItemEvent::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray para
 				player->level->difficulty, // Difficulty,
 				eLeaderboardId_MINING, // ScoreboardId
 				param->itemCount);
-			app.DebugPrintf("<%ls>/tscoreboardMining(%i:%i:%i)/n", DurangoStats::getUserId(player),
+			app.DebugPrintf("<%ls>\tscoreboardMining(%i:%i:%i)\n", DurangoStats::getUserId(player),
 				player->level->difficulty, eLeaderboardId_MINING, param->itemCount);
 		}
 
 		// Debug printout.
 		string method = nameMethods[(int)param->methodId];
-		app.DebugPrintf("<%ls>/t%s(%i:%i:%i)/n", DurangoStats::getUserId(player),
+		app.DebugPrintf("<%ls>\t%s(%i:%i:%i)\n", DurangoStats::getUserId(player),
 			method.c_str(), param->itemId, param->itemAux, param->itemCount);
 
 		// Split on acquisition method, then send relevant events.
@@ -232,7 +232,7 @@ void DsMobKilled::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray para
 							param->mobType)
 			== 0)
 		{
-			app.DebugPrintf("<%ls>/t%s(%i:%i:%i:%i)/n", DurangoStats::getUserId(player),
+			app.DebugPrintf("<%ls>\t%s(%i:%i:%i:%i)\n", DurangoStats::getUserId(player),
 				(param->isRanged?"mobShotWithEntity":"mobKilledInMelee"), 
 				param->mobType, param->weaponId, param->distance, param->damage);
 		}
@@ -257,7 +257,7 @@ void DsMobKilled::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray para
 					1) // Count
 				== 0)
 			{
-				app.DebugPrintf("<%ls>/tscoreboardKills(%i:%i:1)/n", DurangoStats::getUserId(player),
+				app.DebugPrintf("<%ls>\tscoreboardKills(%i:%i:1)\n", DurangoStats::getUserId(player),
 					player->level->difficulty, eLeaderboardId_KILLING);
 			}
 		}
@@ -333,7 +333,7 @@ void DsMobInteract::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray pa
 
 		if (param->mobId < 0) return;
 
-		app.DebugPrintf("<%ls>/t%s(%i)/n", DurangoStats::getUserId(player),
+		app.DebugPrintf("<%ls>\t%s(%i)\n", DurangoStats::getUserId(player),
 			nameInteract[param->interactionType].c_str(), param->mobId);
 
 		EventWriteMobInteract(
@@ -435,7 +435,7 @@ void DsTravel::write(shared_ptr<LocalPlayer> player, eMethod method, int distanc
 {
 	if (player == nullptr) return;
 
-	app.DebugPrintf("<%ls>/t%s(%i)/n", DurangoStats::getUserId(player), nameMethods[method].c_str(), distance);
+	app.DebugPrintf("<%ls>\t%s(%i)\n", DurangoStats::getUserId(player), nameMethods[method].c_str(), distance);
 
 	if (method == DsTravel::eMethod_time)
 	{
@@ -484,7 +484,7 @@ void DsItemUsed::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray param
 	if (paramBlob.length == sizeof(Param))
 	{
 		Param *param = (Param*) paramBlob.data;
-		app.DebugPrintf("<%ls>/titemUsed(%i,%i,%i)/n", DurangoStats::getUserId(player),
+		app.DebugPrintf("<%ls>\titemUsed(%i,%i,%i)\n", DurangoStats::getUserId(player),
 			param->itemId,
 			param->aux,
 			param->count
@@ -528,7 +528,7 @@ void DsAchievement::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray pa
 	{
 		SmallParam *paramS = (SmallParam*) paramBlob.data;
 		assert( DurangoStats::binaryAchievement(paramS->award) );
-		app.DebugPrintf("<%ls>/tAchievement(%i)/n", DurangoStats::getUserId(player), paramS->award);
+		app.DebugPrintf("<%ls>\tAchievement(%i)\n", DurangoStats::getUserId(player), paramS->award);
 		
 		bool canAward = true;
 		if(paramS->award == eAward_stayinFrosty)
@@ -554,7 +554,7 @@ void DsAchievement::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray pa
 		switch(paramL->award)
 		{
 		case eAward_musicToMyEars:
-			app.DebugPrintf("<%ls>/tmusicToMyEars(%i)/n", DurangoStats::getUserId(player), paramL->count);
+			app.DebugPrintf("<%ls>\tmusicToMyEars(%i)\n", DurangoStats::getUserId(player), paramL->count);
 			EventWritePlayedMusicDisc(
 				DurangoStats::getUserId(player),
 				DurangoStats::getPlayerSession(),
@@ -563,7 +563,7 @@ void DsAchievement::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray pa
 			break;
 
 		case eAward_chestfulOfCobblestone:
-			app.DebugPrintf("<%ls>/tchestfulOfCobblestone(%i)/n", DurangoStats::getUserId(player), paramL->count);
+			app.DebugPrintf("<%ls>\tchestfulOfCobblestone(%i)\n", DurangoStats::getUserId(player), paramL->count);
 			EventWriteChestfulOfCobblestone(
 				DurangoStats::getUserId(player),
 				DurangoStats::getPlayerSession(),
@@ -572,7 +572,7 @@ void DsAchievement::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray pa
 			break;
 
 		case eAward_overkill:
-			app.DebugPrintf("<%ls>/toverkill(%i)/n", DurangoStats::getUserId(player), paramL->count);
+			app.DebugPrintf("<%ls>\toverkill(%i)\n", DurangoStats::getUserId(player), paramL->count);
 			EventWriteOverkill(
 				DurangoStats::getUserId(player),
 				DurangoStats::getPlayerSession(),
@@ -581,7 +581,7 @@ void DsAchievement::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray pa
 			break;
 
 		case eAward_OnARail:
-			app.DebugPrintf("<%ls>/nonARail(%i)/n", DurangoStats::getUserId(player), paramL->count);
+			app.DebugPrintf("<%ls>\nonARail(%i)\n", DurangoStats::getUserId(player), paramL->count);
 			EventWriteOnARail(
 				DurangoStats::getUserId(player),
 				DurangoStats::getPlayerSession(),
@@ -623,7 +623,7 @@ void DsChangedDimension::handleParamBlob(shared_ptr<LocalPlayer> player, byteArr
 	if (paramBlob.length == sizeof(Param))
 	{
 		Param *param = (Param*) paramBlob.data;
-		app.DebugPrintf("<%ls>/tchangedDimension(%i:%i)/n", DurangoStats::getUserId(player), 
+		app.DebugPrintf("<%ls>\tchangedDimension(%i:%i)\n", DurangoStats::getUserId(player), 
 			param->fromDimId, param->toDimId);
 
 		// No longer used.
@@ -651,7 +651,7 @@ void DsEnteredBiome::handleParamBlob(shared_ptr<LocalPlayer> player, byteArray p
 	if (paramBlob.length == sizeof(Param))
 	{
 		Param *param = (Param*) paramBlob.data;
-		app.DebugPrintf("<%ls>/tenteredBiome(%i)/n", DurangoStats::getUserId(player), param->biomeId);
+		app.DebugPrintf("<%ls>\tenteredBiome(%i)\n", DurangoStats::getUserId(player), param->biomeId);
 
 		EventWriteEnteredNewBiome(
 			DurangoStats::getUserId(player),
@@ -1137,7 +1137,7 @@ void DurangoStats::playerSessionStart(PlayerUID uid, shared_ptr<Player> plr)
 		//wprintf(uid.toString().c_str());
 		
 		//EventWritePlayerSessionStart(
-		app.DebugPrintf(">>>/tPlayerSessionStart(%ls,%s,%ls,%i,%i)/n",
+		app.DebugPrintf(">>>\tPlayerSessionStart(%ls,%s,%ls,%i,%i)\n",
 			uid.toString(),
 			DurangoStats::getPlayerSession(),
 			DurangoStats::getMultiplayerCorrelationId(),
@@ -1172,7 +1172,7 @@ void DurangoStats::playerSessionPause(int iPad)
 		ProfileManager.GetXUID(iPad, &puid, true);
 
 		//EventWritePlayerSessionPause(
-		app.DebugPrintf(">>>/tPlayerSessionPause(%ls,%s,%ls)/n",
+		app.DebugPrintf(">>>\tPlayerSessionPause(%ls,%s,%ls)\n",
 			puid.toString().c_str(),
 			DurangoStats::getPlayerSession(),
 			DurangoStats::getMultiplayerCorrelationId()
@@ -1195,7 +1195,7 @@ void DurangoStats::playerSessionResume(int iPad)
 		ProfileManager.GetXUID(iPad, &puid, true);
 
 		//EventWritePlayerSessionResume(
-		app.DebugPrintf(">>>/tPlayerSessionResume(%ls,%s,%ls,%i,%i)/n",
+		app.DebugPrintf(">>>\tPlayerSessionResume(%ls,%s,%ls,%i,%i)\n",
 			puid.toString().c_str(),
 			DurangoStats::getPlayerSession(),
 			DurangoStats::getMultiplayerCorrelationId(),

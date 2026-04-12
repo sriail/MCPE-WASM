@@ -25,7 +25,7 @@ bool PineFeature::place(Level *level, Random *random, int x, int y, int z)
 		bool intersects = levelGenOptions->checkIntersects(x - topRadius, y - 1, z - topRadius, x + topRadius, y + treeHeight, z + topRadius);
 		if(intersects)
 		{
-			//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure/n");
+			//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure\n");
 			return false;
 		}
 	}

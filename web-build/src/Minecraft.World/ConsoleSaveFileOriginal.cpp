@@ -114,7 +114,7 @@ ConsoleSaveFileOriginal::ConsoleSaveFileOriginal(const wstring &fileName, LPVOID
 #ifdef __PS3__
 			StorageManager.FreeSaveData();
 #endif
-			app.DebugPrintf("Filesize - %d, Adjusted size - %d/n",fileSize,storageLength);
+			app.DebugPrintf("Filesize - %d, Adjusted size - %d\n",fileSize,storageLength);
 			fileSize = storageLength;
 		}
 
@@ -151,7 +151,7 @@ ConsoleSaveFileOriginal::ConsoleSaveFileOriginal(const wstring &fileName, LPVOID
 				if(decompSize == 0)
 				{
 					// 4J Stu - Saves created between 2/12/2011 and 7/12/2011 will have this problem
-					app.DebugPrintf("Invalid save data format/n");
+					app.DebugPrintf("Invalid save data format\n");
 					ZeroMemory( pvSourceData, fileSize );
 					// Clear the first 8 bytes that reference the header
 					header.WriteHeader( pvSourceData );
@@ -350,7 +350,7 @@ BOOL ConsoleSaveFileOriginal::writeFile(FileEntry *file,LPCVOID lpBuffer, DWORD 
 	PrepareForWrite( file, nNumberOfBytesToWrite );
 
 	char *writeStartOffset = (char *)pvSaveMem + file->currentFilePointer;
-	//printf("Write: pvSaveMem = %0xd, currentFilePointer = %d, writeStartOffset = %0xd/n", pvSaveMem, file->currentFilePointer, writeStartOffset);
+	//printf("Write: pvSaveMem = %0xd, currentFilePointer = %d, writeStartOffset = %0xd\n", pvSaveMem, file->currentFilePointer, writeStartOffset);
 
 #ifdef __PSVITA__
 	// AP - use this to access the virtual memory
@@ -365,7 +365,7 @@ BOOL ConsoleSaveFileOriginal::writeFile(FileEntry *file,LPCVOID lpBuffer, DWORD 
 
 	file->currentFilePointer += *lpNumberOfBytesWritten;
 
-	//wprintf(L"Wrote %d bytes to %s, new file pointer is %I64d/n", *lpNumberOfBytesWritten, file->data.filename, file->currentFilePointer);
+	//wprintf(L"Wrote %d bytes to %s, new file pointer is %I64d\n", *lpNumberOfBytesWritten, file->data.filename, file->currentFilePointer);
 
 	file->updateLastModifiedTime();
 
@@ -387,7 +387,7 @@ BOOL ConsoleSaveFileOriginal::zeroFile(FileEntry *file, DWORD nNumberOfBytesToWr
 	PrepareForWrite( file, nNumberOfBytesToWrite );
 
 	char *writeStartOffset = (char *)pvSaveMem + file->currentFilePointer;
-	//printf("Write: pvSaveMem = %0xd, currentFilePointer = %d, writeStartOffset = %0xd/n", pvSaveMem, file->currentFilePointer, writeStartOffset);
+	//printf("Write: pvSaveMem = %0xd, currentFilePointer = %d, writeStartOffset = %0xd\n", pvSaveMem, file->currentFilePointer, writeStartOffset);
 
 #ifdef __PSVITA__
 	// AP - use this to access the virtual memory
@@ -402,7 +402,7 @@ BOOL ConsoleSaveFileOriginal::zeroFile(FileEntry *file, DWORD nNumberOfBytesToWr
 
 	file->currentFilePointer += *lpNumberOfBytesWritten;
 
-	//wprintf(L"Wrote %d bytes to %s, new file pointer is %I64d/n", *lpNumberOfBytesWritten, file->data.filename, file->currentFilePointer);
+	//wprintf(L"Wrote %d bytes to %s, new file pointer is %I64d\n", *lpNumberOfBytesWritten, file->data.filename, file->currentFilePointer);
 
 	file->updateLastModifiedTime();
 
@@ -423,7 +423,7 @@ BOOL ConsoleSaveFileOriginal::readFile( FileEntry *file, LPVOID lpBuffer, DWORD 
 	LockSaveAccess();
 
 	char *readStartOffset = (char *)pvSaveMem + file->currentFilePointer;
-	//printf("Read: pvSaveMem = %0xd, currentFilePointer = %d, readStartOffset = %0xd/n", pvSaveMem, file->currentFilePointer, readStartOffset);
+	//printf("Read: pvSaveMem = %0xd, currentFilePointer = %d, readStartOffset = %0xd\n", pvSaveMem, file->currentFilePointer, readStartOffset);
 
 	assert( nNumberOfBytesToRead <= file->getFileSize() );
 
@@ -444,7 +444,7 @@ BOOL ConsoleSaveFileOriginal::readFile( FileEntry *file, LPVOID lpBuffer, DWORD 
 
 	file->currentFilePointer += *lpNumberOfBytesRead;
 
-	//wprintf(L"Read %d bytes from %s, new file pointer is %I64d/n", *lpNumberOfBytesRead, file->data.filename, file->currentFilePointer);
+	//wprintf(L"Read %d bytes from %s, new file pointer is %I64d\n", *lpNumberOfBytesRead, file->data.filename, file->currentFilePointer);
 
 	ReleaseSaveAccess();
 
@@ -532,9 +532,9 @@ void ConsoleSaveFileOriginal::MoveDataBeyond(FileEntry *file, DWORD nNumberOfByt
 	// This is where we can safely write to (with the amount we want write subtracted before we write)
 	char *writeStartOffset = finishEndOfDataOffset;
 
-	//printf("/n******* MOVEDATABEYOND *******/n");
-	//printf("Space start: %d, space end: %d/n", spaceStartOffset - (char *)pvSaveMem, spaceEndOffset - (char *)pvSaveMem);
-	//printf("Current end of data: %d, new end of data: %d/n", beginEndOfDataOffset - (char *)pvSaveMem, finishEndOfDataOffset - (char *)pvSaveMem);
+	//printf("\n******* MOVEDATABEYOND *******\n");
+	//printf("Space start: %d, space end: %d\n", spaceStartOffset - (char *)pvSaveMem, spaceEndOffset - (char *)pvSaveMem);
+	//printf("Current end of data: %d, new end of data: %d\n", beginEndOfDataOffset - (char *)pvSaveMem, finishEndOfDataOffset - (char *)pvSaveMem);
 
 	// Optimisation for things that are being moved in whole region file sector (4K chunks). We could generalise this a bit more but seems safest at the moment to identify this particular type
 	// of move and code explicitly for this situation
@@ -597,7 +597,7 @@ void ConsoleSaveFileOriginal::MoveDataBeyond(FileEntry *file, DWORD nNumberOfByt
 			// Push the read point back by the amount of bytes that we are going to read
 			readStartOffset -= amountToRead;
 
-			//printf("About to read %u from %d/n", amountToRead, readStartOffset - (char *)pvSaveMem );
+			//printf("About to read %u from %d\n", amountToRead, readStartOffset - (char *)pvSaveMem );
 #ifdef __PSVITA__
 			// AP - use this to access the virtual memory
 			VirtualCopyFrom(buffer1, readStartOffset, amountToRead);
@@ -614,7 +614,7 @@ void ConsoleSaveFileOriginal::MoveDataBeyond(FileEntry *file, DWORD nNumberOfByt
 			// Write buffer 2 to file
 			if( (writeStartOffset + buffer2Size) <= finishEndOfDataOffset)
 			{
-				//printf("About to write %u to %d/n", buffer2Size, writeStartOffset - (char *)pvSaveMem );
+				//printf("About to write %u to %d\n", buffer2Size, writeStartOffset - (char *)pvSaveMem );
 #ifdef __PSVITA__
 				// AP - use this to access the virtual memory
 				VirtualCopyTo((void *)writeStartOffset, buffer2, buffer2Size);
@@ -631,7 +631,7 @@ void ConsoleSaveFileOriginal::MoveDataBeyond(FileEntry *file, DWORD nNumberOfByt
 
 			if( numberOfBytesRead == 0 )
 			{
-				//printf("/n************** MOVE COMPLETED *************** /n/n");
+				//printf("\n************** MOVE COMPLETED *************** \n\n");
 				assert( writeStartOffset == spaceEndOffset );
 				break;
 			}
@@ -658,7 +658,7 @@ void ConsoleSaveFileOriginal::Flush(bool autosave, bool updateThumbnail )
 	// On Vita we've had problems with saves being corrupted on rapid save/save-exiting so seems prudent to wait for idle
 	while( StorageManager.GetSaveState() != C4JStorage::ESaveGame_Idle )
 	{
-		app.DebugPrintf("Flush wait/n");
+		app.DebugPrintf("Flush wait\n");
 		Sleep(10);
 	}
 #endif
@@ -718,7 +718,7 @@ void ConsoleSaveFileOriginal::Flush(bool autosave, bool updateThumbnail )
 		qwDeltaTime.QuadPart = qwNewTime.QuadPart - qwTime.QuadPart;
 		fElapsedTime = fSecsPerTick * ((FLOAT)(qwDeltaTime.QuadPart));
 
-		app.DebugPrintf("Check buffer size: Elapsed time %f/n", fElapsedTime);
+		app.DebugPrintf("Check buffer size: Elapsed time %f\n", fElapsedTime);
 		PIXEndNamedEvent();
 
 		// We add 4 bytes to the start so that we can signal compressed data
@@ -749,7 +749,7 @@ void ConsoleSaveFileOriginal::Flush(bool autosave, bool updateThumbnail )
 		qwDeltaTime.QuadPart = qwNewTime.QuadPart - qwTime.QuadPart;
 		fElapsedTime = fSecsPerTick * ((FLOAT)(qwDeltaTime.QuadPart));
 
-		app.DebugPrintf("Compress: Elapsed time %f/n", fElapsedTime);
+		app.DebugPrintf("Compress: Elapsed time %f\n", fElapsedTime);
 		PIXEndNamedEvent();
 
 		ZeroMemory(compData,8);
@@ -757,7 +757,7 @@ void ConsoleSaveFileOriginal::Flush(bool autosave, bool updateThumbnail )
 		memcpy( compData, &saveVer, sizeof(int) );
 		memcpy( compData+4, &fileSize, sizeof(int) );
 
-		app.DebugPrintf("Save data compressed from %d to %d/n", fileSize, compLength);
+		app.DebugPrintf("Save data compressed from %d to %d\n", fileSize, compLength);
 #endif
 
 		PBYTE pbThumbnailData=NULL;
@@ -811,7 +811,7 @@ void ConsoleSaveFileOriginal::Flush(bool autosave, bool updateThumbnail )
 #elif (defined __PS3__ || defined __ORBIS__ || defined __PSVITA__ || defined _DURANGO || defined _WINDOWS64)
 		// set the icon and save image
 		StorageManager.SetSaveImages(pbThumbnailData,dwThumbnailDataSize,pbDataSaveImage,dwDataSizeSaveImage,bTextMetadata,iTextMetadataBytes);
-		app.DebugPrintf("Save thumbnail size %d/n",dwThumbnailDataSize);
+		app.DebugPrintf("Save thumbnail size %d\n",dwThumbnailDataSize);
 
 		// save the data
 		StorageManager.SaveSaveData( &ConsoleSaveFileOriginal::SaveSaveDataCallback, this );
@@ -854,7 +854,7 @@ void ConsoleSaveFileOriginal::DebugFlushToFile(void *compressedData /*= NULL*/, 
 
 	DWORD numberOfBytesWritten = 0;
 #ifdef _XBOX
-	File targetFileDir(L"GAME://Saves");
+	File targetFileDir(L"GAME:\\Saves");
 #else
 	File targetFileDir(L"Saves");
 #endif // _XBOX
@@ -875,7 +875,7 @@ void ConsoleSaveFileOriginal::DebugFlushToFile(void *compressedData /*= NULL*/, 
 	{
 		cutFileName = m_fileName.substr(0, XCONTENT_MAX_FILENAME_LENGTH - 25);
 	}
-	swprintf(fileName, XCONTENT_MAX_FILENAME_LENGTH+1, L"//v%04d-%ls%02d.%02d.%02d.%02d.%02d.mcs",VER_PRODUCTBUILD,cutFileName.c_str(), t.wMonth, t.wDay, t.wHour, t.wMinute, t.wSecond);
+	swprintf(fileName, XCONTENT_MAX_FILENAME_LENGTH+1, L"\\v%04d-%ls%02d.%02d.%02d.%02d.%02d.mcs",VER_PRODUCTBUILD,cutFileName.c_str(), t.wMonth, t.wDay, t.wHour, t.wMinute, t.wSecond);
 
 #ifdef _UNICODE
 	wstring wtemp = targetFileDir.getPath() + wstring(fileName);
@@ -1068,12 +1068,12 @@ void ConsoleSaveFileOriginal::ConvertToLocalPlatform()
 			wstring suffix(L".mcr");
 			if (fName.compare(fName.length() - suffix.length(), suffix.length(), suffix) == 0)
 			{
-				app.DebugPrintf("Processing a region file: %ls/n", fName.c_str());
+				app.DebugPrintf("Processing a region file: %ls\n", fName.c_str());
 				ConvertRegionFile(File(fe->data.filename));
 			}
 			else
 			{
-				app.DebugPrintf("%ls is not a region file, ignoring/n", fName.c_str());
+				app.DebugPrintf("%ls is not a region file, ignoring\n", fName.c_str());
 			}
 		}
 	}

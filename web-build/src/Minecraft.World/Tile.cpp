@@ -1468,7 +1468,7 @@ Tile::SoundType::SoundType(eMATERIALSOUND_TYPE eMaterialSound, float volume, flo
 			this->iBreakSound=eSoundType_DIG_WOOD;
 			break;
 		default:
-			app.DebugPrintf("NO BREAK SOUND!/n");
+			app.DebugPrintf("NO BREAK SOUND!\n");
 			this->iBreakSound=-1;
 			break;
 		}
@@ -1514,7 +1514,7 @@ Tile::SoundType::SoundType(eMATERIALSOUND_TYPE eMaterialSound, float volume, flo
 		this->iStepSound=eSoundType_STEP_LADDER;
 		break;
 	default:
-		app.DebugPrintf("NO STEP SOUND!/n");
+		app.DebugPrintf("NO STEP SOUND!\n");
 
 		this->iStepSound=-1;
 		break;

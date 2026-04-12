@@ -98,7 +98,7 @@ void PreLoginPacket::write(DataOutputStream *dos) //throws IOException
 		dos->writePlayerUID( m_playerXuids[i] );
 	}
 
-	app.DebugPrintf("*** PreLoginPacket::write - %s/n",m_szUniqueSaveName);
+	app.DebugPrintf("*** PreLoginPacket::write - %s\n",m_szUniqueSaveName);
 	for(DWORD i = 0; i < m_iSaveNameLen; ++i)
 	{
 		dos->writeByte(m_szUniqueSaveName[i]);

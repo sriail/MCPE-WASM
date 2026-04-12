@@ -45,7 +45,18 @@ using namespace std;
 #include "compression.h"
 #include "PerformanceTimer.h"
 
-// Minecraft.Client Common headers (stubs for Emscripten)
+// Emscripten platform stubs - MUST be before App_structs.h and Consoles_App.h
+// because those headers reference C4JStorage, C_4JProfile, etc.
+#include "../Minecraft.Client/Emscripten/4J_Storage.h"
+#include "../Minecraft.Client/Emscripten/4J_Profile.h"
+#include "../Minecraft.Client/Emscripten/4J_Render.h"
+#include "../Minecraft.Client/Emscripten/4J_Input.h"
+#include "../Minecraft.Client/Emscripten/Emscripten_App.h"
+#include "../Minecraft.Client/Emscripten/SentientTelemetryCommon.h"
+#include "../Minecraft.Client/Emscripten/MinecraftTelemetry.h"
+#include "../Minecraft.Client/Emscripten/strings.h"
+
+// Minecraft.Client Common headers
 #include "../Minecraft.Client/Common/App_defines.h"
 #include "../Minecraft.Client/Common/UI/UIEnums.h"
 #include "../Minecraft.Client/Common/App_enums.h"
@@ -56,17 +67,6 @@ using namespace std;
 #include "../Minecraft.Client/Common/Colours/ColourTable.h"
 #include "../Minecraft.Client/Common/BuildVer.h"
 #include "../Minecraft.Client/Common/Network/GameNetworkManager.h"
-
-// Emscripten platform stubs
-#include "../Minecraft.Client/Emscripten/Emscripten_App.h"
-#include "../Minecraft.Client/Emscripten/SentientTelemetryCommon.h"
-#include "../Minecraft.Client/Emscripten/MinecraftTelemetry.h"
-#include "../Minecraft.Client/Emscripten/4J_Profile.h"
-#include "../Minecraft.Client/Emscripten/4J_Render.h"
-#include "../Minecraft.Client/Emscripten/4J_Storage.h"
-#include "../Minecraft.Client/Emscripten/4J_Input.h"
-#include "../Minecraft.Client/Emscripten/strings.h"
-
 #include "../Minecraft.Client/Common/DLC/DLCSkinFile.h"
 #include "../Minecraft.Client/Common/Console_Awards_enum.h"
 #include "../Minecraft.Client/Common/Potion_Macros.h"

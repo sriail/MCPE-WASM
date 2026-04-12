@@ -65,7 +65,7 @@ intArray IntCache::allocate(int size)
 
 	if (size > tls->maxSize)
 	{
-//		app.DebugPrintf("IntCache: New max size: %d/n" , size);
+//		app.DebugPrintf("IntCache: New max size: %d\n" , size);
 		tls->maxSize = size;
 
 		// 4J - added - all the vectors in cache & allocated are smaller than maxSize so should be discarded. However, we

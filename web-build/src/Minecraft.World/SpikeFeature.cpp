@@ -60,7 +60,7 @@ bool SpikeFeature::place(Level *level, Random *random, int x, int y, int z)
 
 bool SpikeFeature::placeWithIndex(Level *level, Random *random, int x, int y, int z,int iIndex, int iRadius)
 {
-	app.DebugPrintf("Spike - %d,%d,%d - index %d/n",x,y,z,iIndex);
+	app.DebugPrintf("Spike - %d,%d,%d - index %d\n",x,y,z,iIndex);
 
 	int hh = 12 + (iIndex*3);
 
@@ -114,7 +114,7 @@ bool SpikeFeature::placeWithIndex(Level *level, Random *random, int x, int y, in
 		} 
 		else 
 		{
-			app.DebugPrintf("Breaking out of spike feature/n");
+			app.DebugPrintf("Breaking out of spike feature\n");
 			break;
 		}
 	}
@@ -148,7 +148,7 @@ bool SpikeFeature::placeWithIndex(Level *level, Random *random, int x, int y, in
 			} 
 			else 
 			{
-				app.DebugPrintf("Breaking out of spike feature/n");
+				app.DebugPrintf("Breaking out of spike feature\n");
 				break;
 			}
 		}

@@ -92,7 +92,7 @@ bool VillageFeature::isFeatureChunk(int x, int z,bool bIsSuperflat)
 			bool biomeOk = level->getBiomeSource()->containsOnly(x * 16 + 8, z * 16 + 8, 0, allowedBiomes);
 			if (biomeOk)
 			{
-				//app.DebugPrintf("Biome ok for Village at %d, %d/n",(x * 16 + 8),(z * 16 + 8));
+				//app.DebugPrintf("Biome ok for Village at %d, %d\n",(x * 16 + 8),(z * 16 + 8));
 				return true;
 			}
 		}

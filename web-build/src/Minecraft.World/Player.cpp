@@ -155,7 +155,7 @@ Player::Player(Level *level, const wstring &name) : LivingEntity( level )
 Player::~Player()
 {
 	// TODO 4J
-	//printf("A player has been destroyed./n");
+	//printf("A player has been destroyed.\n");
 	delete inventoryMenu;
 
 	// 4J Stu - Fix for #10938 - CRASH - Game hardlocks when client has an open chest and Xbox Guide while host exits without saving.
@@ -634,7 +634,7 @@ void Player::ride(shared_ptr<Entity> e)
 void Player::setPlayerDefaultSkin(EDefaultSkins skin)
 {
 #ifndef _CONTENT_PACKAGE
-	wprintf(L"Setting default skin to %d for player %ls/n", skin, name.c_str() );
+	wprintf(L"Setting default skin to %d for player %ls\n", skin, name.c_str() );
 #endif
 	m_skinIndex = skin;
 }
@@ -642,7 +642,7 @@ void Player::setPlayerDefaultSkin(EDefaultSkins skin)
 void Player::setCustomSkin(DWORD skinId)
 {
 #ifndef _CONTENT_PACKAGE
-	wprintf(L"Attempting to set skin to %08X for player %ls/n", skinId, name.c_str() );
+	wprintf(L"Attempting to set skin to %08X for player %ls\n", skinId, name.c_str() );
 #endif
 	EDefaultSkins playerSkin = eDefaultSkins_ServerSelected;
 
@@ -678,7 +678,7 @@ void Player::setCustomSkin(DWORD skinId)
 	if(pvModelParts==NULL)
 	{
 	// we don't have the data from the dlc skin yet
-	app.DebugPrintf("Couldn't get model parts for skin %X/n",m_dwSkinId);
+	app.DebugPrintf("Couldn't get model parts for skin %X\n",m_dwSkinId);
 
 	// do we have it from the DLC pack?
 	DLCSkinFile *pDLCSkinFile = app.m_dlcManager.getSkinFile(this->customTextureUrl);
@@ -688,7 +688,7 @@ void Player::setCustomSkin(DWORD skinId)
 	DWORD dwBoxC=pDLCSkinFile->getAdditionalBoxesCount();
 	if(dwBoxC!=0)
 	{
-	app.DebugPrintf("Got model parts from DLCskin for skin %X/n",m_dwSkinId);
+	app.DebugPrintf("Got model parts from DLCskin for skin %X\n",m_dwSkinId);
 	pvModelParts=app.SetAdditionalSkinBoxes(m_dwSkinId,pDLCSkinFile->getAdditionalBoxes());
 	this->SetAdditionalModelParts(pvModelParts);
 	}
@@ -705,7 +705,7 @@ void Player::setCustomSkin(DWORD skinId)
 	}
 	else
 	{
-	app.DebugPrintf("Got model parts from app.GetAdditionalModelParts for skin %X/n",m_dwSkinId);
+	app.DebugPrintf("Got model parts from app.GetAdditionalModelParts for skin %X\n",m_dwSkinId);
 
 	this->SetAdditionalModelParts(pvModelParts);
 	}*/
@@ -773,7 +773,7 @@ void Player::setXuid(PlayerUID xuid)
 void Player::setCustomCape(DWORD capeId)
 {
 #ifndef _CONTENT_PACKAGE
-	wprintf(L"Attempting to set cape to %08X for player %s/n", capeId, name.c_str() );
+	wprintf(L"Attempting to set cape to %08X for player %s\n", capeId, name.c_str() );
 #endif
 
 	m_dwCapeId = capeId;
@@ -3103,7 +3103,7 @@ vector<ModelPart *> *Player::GetAdditionalModelParts()
 			m_bCheckedDLCForModelParts = true;
 
 			// we don't have the data from the dlc skin yet
-			app.DebugPrintf("m_bCheckedForModelParts Couldn't get model parts for skin %X/n",m_dwSkinId);
+			app.DebugPrintf("m_bCheckedForModelParts Couldn't get model parts for skin %X\n",m_dwSkinId);
 
 			// do we have it from the DLC pack?
 			DLCSkinFile *pDLCSkinFile = app.m_dlcManager.getSkinFile(this->customTextureUrl);
@@ -3113,7 +3113,7 @@ vector<ModelPart *> *Player::GetAdditionalModelParts()
 				DWORD dwBoxC=pDLCSkinFile->getAdditionalBoxesCount();
 				if(dwBoxC!=0)
 				{
-					app.DebugPrintf("m_bCheckedForModelParts Got model parts from DLCskin for skin %X/n",m_dwSkinId);
+					app.DebugPrintf("m_bCheckedForModelParts Got model parts from DLCskin for skin %X\n",m_dwSkinId);
 					m_ppAdditionalModelParts=app.SetAdditionalSkinBoxes(m_dwSkinId,pDLCSkinFile->getAdditionalBoxes());
 				}
 

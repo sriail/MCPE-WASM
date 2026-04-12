@@ -20,7 +20,7 @@
 // 4J - not required anymore
 // These were Pattern class objects, using the c++0x regex class instead
 const std::tr1::wregex McRegionLevelStorageSource::FolderFilter::chunkFolderPattern = std::tr1::wregex(L"[0-9a-z]|([0-9a-z][0-9a-z])");
-const std::tr1::wregex McRegionLevelStorageSource::ChunkFilter::chunkFilePattern = std::tr1::wregex(L"c//.(-?[0-9a-z]+)//.(-?[0-9a-z]+)//.dat");
+const std::tr1::wregex McRegionLevelStorageSource::ChunkFilter::chunkFilePattern = std::tr1::wregex(L"c\\.(-?[0-9a-z]+)\\.(-?[0-9a-z]+)\\.dat");
 #endif
 
 McRegionLevelStorageSource::McRegionLevelStorageSource(File dir) : DirectoryLevelStorageSource(dir)

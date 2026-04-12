@@ -83,12 +83,12 @@ bool ShapelessRecipy::requires(int iRecipe)
 
 	*tempList=*ingredients;
 
-	//printf("ShapelessRecipy %d/n",iRecipe);
+	//printf("ShapelessRecipy %d\n",iRecipe);
 
 	int iCount=0;
 	for ( auto ingredient = ingredients->begin(); ingredient != ingredients->end(); ingredient++)
 	{
-		//printf("/tIngredient %d is %d/n",iCount++,(*ingredient)->id);
+		//printf("\tIngredient %d is %d\n",iCount++,(*ingredient)->id);
 		//if (item->id == (*ingredient)->id && ((*ingredient)->getAuxValue() == Recipes::ANY_AUX_VALUE || item->getAuxValue() == (*ingredient)->getAuxValue())) 
 		tempList->erase(ingredient);
 	}

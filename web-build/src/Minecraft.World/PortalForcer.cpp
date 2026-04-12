@@ -274,22 +274,22 @@ bool PortalForcer::createPortal(shared_ptr<Entity> e)
 	// Move the positions that we want to check away from the edge of the world
 	if( (xc - r) < -XZOFFSET )
 	{
-		app.DebugPrintf("Adjusting portal creation x due to being too close to the edge/n");
+		app.DebugPrintf("Adjusting portal creation x due to being too close to the edge\n");
 		xc -= ( (xc - r) + XZOFFSET);
 	}
 	else if ( (xc + r) >= XZOFFSET )
 	{
-		app.DebugPrintf("Adjusting portal creation x due to being too close to the edge/n");
+		app.DebugPrintf("Adjusting portal creation x due to being too close to the edge\n");
 		xc -= ( (xc + r) - XZOFFSET);
 	}
 	if( (zc - r) < -XZOFFSET )
 	{
-		app.DebugPrintf("Adjusting portal creation z due to being too close to the edge/n");
+		app.DebugPrintf("Adjusting portal creation z due to being too close to the edge\n");
 		zc -= ( (zc - r) + XZOFFSET);
 	}
 	else if ( (zc + r) >= XZOFFSET )
 	{
-		app.DebugPrintf("Adjusting portal creation z due to being too close to the edge/n");
+		app.DebugPrintf("Adjusting portal creation z due to being too close to the edge\n");
 		zc -= ( (zc + r) - XZOFFSET);
 	}
 
@@ -342,7 +342,7 @@ bool PortalForcer::createPortal(shared_ptr<Entity> e)
 										// 4J Stu - Changes to stop Portals being created at the border of the nether inside the bedrock
 										if( ( xt < -XZOFFSET ) || ( xt >= XZOFFSET ) || ( zt < -XZOFFSET ) || ( zt >= XZOFFSET ) )
 										{
-											app.DebugPrintf("Skipping possible portal location as at least one block is too close to the edge/n");
+											app.DebugPrintf("Skipping possible portal location as at least one block is too close to the edge\n");
 											goto next_first;
 										}
 
@@ -402,7 +402,7 @@ next_first: continue;
 									// 4J Stu - Changes to stop Portals being created at the border of the nether inside the bedrock
 									if( ( xt < -XZOFFSET ) || ( xt >= XZOFFSET ) || ( zt < -XZOFFSET ) || ( zt >= XZOFFSET ) )
 									{
-										app.DebugPrintf("Skipping possible portal location as at least one block is too close to the edge/n");
+										app.DebugPrintf("Skipping possible portal location as at least one block is too close to the edge\n");
 										goto next_second;
 									}
 

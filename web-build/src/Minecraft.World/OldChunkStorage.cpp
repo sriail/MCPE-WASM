@@ -74,7 +74,7 @@ File OldChunkStorage::getFile(int x, int z)
 	_itow(x & 63,path1,36);
 	_itow(z & 63,path2,36);
 #endif
-	//sprintf(file,"%s//%s",dir,path1);
+	//sprintf(file,"%s\\%s",dir,path1);
 	File file( dir, wstring( path1 ) );
 	if( !file.exists() )
 	{
@@ -85,7 +85,7 @@ File OldChunkStorage::getFile(int x, int z)
 		}
 	}
 
-	//strcat(file,"//");
+	//strcat(file,"\\");
 	//strcat(file,path2);
 	file = File( file, wstring( path2 ) );
 	if( !file.exists() )
@@ -97,9 +97,9 @@ File OldChunkStorage::getFile(int x, int z)
 		}
 	}
 
-	//strcat(file,"//");
+	//strcat(file,"\\");
 	//strcat(file,name);
-	//sprintf(file,"%s//%s",file,name);
+	//sprintf(file,"%s\\%s",file,name);
 	file = File( file, wstring( name ) );
 	if ( !file.exists() )
 	{
@@ -124,14 +124,14 @@ LevelChunk *OldChunkStorage::load(Level *level, int x, int z)
 		if (!tag->contains(L"Level"))
 		{
 			char buf[256];
-			sprintf(buf,"Chunk file at %d, %d is missing level data, skipping/n",x,z);
+			sprintf(buf,"Chunk file at %d, %d is missing level data, skipping\n",x,z);
 			app.DebugPrintf(buf);
 			return NULL;
 		}
 		if (!tag->getCompound(L"Level")->contains(L"Blocks"))
 		{
 			char buf[256];
-			sprintf(buf,"Chunk file at %d, %d is missing block data, skipping/n",x,z);
+			sprintf(buf,"Chunk file at %d, %d is missing block data, skipping\n",x,z);
 			app.DebugPrintf(buf);
 			return NULL;
 		}
@@ -139,7 +139,7 @@ LevelChunk *OldChunkStorage::load(Level *level, int x, int z)
 		if (!levelChunk->isAt(x, z))
 		{
 			char buf[256];
-			sprintf(buf,"Chunk fileat %d, %d is in the wrong location; relocating. Expected %d, %d, got %d, %d/n",
+			sprintf(buf,"Chunk fileat %d, %d is in the wrong location; relocating. Expected %d, %d, got %d, %d\n",
 				x, z, x, z, levelChunk->x, levelChunk->z);
 			app.DebugPrintf(buf);
 			tag->putInt(L"xPos", x);
@@ -168,7 +168,7 @@ void OldChunkStorage::save(Level *level, LevelChunk *levelChunk)
 	// 4J - removed try/catch
 	//    try {
 	//char tmpFileName[MAX_PATH_SIZE];
-	//sprintf(tmpFileName,"%s//%s",dir,"tmp_chunk.dat");
+	//sprintf(tmpFileName,"%s\\%s",dir,"tmp_chunk.dat");
 	File tmpFile( dir, L"tmp_chunk.dat" );
 	//            System.out.println("Saving chunk "+levelChunk.x+", "+levelChunk.z);
 

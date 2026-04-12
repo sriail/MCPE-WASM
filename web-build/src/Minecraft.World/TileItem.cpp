@@ -143,8 +143,8 @@ bool TileItem::useOn(shared_ptr<ItemInstance> instance, shared_ptr<Player> playe
 				// 					pMinecraft->soundEngine->GetSoundName(szStepSoundName,iStepSound);
 				// 				}
 
-				//app.DebugPrintf("Place Sound - %s, Step Sound - %s/n",szPlaceSoundName,szStepSoundName);
-				app.DebugPrintf("Place Sound - %d, Step Sound - %d/n",iPlaceSound,iStepSound);
+				//app.DebugPrintf("Place Sound - %s, Step Sound - %s\n",szPlaceSoundName,szStepSoundName);
+				app.DebugPrintf("Place Sound - %d, Step Sound - %d\n",iPlaceSound,iStepSound);
 #endif
 				level->playSound(x + 0.5f, y + 0.5f, z + 0.5f, tile->soundType->getPlaceSound(), (tile->soundType->getVolume() + 1) / 2, tile->soundType->getPitch() * 0.8f);
 #ifndef _FINAL_BUILD

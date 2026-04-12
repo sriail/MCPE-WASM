@@ -324,7 +324,7 @@ int LivingEntity::decreaseAirSupply(int currentSupply)
 	}
 	if(instanceof(eTYPE_PLAYER))
 	{
-		app.DebugPrintf("++++++++++ %s: Player decreasing air supply to %d/n", level->isClientSide ? "CLIENT" : "SERVER", currentSupply - 1 );
+		app.DebugPrintf("++++++++++ %s: Player decreasing air supply to %d\n", level->isClientSide ? "CLIENT" : "SERVER", currentSupply - 1 );
 	}
 	return currentSupply - 1;
 }

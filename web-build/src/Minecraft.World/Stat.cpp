@@ -36,7 +36,7 @@ Stat *Stat::postConstruct()
 {
     //if (Stats::statsById->containsKey(id))
 	//{
-        //throw new RuntimeException("Duplicate stat id: /"" + Stats::statsById->get(id)->name + "/" and /"" + name + "/" at id " + id);	4J - TODO
+        //throw new RuntimeException("Duplicate stat id: \"" + Stats::statsById->get(id)->name + "\" and \"" + name + "\" at id " + id);	4J - TODO
     //}
     Stats::all->push_back(this);
 

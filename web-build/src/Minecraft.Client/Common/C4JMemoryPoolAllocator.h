@@ -29,13 +29,13 @@ public:
 
 	C4JPoolAllocator( C4JMemoryPool* pool = new C4JMemoryPoolFixed(32, 4096 )) : m_pPool( pool ), m_selfAllocated(true) 
 	{
-		printf("allocated mempool/n");
+		printf("allocated mempool\n");
 	}
 
 	template<typename U>
 	C4JPoolAllocator(C4JPoolAllocator<U> const& obj) : m_pPool( obj.m_pPool ), m_selfAllocated(false) // copy constructor
     {
-		printf("C4JPoolAllocator constructed from 0x%08x/n", &obj);
+		printf("C4JPoolAllocator constructed from 0x%08x\n", &obj);
 		assert(obj.m_pPool);
     }
 private:

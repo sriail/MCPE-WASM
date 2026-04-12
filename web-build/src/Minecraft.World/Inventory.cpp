@@ -469,14 +469,14 @@ void Inventory::setItem(unsigned int slot, shared_ptr<ItemInstance> item)
 	if(item!=NULL)
 	{
 		wstring itemstring=item->toString();
-		app.DebugPrintf("Inventory::setItem - slot = %d,/t item = %d ",slot,item->id);
+		app.DebugPrintf("Inventory::setItem - slot = %d,\t item = %d ",slot,item->id);
 		//OutputDebugStringW(itemstring.c_str());
-		app.DebugPrintf("/n");
+		app.DebugPrintf("\n");
 	}
 #else
 	if(item!=NULL)
 	{
-		app.DebugPrintf("Inventory::setItem - slot = %d,/t item = %d, aux = %d/n",slot,item->id,item->getAuxValue());
+		app.DebugPrintf("Inventory::setItem - slot = %d,\t item = %d, aux = %d\n",slot,item->id,item->getAuxValue());
 	}
 #endif
 	// 4J Stu - Changed this a little from Java to be less funn

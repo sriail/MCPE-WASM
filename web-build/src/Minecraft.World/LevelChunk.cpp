@@ -1039,12 +1039,12 @@ bool LevelChunk::setTileAndData(int x, int y, int z, int _tile, int _data)
 			if (te == NULL)
 			{
 				te = dynamic_cast<EntityTile *>(Tile::tiles[_tile])->newTileEntity(level);
-				//app.DebugPrintf("%s: Setting tile id %d, created tileEntity type %d/n", level->isClientSide?"Client":"Server", _tile, te->GetType());
+				//app.DebugPrintf("%s: Setting tile id %d, created tileEntity type %d\n", level->isClientSide?"Client":"Server", _tile, te->GetType());
 				level->setTileEntity(xOffs, y, zOffs, te);
 			}
 			if (te != NULL)
 			{
-				//app.DebugPrintf("%s: Setting tile id %d, found tileEntity type %d/n", level->isClientSide?"Client":"Server", _tile, te->GetType());
+				//app.DebugPrintf("%s: Setting tile id %d, found tileEntity type %d\n", level->isClientSide?"Client":"Server", _tile, te->GetType());
 				te->clearCache();
 			}
 		}
@@ -1251,7 +1251,7 @@ void LevelChunk::removeEntity(shared_ptr<Entity> e, int yc)
 		static bool bShowMsg = true;
 		if(bShowMsg)
 		{
-			app.DebugPrintf("Need to add C++11 shrink_to_fit for PS3/n");
+			app.DebugPrintf("Need to add C++11 shrink_to_fit for PS3\n");
 			bShowMsg = false;
 		}
 #else
@@ -1368,7 +1368,7 @@ void LevelChunk::setTileEntity(int x, int y, int z, shared_ptr<TileEntity> tileE
 
 	if (getTile(x, y, z) == 0 || !Tile::tiles[getTile(x, y, z)]->isEntityTile())	// 4J - was !(Tile.tiles[getTile(x, y, z)] instanceof EntityTile))
 	{
-		app.DebugPrintf("Attempted to place a tile entity where there was no entity tile!/n");
+		app.DebugPrintf("Attempted to place a tile entity where there was no entity tile!\n");
 		return;
 	}
     auto it = tileEntities.find(pos);
@@ -1402,7 +1402,7 @@ void LevelChunk::removeTileEntity(int x, int y, int z)
 			{
 				if(level->isClientSide)
 				{
-					app.DebugPrintf("Removing tile entity of type %d/n", te->GetType());
+					app.DebugPrintf("Removing tile entity of type %d\n", te->GetType());
 				}
 				te->setRemoved();
 			}
@@ -1514,7 +1514,7 @@ void LevelChunk::unload(bool unloadTileEntities)	// 4J - added parameter
 #else
 	LeaveCriticalSection(&m_csEntities);
 #endif
-	//app.DebugPrintf("Unloaded chunk %d, %d/n", x, z);
+	//app.DebugPrintf("Unloaded chunk %d, %d\n", x, z);
 
 #ifdef _LARGE_WORLDS
 	if ( !m_bUnloaded ) // 4J-JEV: If we unload a chunk twice, we delete all the entities/tile-entities its saved in the entitiesTag.

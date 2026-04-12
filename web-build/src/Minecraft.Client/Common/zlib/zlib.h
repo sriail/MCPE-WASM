@@ -1644,18 +1644,18 @@ ZEXTERN int ZEXPORT inflateBackInit_ OF((z_streamp strm, int windowBits,
                                          unsigned char FAR *window,
                                          const char *version,
                                          int stream_size));
-#define deflateInit(strm, level) /
+#define deflateInit(strm, level) \
         deflateInit_((strm), (level), ZLIB_VERSION, (int)sizeof(z_stream))
-#define inflateInit(strm) /
+#define inflateInit(strm) \
         inflateInit_((strm), ZLIB_VERSION, (int)sizeof(z_stream))
-#define deflateInit2(strm, level, method, windowBits, memLevel, strategy) /
-        deflateInit2_((strm),(level),(method),(windowBits),(memLevel),/
+#define deflateInit2(strm, level, method, windowBits, memLevel, strategy) \
+        deflateInit2_((strm),(level),(method),(windowBits),(memLevel),\
                       (strategy), ZLIB_VERSION, (int)sizeof(z_stream))
-#define inflateInit2(strm, windowBits) /
-        inflateInit2_((strm), (windowBits), ZLIB_VERSION, /
+#define inflateInit2(strm, windowBits) \
+        inflateInit2_((strm), (windowBits), ZLIB_VERSION, \
                       (int)sizeof(z_stream))
-#define inflateBackInit(strm, windowBits, window) /
-        inflateBackInit_((strm), (windowBits), (window), /
+#define inflateBackInit(strm, windowBits, window) \
+        inflateBackInit_((strm), (windowBits), (window), \
                       ZLIB_VERSION, (int)sizeof(z_stream))
 
 #ifndef Z_SOLO
@@ -1675,10 +1675,10 @@ struct gzFile_s {
 ZEXTERN int ZEXPORT gzgetc_ OF((gzFile file));  /* backward compatibility */
 #ifdef Z_PREFIX_SET
 #  undef z_gzgetc
-#  define z_gzgetc(g) /
+#  define z_gzgetc(g) \
           ((g)->have ? ((g)->have--, (g)->pos++, *((g)->next)++) : gzgetc(g))
 #else
-#  define gzgetc(g) /
+#  define gzgetc(g) \
           ((g)->have ? ((g)->have--, (g)->pos++, *((g)->next)++) : gzgetc(g))
 #endif
 

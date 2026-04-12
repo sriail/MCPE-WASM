@@ -391,7 +391,7 @@ vector<shared_ptr<SynchedEntityData::DataItem> > *SynchedEntityData::unpack(Data
 			}
 			break;
 		default:
-			app.DebugPrintf(" ------ garbage data, or early end of stream due to an incomplete packet/n");
+			app.DebugPrintf(" ------ garbage data, or early end of stream due to an incomplete packet\n");
 			delete result;
 			return NULL;
 			break;

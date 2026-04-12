@@ -71,7 +71,7 @@ void AnvilMenu::createResult()
 		tax += input->getBaseRepairCost() + (addition == NULL ? 0 : addition->getBaseRepairCost());
 		if (DEBUG_COST)
 		{
-			app.DebugPrintf("Starting with base repair tax of %d (%d + %d)/n", tax, input->getBaseRepairCost(), (addition == NULL ? 0 : addition->getBaseRepairCost()));
+			app.DebugPrintf("Starting with base repair tax of %d (%d + %d)\n", tax, input->getBaseRepairCost(), (addition == NULL ? 0 : addition->getBaseRepairCost()));
 		}
 
 		repairItemCountCost = 0;
@@ -127,7 +127,7 @@ void AnvilMenu::createResult()
 						price += max(1, additional / 100);
 						if (DEBUG_COST)
 						{
-							app.DebugPrintf("Repairing; price is now %d (went up by %d)/n", price, max(1, additional / 100) );
+							app.DebugPrintf("Repairing; price is now %d (went up by %d)\n", price, max(1, additional / 100) );
 						}
 					}
 				}
@@ -159,7 +159,7 @@ void AnvilMenu::createResult()
 								price += extra;
 								if (DEBUG_COST)
 								{
-									app.DebugPrintf("Enchantment incompatibility fee; price is now %d (went up by %d)/n", price, extra);
+									app.DebugPrintf("Enchantment incompatibility fee; price is now %d (went up by %d)\n", price, extra);
 								}
 							}
 						}
@@ -190,7 +190,7 @@ void AnvilMenu::createResult()
 						price += fee * extra;
 						if (DEBUG_COST)
 						{
-							app.DebugPrintf("Enchantment increase fee; price is now %d (went up by %d)/n", price, fee * extra);
+							app.DebugPrintf("Enchantment increase fee; price is now %d (went up by %d)\n", price, fee * extra);
 						}
 					}
 					delete additionalEnchantments;
@@ -311,11 +311,11 @@ void AnvilMenu::createResult()
 	{
 		if (level->isClientSide)
 		{
-			app.DebugPrintf("CLIENT Cost is %d (%d price, %d tax)/n", cost, price, tax);
+			app.DebugPrintf("CLIENT Cost is %d (%d price, %d tax)\n", cost, price, tax);
 		}
 		else
 		{
-			app.DebugPrintf("SERVER Cost is %d (%d price, %d tax)/n", cost, price, tax);
+			app.DebugPrintf("SERVER Cost is %d (%d price, %d tax)\n", cost, price, tax);
 		}
 	}
 }

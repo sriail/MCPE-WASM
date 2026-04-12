@@ -383,7 +383,7 @@ void CompressedTileStorage::setData(byteArray dataIn, unsigned int inOffset)
 	}
 
 //	chunkTotal++;
-//	printf("%d: %d (0) %d (1) %d (2) %d (4) %d (8)/n", chunkTotal, type0 / chunkTotal, type1 / chunkTotal, type2 / chunkTotal, type4 / chunkTotal, type8 / chunkTotal);
+//	printf("%d: %d (0) %d (1) %d (2) %d (4) %d (8)\n", chunkTotal, type0 / chunkTotal, type1 / chunkTotal, type2 / chunkTotal, type4 / chunkTotal, type8 / chunkTotal);
 
 	memToAlloc += 1024; // For the indices
 	unsigned char *newIndicesAndData = (unsigned char *)XPhysicalAlloc(memToAlloc, MAXULONG_PTR, 4096, PAGE_READWRITE);//(unsigned char *)malloc( memToAlloc );
@@ -805,12 +805,12 @@ void CompressedTileStorage::tick()
 	// before we ever delete something, from when the request to delete it came in
 	int freeIndex = ( deleteQueueIndex + 1 ) % 3;
 
-//	printf("Free queue: %d, %d/n",deleteQueue[freeIndex].GetEntryCount(),deleteQueue[freeIndex].GetAllocated());
+//	printf("Free queue: %d, %d\n",deleteQueue[freeIndex].GetEntryCount(),deleteQueue[freeIndex].GetAllocated());
 	unsigned char *toFree = NULL;
 	do
 	{
 		toFree = deleteQueue[freeIndex].Pop();
-//		if( toFree ) printf("Deleting 0x%x/n", toFree);
+//		if( toFree ) printf("Deleting 0x%x\n", toFree);
 #if 1
 		if( toFree ) XPhysicalFree(toFree);
 #else

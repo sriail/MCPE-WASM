@@ -122,7 +122,7 @@ LevelChunk *McRegionChunkStorage::load(Level *level, int x, int z)
 		if (!chunkData->contains(L"Level"))
 		{
 			char buf[256];
-			sprintf(buf,"Chunk file at %d, %d is missing level data, skipping/n",x, z);
+			sprintf(buf,"Chunk file at %d, %d is missing level data, skipping\n",x, z);
 			app.DebugPrintf(buf);
 			delete chunkData;
 			return NULL;
@@ -130,7 +130,7 @@ LevelChunk *McRegionChunkStorage::load(Level *level, int x, int z)
 		if (!chunkData->getCompound(L"Level")->contains(L"Blocks"))
 		{
 			char buf[256];
-			sprintf(buf,"Chunk file at %d, %d is missing block data, skipping/n",x, z);
+			sprintf(buf,"Chunk file at %d, %d is missing block data, skipping\n",x, z);
 			app.DebugPrintf(buf);
 			delete chunkData;
 			return NULL;
@@ -141,7 +141,7 @@ LevelChunk *McRegionChunkStorage::load(Level *level, int x, int z)
 		if (!levelChunk->isAt(x, z))
 		{
 			char buf[256];
-			sprintf(buf,"Chunk file at %d, %d is in the wrong location; relocating. Expected %d, %d, got %d, %d/n",
+			sprintf(buf,"Chunk file at %d, %d is in the wrong location; relocating. Expected %d, %d, got %d, %d\n",
 				x, z, x, z, levelChunk->x, levelChunk->z);
 			app.DebugPrintf(buf);
 			delete levelChunk;
@@ -182,7 +182,7 @@ void McRegionChunkStorage::save(Level *level, LevelChunk *levelChunk)
 	// when we are running saves on multiple threads these sections have a lot of contention and thrash the memory system's critical sections
 	// Better to let each thread have its turn at a higher level of granularity.
 	MemSect(30);
-	PIXBeginNamedEvent(0,"Getting output stream/n");
+	PIXBeginNamedEvent(0,"Getting output stream\n");
 	DataOutputStream *output = RegionFileCache::getChunkDataOutputStream(m_saveFile, m_prefix, levelChunk->x, levelChunk->z);
 	PIXEndNamedEvent();
 
@@ -201,17 +201,17 @@ void McRegionChunkStorage::save(Level *level, LevelChunk *levelChunk)
 	else
 	{
 		EnterCriticalSection(&cs_memory);
-		PIXBeginNamedEvent(0,"Creating tags/n");
+		PIXBeginNamedEvent(0,"Creating tags\n");
 		CompoundTag *tag = new CompoundTag();
 		CompoundTag *levelData = new CompoundTag();
 		tag->put(L"Level", levelData);
 		OldChunkStorage::save(levelChunk, level, levelData);
 		PIXEndNamedEvent();
-		PIXBeginNamedEvent(0,"NbtIo writing/n");
+		PIXBeginNamedEvent(0,"NbtIo writing\n");
 		NbtIo::write(tag, output);
 		PIXEndNamedEvent();
 		LeaveCriticalSection(&cs_memory);
-		PIXBeginNamedEvent(0,"Output closing/n");
+		PIXBeginNamedEvent(0,"Output closing\n");
 		output->close();
 		PIXEndNamedEvent();
 
@@ -219,7 +219,7 @@ void McRegionChunkStorage::save(Level *level, LevelChunk *levelChunk)
 		// 4J Stu - getChunkDataOutputStream makes a new DataOutputStream that points to a new ChunkBuffer( ByteArrayOutputStream )
 		// We should clean these up when we are done
 		EnterCriticalSection(&cs_memory);
-		PIXBeginNamedEvent(0,"Cleaning up/n");
+		PIXBeginNamedEvent(0,"Cleaning up\n");
 		output->deleteChildStream();
 		delete output;
 		delete tag;
@@ -327,14 +327,14 @@ void McRegionChunkStorage::staticCtor()
 	for(unsigned int i = 0; i < 3; ++i)
 	{
 		char threadName[256];
-		sprintf(threadName,"McRegion Save thread %d/n",i);
+		sprintf(threadName,"McRegion Save thread %d\n",i);
 		SetThreadName(0, threadName);
 
 		//saveThreads[j] = CreateThread(NULL,0,runSaveThreadProc,&threadData[j],CREATE_SUSPENDED,&threadId[j]);
 		s_saveThreads[i] = new C4JThread(runSaveThreadProc,NULL,threadName);
 
 
-		//app.DebugPrintf("Created new thread: %s/n",threadName);
+		//app.DebugPrintf("Created new thread: %s\n",threadName);
 
 		// Threads 1,3 and 5 are generally idle so use them
 		if(i == 0) s_saveThreads[i]->SetProcessor(CPU_CORE_SAVE_THREAD_A);
@@ -376,7 +376,7 @@ int McRegionChunkStorage::runSaveThreadProc(LPVOID lpParam)
 			if(dos)
 			{
 				PIXBeginNamedEvent(0,"Saving chunk");
-				//app.DebugPrintf("Compressing chunk data (%d left)/n", lastQueueSize - 1);
+				//app.DebugPrintf("Compressing chunk data (%d left)\n", lastQueueSize - 1);
 				dos->close();
 				dos->deleteChildStream();
 				PIXEndNamedEvent();

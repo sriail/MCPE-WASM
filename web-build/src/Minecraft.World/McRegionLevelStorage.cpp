@@ -69,7 +69,7 @@ ChunkStorage *McRegionLevelStorage::createChunkStorage(Dimension *dimension)
 		if((iSaveVersion!=0) && (iSaveVersion < SAVE_FILE_VERSION_NEW_END))
 		{
 			// For versions before TU9 (TU7 and 8) we generate a part of The End, but we want to scrap it if it exists so that it is replaced with the TU9+ version
-			app.DebugPrintf("Loaded save version number is: %d, required to keep The End is: %d/n",m_saveFile->getSaveVersion(), SAVE_FILE_VERSION_NEW_END);
+			app.DebugPrintf("Loaded save version number is: %d, required to keep The End is: %d\n",m_saveFile->getSaveVersion(), SAVE_FILE_VERSION_NEW_END);
 
 			vector<FileEntry *> *endFiles = m_saveFile->getFilesWithPrefix(LevelStorage::ENDER_FOLDER);
 

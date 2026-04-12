@@ -21,7 +21,7 @@ RegionFile *RegionFileCache::_getRegionFile(ConsoleSaveFile *saveFile, const wst
 {
 	// 4J Jev - changed back to use of the File class.
 	//char file[MAX_PATH_SIZE];
-	//sprintf(file,"%s//region//r.%d.%d.mcr",basePath,chunkX >> 5,chunkZ >> 5);
+	//sprintf(file,"%s\\region\\r.%d.%d.mcr",basePath,chunkX >> 5,chunkZ >> 5);
 
 	//File regionDir(basePath, L"region");
 

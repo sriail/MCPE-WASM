@@ -10,8 +10,8 @@ wstring toLower(const wstring& a)
 wstring trimString(const wstring& a)
 {
 	wstring b;
-	int start = (int)a.find_first_not_of(L" /t/n/r");
-	int end = (int)a.find_last_not_of(L" /t/n/r");
+	int start = (int)a.find_first_not_of(L" \t\n\r");
+	int end = (int)a.find_last_not_of(L" \t\n\r");
 	if( start == wstring::npos ) start = 0;
 	if( end == wstring::npos ) end = (int)a.size()-1;
 	b = a.substr(start,(end-start)+1);
@@ -57,9 +57,9 @@ const char *wstringtofilename(const wstring& name)
 	{
 		wchar_t c = name[i];
 #if defined __PS3__ || defined __ORBIS__
-		if(c=='//') c='/';
+		if(c=='\\') c='/';
 #else
-		if(c=='/') c='//';
+		if(c=='/') c='\\';
 #endif
 		assert(c<128);	// Will we have to do any conversion of non-ASCII characters in filenames?
 		buf[i] = (char)c;
@@ -112,11 +112,11 @@ void stripWhitespaceForHtml(wstring &string, bool bRemoveNewline)
 	// Strip newline chars
 	if(bRemoveNewline)
 	{	
-		string.erase(std::remove(string.begin(), string.end(), '/n'), string.end());
-		string.erase(std::remove(string.begin(), string.end(), '/r'), string.end());
+		string.erase(std::remove(string.begin(), string.end(), '\n'), string.end());
+		string.erase(std::remove(string.begin(), string.end(), '\r'), string.end());
 	}
 
-	string.erase(std::remove(string.begin(), string.end(), '/t'), string.end());
+	string.erase(std::remove(string.begin(), string.end(), '\t'), string.end());
 
 	// Strip duplicate spaces
 	string.erase(std::unique(string.begin(), string.end(), BothAreSpaces), string.end()); 
@@ -128,7 +128,7 @@ wstring escapeXML(const wstring &in)
 {
 	wstring out = in;
 	out = replaceAll(out, L"&", L"&amp;");
-	//out = replaceAll(out, L"/"", L"&quot;");
+	//out = replaceAll(out, L"\"", L"&quot;");
 	//out = replaceAll(out, L"'", L"&apos;");
 	out = replaceAll(out, L"<", L"&lt;");
 	out = replaceAll(out, L">", L"&gt;");
@@ -139,7 +139,7 @@ wstring parseXMLSpecials(const wstring &in)
 {
 	wstring out = in;
 	out = replaceAll(out, L"&amp;", L"&");
-	//out = replaceAll(out, L"/"", L"&quot;");
+	//out = replaceAll(out, L"\"", L"&quot;");
 	//out = replaceAll(out, L"'", L"&apos;");
 	out = replaceAll(out, L"&lt;", L"<");
 	out = replaceAll(out, L"&gt;", L">");

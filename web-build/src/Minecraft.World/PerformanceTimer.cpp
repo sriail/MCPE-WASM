@@ -30,6 +30,6 @@ void PerformanceTimer::PrintElapsedTime(const wstring &description)
 	qwDeltaTime.QuadPart = qwNewTime.QuadPart - m_qwStartTime.QuadPart;
 	float fElapsedTime = m_fSecsPerTick * ((FLOAT)(qwDeltaTime.QuadPart));
 
-	app.DebugPrintf("TIMER: %ls: Elapsed time %f/n", description.c_str(), fElapsedTime);
+	app.DebugPrintf("TIMER: %ls: Elapsed time %f\n", description.c_str(), fElapsedTime);
 #endif
 }

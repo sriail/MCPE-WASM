@@ -1639,7 +1639,7 @@ void Level::playEntitySound(shared_ptr<Entity> entity, int iSound, float volume,
 		// 4J-PB - if the entity is a local player, don't play the sound
 		if(entity->GetType() == eTYPE_SERVERPLAYER)
 		{
-			//app.DebugPrintf("ENTITY is serverplayer/n");
+			//app.DebugPrintf("ENTITY is serverplayer\n");
 
 			listener->playSound(iSound, entity->x, entity->y - entity->heightOffset, entity->z, volume, pitch);
 		}
@@ -3655,7 +3655,7 @@ void Level::checkLight(LightLayer::variety layer, int xc, int yc, int zc, bool f
 		fElapsedTime2 = fSecsPerTick * ((FLOAT)(qwDeltaTime2.QuadPart));
 		if( ( darktcc > 0 ) | ( tcc > 0 ) )
 		{
-			printf("%d %d %d %f + %f = %f/n", darktcc, tcc, darktcc + tcc, fElapsedTime1 * 1000.0f, fElapsedTime2 * 1000.0f, ( fElapsedTime1 + fElapsedTime2 ) * 1000.0f);
+			printf("%d %d %d %f + %f = %f\n", darktcc, tcc, darktcc + tcc, fElapsedTime1 * 1000.0f, fElapsedTime2 * 1000.0f, ( fElapsedTime1 + fElapsedTime2 ) * 1000.0f);
 		}
 	}
 	/////////////////////////////////////////////////////////////////
@@ -4254,14 +4254,14 @@ void Level::setBlocksAndData(int x, int y, int z, int xs, int ys, int zs, byteAr
 			if( forceUnshare )
 			{
 				int size = (x1 - x0 ) * ( y1 - y0 ) * ( z1 - z0 );
-				PIXBeginNamedEvent(0,"Chunk data unsharing %d/n", size);
+				PIXBeginNamedEvent(0,"Chunk data unsharing %d\n", size);
 				lc->stopSharingTilesAndData();
 				PIXEndNamedEvent();
 			}
 			if(p < data.length) p = lc->setBlocksAndData(data, x0, y0, z0, x1, y1, z1, p, includeLighting);
 			setTilesDirty(xc * 16 + x0, y0, zc * 16 + z0, xc * 16 + x1, y1, zc * 16 + z1);
 
-			PIXBeginNamedEvent(0,"Chunk data sharing/n");
+			PIXBeginNamedEvent(0,"Chunk data sharing\n");
 			if( g_NetworkManager.IsHost() && isClientSide )
 			{
 				lc->startSharingTilesAndData();
@@ -4298,7 +4298,7 @@ void Level::setGameTime(int64_t time)
 		else if (timeDiff > 100)
 		{
 			// Time differences of more than ~5 seconds are generally not real time passing so ignore (moving dimensions does this)
-			app.DebugPrintf("Level::setTime: Massive time difference, ignoring for time passed stat (%lli)/n", timeDiff);
+			app.DebugPrintf("Level::setTime: Massive time difference, ignoring for time passed stat (%lli)\n", timeDiff);
 			timeDiff = 0;
 		}
 

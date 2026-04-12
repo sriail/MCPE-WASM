@@ -18,7 +18,7 @@ bool ReedsFeature::place(Level *level, Random *random, int x, int y, int z)
 			bool intersects = levelGenOptions->checkIntersects(x2, y2, z2, x2, y2, z2);
 			if(intersects)
 			{
-				//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure/n");
+				//app.DebugPrintf("Skipping reeds feature generation as it overlaps a game rule structure\n");
 				continue;
 			}
 		}

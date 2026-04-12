@@ -75,7 +75,7 @@ BlockRegionUpdatePacket::BlockRegionUpdatePacket(int x, int y, int z, int xs, in
 		unsigned int inputSize = (256 * 16 * 16 * 5)/2;
 	
 		Compression::getCompression()->CompressLZXRLE(ucTemp, &inputSize, rawBuffer.data, (unsigned int) rawBuffer.length);
-		//app.DebugPrintf("Chunk (%d,%d) compressed from %d to size %d/n", x>>4, z>>4, rawBuffer.length, inputSize);
+		//app.DebugPrintf("Chunk (%d,%d) compressed from %d to size %d\n", x>>4, z>>4, rawBuffer.length, inputSize);
 		unsigned char *ucTemp2 = new unsigned char[inputSize];
 		memcpy(ucTemp2,ucTemp,inputSize);
 		delete [] ucTemp;
@@ -124,10 +124,10 @@ void BlockRegionUpdatePacket::read(DataInputStream *dis) //throws IOException
 		}
 		else
 		{
-			app.DebugPrintf("Not decompressing packet that wasn't fully read/n");
+			app.DebugPrintf("Not decompressing packet that wasn't fully read\n");
 		}
 
-	//	printf("Block (%d %d %d), (%d %d %d) coming in decomp from %d to %d/n",x,y,z,xs,ys,zs,size,outputSize);
+	//	printf("Block (%d %d %d), (%d %d %d) coming in decomp from %d to %d\n",x,y,z,xs,ys,zs,size,outputSize);
 	
 
 		delete [] compressedBuffer.data;

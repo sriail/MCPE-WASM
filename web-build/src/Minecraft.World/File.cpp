@@ -10,7 +10,7 @@
 #include <fios2.h>
 #endif
 
-const wchar_t File::pathSeparator = L'//';
+const wchar_t File::pathSeparator = L'\\';
 #ifdef _XBOX
 const std::wstring File::pathRoot = L"GAME:"; // Path root after pathSeparator has been removed
 #else
@@ -29,7 +29,7 @@ File::File( const wstring& pathname ) //: parent( NULL )
 	// #ifndef _CONTENT_PACKAGE
 	// 	char buf[256];
 	// 	wcstombs(buf, pathname.c_str(), 256);
-	// 	printf("File::File - %s/n",buf);
+	// 	printf("File::File - %s\n",buf);
 	// #endif
 	if( pathname.empty() )
 		m_abstractPathName = wstring( L"" );
@@ -106,7 +106,7 @@ bool File::_delete()
 	{
 		DWORD error = GetLastError();
 #ifndef _CONTENT_PACKAGE
-		printf( "File::_delete - Error code %d (%#0.8X)/n", error, error );
+		printf( "File::_delete - Error code %d (%#0.8X)\n", error, error );
 #endif
 		return false;
 	}
@@ -249,7 +249,7 @@ bool File::renameTo(File dest)
 	{
 		DWORD error = GetLastError();
 #ifndef _CONTENT_PACKAGE
-		printf( "File::renameTo - Error code %d (%#0.8X)/n", error, error );
+		printf( "File::renameTo - Error code %d (%#0.8X)\n", error, error );
 #endif
 		return false;
 	}
@@ -324,7 +324,7 @@ std::vector<File *> *File::listFiles() const
 	bool exists = sceFiosDirectoryExistsSync( NULL, filePath );
 	if( !exists  )
 	{
-		app.DebugPrintf("/nsceFiosDirectoryExistsSync - Directory doesn't exist/n");
+		app.DebugPrintf("\nsceFiosDirectoryExistsSync - Directory doesn't exist\n");
 	}
 
 	//CD - Vita note: sceFiosDHOpenSync returns SCE_FIOS_ERROR_UNIMPLEMENTED
@@ -339,7 +339,7 @@ std::vector<File *> *File::listFiles() const
 	int err = sceFiosOpWait(op);
 	if( err != SCE_FIOS_OK  )
 	{
-		app.DebugPrintf("/nsceFiosOpWait = 0x%x/n",err);
+		app.DebugPrintf("\nsceFiosOpWait = 0x%x\n",err);
 	}
 	SceFiosSize size = sceFiosOpGetActualCount(op);
 	char *pBuf = new char[size];
@@ -351,7 +351,7 @@ std::vector<File *> *File::listFiles() const
 	err = sceFiosDHOpenSync(NULL, &dh, filePath, buf);
 	if( err != SCE_FIOS_OK  )
 	{
-		app.DebugPrintf("/nsceFiosDHOpenSync = 0x%x/n",err);
+		app.DebugPrintf("\nsceFiosDHOpenSync = 0x%x\n",err);
 	}
 	SceFiosDirEntry entry;
 	ZeroMemory(&entry, sizeof(SceFiosDirEntry));
@@ -371,7 +371,7 @@ std::vector<File *> *File::listFiles() const
 
 #ifdef _UNICODE
 	WCHAR path[MAX_PATH];
-	swprintf( path, L"%ls//*", getPath().c_str() );
+	swprintf( path, L"%ls\\*", getPath().c_str() );
 	HANDLE hFind = FindFirstFile( path, &wfd);
 	if(hFind != INVALID_HANDLE_VALUE)
 	{
@@ -386,7 +386,7 @@ std::vector<File *> *File::listFiles() const
 	}
 #else
 	char path[MAX_PATH] {};
-	snprintf( path, MAX_PATH, "%s//*", wstringtofilename( getPath() ) );
+	snprintf( path, MAX_PATH, "%s\\*", wstringtofilename( getPath() ) );
 	HANDLE hFind = FindFirstFile( path, &wfd);
 	if(hFind != INVALID_HANDLE_VALUE)
 	{
@@ -463,7 +463,7 @@ std::vector<File *> *File::listFiles(FileFilter *filter) const
 	WIN32_FIND_DATA wfd;
 	DWORD dwAttr = FILE_ATTRIBUTE_DIRECTORY;
 
-	swprintf( path, L"%ls//*", getPath().c_str() );
+	swprintf( path, L"%ls\\*", getPath().c_str() );
 	HANDLE hFind = FindFirstFile( path, &wfd);
 	if(hFind != INVALID_HANDLE_VALUE)
 	{
@@ -484,7 +484,7 @@ std::vector<File *> *File::listFiles(FileFilter *filter) const
 	WIN32_FIND_DATA wfd;
 	//DWORD dwAttr = FILE_ATTRIBUTE_DIRECTORY;
 
-	sprintf( path, "%s//*", wstringtofilename( getPath() ) );
+	sprintf( path, "%s\\*", wstringtofilename( getPath() ) );
 	HANDLE hFind = FindFirstFile( path, &wfd);
 	if(hFind != INVALID_HANDLE_VALUE)
 	{
@@ -539,7 +539,7 @@ int64_t File::length()
 		sprintf(filePath,"%s/%s",getUsrDirPath(), lpFileName );
 
 #ifndef _CONTENT_PACKAGE
-	//printf("+++File::length - %s/n",filePath);
+	//printf("+++File::length - %s\n",filePath);
 #endif
 	// check if the file exists first
 	CellFsStat statData;
@@ -547,16 +547,16 @@ int64_t File::length()
 
 	if( err != CELL_FS_SUCCEEDED)
 	{
-		//printf("+++File::length FAILED with %d/n",err);
+		//printf("+++File::length FAILED with %d\n",err);
 		return 0;
 	}
 	if(statData.st_mode == CELL_FS_S_IFDIR)
 	{
-		//printf("+++File::length FAILED with %d/n",err);
+		//printf("+++File::length FAILED with %d\n",err);
 		return 0;
 	}
 
-	//printf("+++File::length - %ll/n",statData.st_size);
+	//printf("+++File::length - %ll\n",statData.st_size);
 
 	return statData.st_size;
 #elif defined __ORBIS__ || defined __PSVITA__

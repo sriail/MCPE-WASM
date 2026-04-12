@@ -204,7 +204,7 @@ FlatGeneratorInfo *FlatGeneratorInfo::fromValue(const wstring &input)
 
         for (auto it = structures.begin(); it != structures.end(); ++it)
         {
-			std::vector<std::wstring> separated = stringSplit(parts[index++], L"//(");
+			std::vector<std::wstring> separated = stringSplit(parts[index++], L"\\(");
 
 			unordered_map<wstring, wstring> structureOptions;
 

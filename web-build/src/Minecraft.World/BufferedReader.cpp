@@ -132,7 +132,7 @@ int BufferedReader::read(wchar_t cbuf[], unsigned int off, unsigned int len)
 	return charsRead;
 }
 
-//Reads a line of text. A line is considered to be terminated by any one of a line feed ('/n'), a carriage return ('/r'),
+//Reads a line of text. A line is considered to be terminated by any one of a line feed ('\n'), a carriage return ('\r'),
 //or a carriage return followed immediately by a linefeed.
 //Returns:
 //A String containing the contents of the line, not including any line-termination characters, or null if the end of the stream has been reached
@@ -147,7 +147,7 @@ wstring BufferedReader::readLine()
 
 		if( !newLineCharFound )
 		{
-			if( ( value == '/n')  || ( value == '/r') )
+			if( ( value == '\n')  || ( value == '\r') )
 			{
 				newLineCharFound = true;
 			}
@@ -158,7 +158,7 @@ wstring BufferedReader::readLine()
 		}
 		else
 		{
-			if( ( value != '/n')  && ( value != '/r') )
+			if( ( value != '\n')  && ( value != '\r') )
 			{
 				readMark--; // Move back the read mark on char so we get this char again next time
 				break;
