@@ -269,3 +269,20 @@ inline int wcscat_s(wchar_t* dest, size_t destsz, const wchar_t* src) {
 #define TELEMETRY_ENABLED 0
 
 #endif // EMSCRIPTEN
+
+
+// Xbox string verification stub
+typedef struct _STRING_VERIFY_RESPONSE {
+    unsigned int uiSize;
+    int iResult;
+} STRING_VERIFY_RESPONSE;
+
+// DirectX type stubs
+typedef struct _D3D11_VIEWPORT {
+    float TopLeftX, TopLeftY, Width, Height, MinDepth, MaxDepth;
+} D3D11_VIEWPORT;
+
+// ZeroMemory stub
+#ifndef ZeroMemory
+#define ZeroMemory(dest, size) memset(dest, 0, size)
+#endif

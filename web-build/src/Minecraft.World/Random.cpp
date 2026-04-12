@@ -7,7 +7,13 @@ Random::Random()
 	// 4J - jave now uses the system nanosecond counter added to a "seedUniquifier" to get an initial seed. Our nanosecond timer is actually only millisecond accuate, so
 	// use QueryPerformanceCounter here instead
 	int64_t seed;
+	#ifdef EMSCRIPTEN
+	struct timespec ts;
+	clock_gettime(CLOCK_MONOTONIC, &ts);
+	seed = ts.tv_nsec;
+#else
 	QueryPerformanceCounter((LARGE_INTEGER *)&seed);
+#endif
 	seed += 8682522807148012LL;
 
 	setSeed(seed);

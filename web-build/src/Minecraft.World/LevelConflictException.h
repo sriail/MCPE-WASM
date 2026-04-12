@@ -6,7 +6,7 @@ using namespace std;
 class LevelConflictException : public RuntimeException
 {
 private:
-	static const __int32 serialVersionUID = 1L;
+	static const int32_t serialVersionUID = 1L;
     
 public:
 	LevelConflictException(const wstring& msg);

@@ -936,4 +936,4 @@ private:
 };
 
 //singleton
-//extern CMinecraftApp app;
+extern CMinecraftApp app;

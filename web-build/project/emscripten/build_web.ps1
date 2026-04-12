@@ -16,7 +16,7 @@ $EM_CACHE = $env:EM_CACHE
 # Emscripten flags
 $COMPILE_FLAGS = @(
     "-O2",
-    "-std=c++17",
+    "-std=c++14",
     "-DOPENGL_ES",
     "-DUSE_VBO",
     "-DEMSCRIPTEN",
