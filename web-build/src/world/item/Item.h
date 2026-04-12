@@ -201,6 +201,13 @@ public:
 	static Item* netherbrick;
 	static Item* netherQuartz;
 
+	static Item* greenEmerald;
+	static Item* enderPearl;
+	static Item* mutton_raw;
+	static Item* mutton_cooked;
+	static Item* cookie;
+	static Item* cocoaBeans;
+
     static Item* record_01;
     static Item* record_02;
 

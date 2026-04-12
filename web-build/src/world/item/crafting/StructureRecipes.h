@@ -8,6 +8,7 @@
 #include "../../level/tile/Tile.h"
 #include "../../level/tile/SandStoneTile.h"
 #include "../../level/tile/StoneSlabTile.h"
+#include "../../level/tile/StoneVariantTile.h"
 
 class StructureRecipes
 {
@@ -88,12 +89,85 @@ public:
 
 			definition('N', Item::netherQuartz));
 
-        //r->addShapedRecipe(ItemInstance(Tile::redstoneLight, 1), //
-        //    " R ", //
-        //    "RGR", //
-        //    " R ", //
+        r->addShapedRecipe(ItemInstance(Tile::redstoneLamp, 1), //
+            " R ", //
+            "RGR", //
+            " R ", //
 
-        //    definition('R', Item::redStone, 'G', Tile::lightGem));
+            definition('R', Item::redStone, 'G', Tile::lightGem));
+
+		// Polished stone variants
+		r->addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_GRANITE), //
+			"##", //
+			"##", //
+
+			definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+		r->addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_DIORITE), //
+			"##", //
+			"##", //
+
+			definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+		r->addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_ANDESITE), //
+			"##", //
+			"##", //
+
+			definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
+		// Polished Sandstone
+		r->addShapedRecipe(ItemInstance(Tile::polishedSandstone, 4), //
+			"##", //
+			"##", //
+
+			definition('#', Tile::sandStone));
+
+		// Green Emerald Block
+		r->addShapedRecipe(ItemInstance(Tile::greenEmeraldBlock), //
+			"###", //
+			"###", //
+			"###", //
+
+			definition('#', Item::greenEmerald));
+
+		// Redstone Block
+		r->addShapedRecipe(ItemInstance(Tile::redstoneBlock), //
+			"###", //
+			"###", //
+			"###", //
+
+			definition('#', Item::redStone));
+
+		// Coal Block
+		r->addShapedRecipe(ItemInstance(Tile::coalBlock), //
+			"###", //
+			"###", //
+			"###", //
+
+			definition('#', Item::coal));
+
+		// Nether Brick Fence
+		r->addShapedRecipe(ItemInstance(Tile::netherBrickFence, 6), //
+			"###", //
+			"###", //
+
+			definition('#', Item::netherbrick));
+
+		// Hay Bale
+		r->addShapedRecipe(ItemInstance(Tile::hayBale), //
+			"###", //
+			"###", //
+			"###", //
+
+			definition('#', Item::wheat));
+
+		// Slime Block
+		r->addShapedRecipe(ItemInstance(Tile::slimeBlock), //
+			"###", //
+			"###", //
+			"###", //
+
+			definition('#', Item::slimeBall));
     }
 };
 

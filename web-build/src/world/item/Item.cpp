@@ -108,7 +108,7 @@ Item* Item::door_wood = NULL;
 //Item* Item::minecart = NULL;
 //Item* Item::saddle = NULL;
 Item* Item::door_iron = NULL;
-//Item* Item::redStone = NULL;
+Item* Item::redStone = NULL;
 Item* Item::snowBall = NULL;
 
 //Item* Item::boat = NULL;
@@ -141,7 +141,7 @@ Item* Item::sugar = NULL;
 
 Item* Item::bed = NULL;
 
-//Item* Item::diode = NULL;
+Item* Item::diode = NULL;
 ShearsItem* Item::shears = NULL;
 Item* Item::beef_raw = NULL;
 Item* Item::beef_cooked = NULL;
@@ -150,6 +150,13 @@ Item* Item::chicken_cooked = NULL;
 
 Item* Item::netherbrick = NULL;
 Item* Item::netherQuartz = NULL;
+
+Item* Item::greenEmerald = NULL;
+Item* Item::enderPearl = NULL;
+Item* Item::mutton_raw = NULL;
+Item* Item::mutton_cooked = NULL;
+Item* Item::cookie = NULL;
+Item* Item::cocoaBeans = NULL;
 
 //Item* Item::record_01 = NULL;
 //Item* Item::record_02 = NULL;
@@ -246,7 +253,7 @@ void Item::initItems() {
 	//Item::minecart = (new MinecartItem(72, Minecart.RIDEABLE))->setIcon(7, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("minecart");
 	//Item::saddle = (new SaddleItem(73))->setIcon(8, 6)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("saddle");
 	Item::door_iron = (new DoorItem(74, Material::metal))->setIcon(12, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorIron");
-	//Item::redStone = (new RedStoneItem(75))->setIcon(8, 3)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstone");
+	Item::redStone = (new Item(75))->setIcon(8, 3)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstone");
 	Item::snowBall = (new SnowballItem(76))->setIcon(14, 0)->setCategory(ItemCategory::Decorations)->setDescriptionId("snowball");
 	//Item::boat = (new BoatItem(77))->setIcon(8, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("boat");
 	Item::leather = (new Item(78))->setIcon(7, 6)->setCategory(ItemCategory::Tools)->setDescriptionId("leather");
@@ -271,7 +278,7 @@ void Item::initItems() {
 	Item::sugar = (new Item(97))->setIcon(13, 0)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("sugar")->handEquipped();
 	//Item::cake = (new TilePlanterItem(98, Tile::cake))->setMaxStackSize(1)->setIcon(13, 1)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cake");
 	Item::bed = (new BedItem(99))->setMaxStackSize(1)->setIcon(13, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("bed");
-	//Item::diode = (new TilePlanterItem(100, Tile::diode_off))->setIcon(6, 5)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
+	Item::diode = (new TilePlanterItem(100, Tile::diode_off))->setIcon(6, 5)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
 	Item::shears = (ShearsItem*)(new ShearsItem(103))->setIcon(13, 5)->setCategory(ItemCategory::Tools)->setDescriptionId("shears");
 	Item::melon = (new FoodItem(104, 2, false))->setIcon(13, 6)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("melon");
 	Item::seeds_melon = (new SeedItem(106, Tile::melonStem->id, Tile::farmland->id))->setIcon(14, 3)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("seedsMelon");
@@ -282,6 +289,13 @@ void Item::initItems() {
 
 	Item::netherbrick = (new Item(149))->setIcon(5, 9)->setDescriptionId("netherbrickItem")->setCategory(ItemCategory::Structures);
 	Item::netherQuartz = (new Item(150))->setIcon(5, 10)->setDescriptionId("netherquartz")->setCategory(ItemCategory::Mechanisms);
+
+	Item::greenEmerald = (new Item(151))->setIcon(7, 11)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
+	Item::enderPearl = (new Item(152))->setIcon(11, 9)->setCategory(ItemCategory::Decorations)->setDescriptionId("enderPearl");
+	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(9, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
+	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
+	Item::cookie = (new FoodItem(155, 2, false))->setIcon(12, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cookie");
+	Item::cocoaBeans = (new Item(156))->setIcon(14, 5)->setCategory(ItemCategory::Decorations)->setDescriptionId("cocoaBeans");
 
 	//Item::record_01 = (new RecordingItem(2000, "13"))->setIcon(0, 15)->setCategory(ItemCategory::Decorations)->setDescriptionId("record");
 	//Item::record_02 = (new RecordingItem(2001, "cat"))->setIcon(1, 15)->setCategory(ItemCategory::Decorations)->setDescriptionId("record");

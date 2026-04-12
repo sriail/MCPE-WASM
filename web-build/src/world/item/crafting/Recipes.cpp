@@ -12,6 +12,7 @@
 #include "OreRecipes.h"
 #include "../CoalItem.h"
 #include "../../level/tile/StoneSlabTile.h"
+#include "../../level/tile/WoodPlanks.h"
 
 /*static*/
 Recipes* Recipes::instance = NULL;
@@ -54,7 +55,25 @@ Recipes::Recipes()
 		"#W#", //
 		"#W#", //
 
-		definition('#', Item::stick, 'W', Tile::wood));
+		definition('#', Item::stick, 'W', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
+
+	addShapedRecipe(ItemInstance(Tile::fenceGate_spruce, 1), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', Item::stick, 'W', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	addShapedRecipe(ItemInstance(Tile::fenceGate_birch, 1), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', Item::stick, 'W', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	addShapedRecipe(ItemInstance(Tile::fenceGate_jungle, 1), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', Item::stick, 'W', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
 
 	//addShapedRecipe(ItemInstance(Tile::recordPlayer, 1), //
 	//	"###", //
@@ -150,18 +169,57 @@ Recipes::Recipes()
 
 		definition('#', Item::stick));
 
-	addShapedRecipe(ItemInstance(Item::door_wood, 1), //
+	addShapedRecipe(ItemInstance(Item::door_wood, 3), //
 		"##", //
 		"##", //
 		"##", //
 
-		definition('#', Tile::wood));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
+
+	addShapedRecipe(ItemInstance(Item::door_wood, 3), //
+		"##", //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	addShapedRecipe(ItemInstance(Item::door_wood, 3), //
+		"##", //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	addShapedRecipe(ItemInstance(Item::door_wood, 3), //
+		"##", //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
 
 	addShapedRecipe(ItemInstance(Tile::trapdoor, 2), //
 		"###", //
 		"###", //
 
-		definition('#', Tile::wood));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
+
+	addShapedRecipe(ItemInstance(Tile::trapdoor_spruce, 2), //
+		"###", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	addShapedRecipe(ItemInstance(Tile::trapdoor_birch, 2), //
+		"###", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	addShapedRecipe(ItemInstance(Tile::trapdoor_jungle, 2), //
+		"###", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
 
 	//addShapedRecipe(ItemInstance(Item::door_iron, 1), //
 	//	"##", //
@@ -170,12 +228,33 @@ Recipes::Recipes()
 
 	//	definition('#', Item::ironIngot));
 
-	addShapedRecipe(ItemInstance(Item::sign, 1), //
+	addShapedRecipe(ItemInstance(Item::sign, 3), //
 		"###", //
 		"###", //
 		" X ", //
 
-		definition('#', Tile::wood, 'X', Item::stick));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK), 'X', Item::stick));
+
+	addShapedRecipe(ItemInstance(Item::sign, 3), //
+		"###", //
+		"###", //
+		" X ", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE), 'X', Item::stick));
+
+	addShapedRecipe(ItemInstance(Item::sign, 3), //
+		"###", //
+		"###", //
+		" X ", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH), 'X', Item::stick));
+
+	addShapedRecipe(ItemInstance(Item::sign, 3), //
+		"###", //
+		"###", //
+		" X ", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE), 'X', Item::stick));
 
 	//addShapedRecipe(ItemInstance(Item::cake, 1), //
 	//	"AAA", //
@@ -191,10 +270,29 @@ Recipes::Recipes()
 
 		definition('#', Item::reeds));
 
-	addShapedRecipe(ItemInstance(Tile::wood, 4), //
+	// Oak Log → Oak Planks
+	addShapedRecipe(ItemInstance(Tile::wood, 4, WoodPlanks::OAK), //
 		"#", //
 
-		definition('#', Tile::treeTrunk));
+		definition('#', ItemInstance(Tile::treeTrunk, 1, 0)));
+
+	// Spruce Log → Spruce Planks
+	addShapedRecipe(ItemInstance(Tile::wood, 4, WoodPlanks::SPRUCE), //
+		"#", //
+
+		definition('#', ItemInstance(Tile::treeTrunk, 1, 1)));
+
+	// Birch Log → Birch Planks
+	addShapedRecipe(ItemInstance(Tile::wood, 4, WoodPlanks::BIRCH), //
+		"#", //
+
+		definition('#', ItemInstance(Tile::treeTrunk, 1, 2)));
+
+	// Jungle Log → Jungle Planks
+	addShapedRecipe(ItemInstance(Tile::wood, 4, WoodPlanks::JUNGLE), //
+		"#", //
+
+		definition('#', Tile::jungleLog));
 
 	addShapedRecipe(ItemInstance(Item::stick, 4), //
 		"#", //
@@ -319,7 +417,28 @@ Recipes::Recipes()
 		"## ", //
 		"###", //
 
-		definition('#', Tile::wood));
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_spruce, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_birch, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_jungle, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
 
 	//addShapedRecipe(ItemInstance(Item::fishingRod, 1), //
 	//	"  #", //
@@ -466,6 +585,43 @@ Recipes::Recipes()
 		"X#X", //
 
 		definition('#', Item::emerald, 'X', Item::ironIngot));
+
+	// Spruce fence (planks + sticks)
+	addShapedRecipe(ItemInstance(Tile::fence_spruce, 3), //
+		"W#W", //
+		"W#W", //
+
+		definition('W', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE), '#', Item::stick));
+
+	// Birch fence (planks + sticks)
+	addShapedRecipe(ItemInstance(Tile::fence_birch, 3), //
+		"W#W", //
+		"W#W", //
+
+		definition('W', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH), '#', Item::stick));
+
+	// Jungle fence (planks + sticks)
+	addShapedRecipe(ItemInstance(Tile::fence_jungle, 3), //
+		"W#W", //
+		"W#W", //
+
+		definition('W', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE), '#', Item::stick));
+
+	// Wood slab variants
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf, 6, StoneSlabTile::WOOD_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf, 6, StoneSlabTile::WOOD_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf, 6, StoneSlabTile::WOOD_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
 
 	LOGI("%d recipes\n", (int)recipes.size());
 }
