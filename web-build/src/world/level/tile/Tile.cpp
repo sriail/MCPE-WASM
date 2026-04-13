@@ -503,10 +503,11 @@ void Tile::initTiles() {
 	smoothStoneSlabFull = (new StoneSlabTile(163, true))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("slabSmoothStone");
 
 	// Repeaters & Comparators (placeholder diode-shaped blocks)
-	repeater_off  = (new Tile(164, 3 + 8 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("repeater");
-	repeater_on   = (new Tile(165, 3 + 9 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("repeater");
-	comparator_off = (new Tile(166, 14 + 2 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
-	comparator_on  = (new Tile(167, 15 + 2 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
+	// Textures placed in row 11 to avoid conflict with spruce planks at (3,8)
+	repeater_off  = (new Tile(164, 0 + 11 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("repeater");
+	repeater_on   = (new Tile(165, 1 + 11 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("repeater");
+	comparator_off = (new Tile(166, 2 + 11 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
+	comparator_on  = (new Tile(167, 3 + 11 * 16, Material::decoration))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("comparator");
 
 	//
 	// Special tiles for Pocket Edition is placed at high IDs

@@ -286,7 +286,7 @@ void Item::initItems() {
 	Item::sugar = (new Item(97))->setIcon(13, 0)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("sugar")->handEquipped();
 	//Item::cake = (new TilePlanterItem(98, Tile::cake))->setMaxStackSize(1)->setIcon(13, 1)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cake");
 	Item::bed = (new BedItem(99))->setMaxStackSize(1)->setIcon(13, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("bed");
-	Item::diode = (new TilePlanterItem(100, Tile::diode_off))->setIcon(6, 5)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
+	Item::diode = (new TilePlanterItem(100, Tile::repeater_off))->setIcon(6, 5)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("diode");
 	Item::shears = (ShearsItem*)(new ShearsItem(103))->setIcon(13, 5)->setCategory(ItemCategory::Tools)->setDescriptionId("shears");
 	Item::melon = (new FoodItem(104, 2, false))->setIcon(13, 6)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("melon");
 	Item::seeds_melon = (new SeedItem(106, Tile::melonStem->id, Tile::farmland->id))->setIcon(14, 3)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("seedsMelon");
