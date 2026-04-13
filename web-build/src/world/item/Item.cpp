@@ -298,14 +298,14 @@ void Item::initItems() {
 	Item::camera = (new CameraItem(200))->setIcon(2, 15)->setCategory(ItemCategory::Decorations)->setDescriptionId("camera");
 
 	// New items
-	Item::greenEmerald = (new Item(151))->setIcon(10, 8)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
+	Item::greenEmerald = (new Item(151))->setIcon(9, 10)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
 	Item::cookie = (new FoodItem(152, 2, false))->setIcon(12, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cookie");
 	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(9, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
-	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
+	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 9)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
 	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 10)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
-	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
-	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
-	Item::door_jungle = (new WoodDoorItem(158, Tile::door_jungle))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
+	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(11, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(12, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	Item::door_jungle = (new WoodDoorItem(158, Tile::door_jungle))->setIcon(13, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)
