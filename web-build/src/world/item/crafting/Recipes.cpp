@@ -689,19 +689,6 @@ Recipes::Recipes()
 		"###", "###",
 		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
 
-	// Polished stone recipes (4 base → 4 polished in 2x2)
-	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_GRANITE),
-		"##", "##",
-		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
-
-	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_DIORITE),
-		"##", "##",
-		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
-
-	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_ANDESITE),
-		"##", "##",
-		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
-
 	// Sandstone slabs & wall
 	addShapedRecipe(ItemInstance(Tile::sandstoneSlabHalf, 6),
 		"###",
@@ -709,10 +696,6 @@ Recipes::Recipes()
 
 	addShapedRecipe(ItemInstance(Tile::wall_sandstone, 6),
 		"###", "###",
-		definition('#', Tile::sandStone));
-
-	addShapedRecipe(ItemInstance(Tile::polishedSandstone, 4),
-		"##", "##",
 		definition('#', Tile::sandStone));
 
 	addShapedRecipe(ItemInstance(Tile::stairs_polishedSandstone, 4),
@@ -724,10 +707,6 @@ Recipes::Recipes()
 		definition('#', Tile::polishedSandstone));
 
 	// Nether brick extras
-	addShapedRecipe(ItemInstance(Tile::netherBrickFence, 6),
-		"###", "###",
-		definition('#', Tile::netherBrick));
-
 	addShapedRecipe(ItemInstance(Tile::wall_netherBrick, 6),
 		"###", "###",
 		definition('#', Item::netherbrick));
@@ -736,42 +715,10 @@ Recipes::Recipes()
 		"###",
 		definition('#', Tile::netherBrick));
 
-	addShapedRecipe(ItemInstance(Tile::stairs_netherBricks, 4),
-		"#  ", "## ", "###",
-		definition('#', Tile::netherBrick));
-
 	// Smooth stone slab
 	addShapedRecipe(ItemInstance(Tile::smoothStoneSlabHalf, 6),
 		"###",
 		definition('#', Tile::smoothStone));
-
-	// Ore blocks
-	addShapedRecipe(ItemInstance(Tile::greenEmeraldBlock, 1),
-		"###", "###", "###",
-		definition('#', Item::greenEmerald));
-
-	addShapedRecipe(ItemInstance(Tile::redstoneBlock, 1),
-		"###", "###", "###",
-		definition('#', Item::redStone));
-
-	addShapedRecipe(ItemInstance(Tile::coalBlock, 1),
-		"###", "###", "###",
-		definition('#', Item::coal));
-
-	// Redstone lamp
-	addShapedRecipe(ItemInstance(Tile::redstoneLamp, 1),
-		" R ", "RGR", " R ",
-		definition('R', Item::redStone, 'G', Tile::lightGem));
-
-	// Slime block
-	addShapedRecipe(ItemInstance(Tile::slimeBlock, 1),
-		"###", "###", "###",
-		definition('#', Item::slimeBall));
-
-	// Hay bale
-	addShapedRecipe(ItemInstance(Tile::hayBale, 1),
-		"###", "###", "###",
-		definition('#', Item::wheat));
 
 	// Cookie
 	addShapedRecipe(ItemInstance(Item::cookie, 8),

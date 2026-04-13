@@ -10,7 +10,7 @@ public:
 	int topTex;
 
 	HayBaleTile(int id, int sideTex, int topBottomTex)
-	:	super(id, sideTex, Material::grass),
+	:	super(id, sideTex, Material::plant),
 		topTex(topBottomTex)
 	{
 	}
