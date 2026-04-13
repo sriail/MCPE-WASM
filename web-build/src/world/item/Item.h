@@ -201,6 +201,18 @@ public:
 	static Item* netherbrick;
 	static Item* netherQuartz;
 
+	// New items
+	static Item* redStone;         // redstone dust item
+	static Item* diode;            // repeater item
+	static Item* greenEmerald;     // green emerald item (not diamond)
+	static Item* cookie;           // cookie item
+	static Item* mutton_raw;       // raw mutton
+	static Item* mutton_cooked;    // cooked mutton
+	static Item* enderPearl;       // ender pearl
+	static Item* door_spruce;      // spruce door item
+	static Item* door_birch;       // birch door item
+	static Item* door_jungle;      // jungle door item
+
     static Item* record_01;
     static Item* record_02;
 

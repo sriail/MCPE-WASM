@@ -12,6 +12,9 @@
 #include "OreRecipes.h"
 #include "../CoalItem.h"
 #include "../../level/tile/StoneSlabTile.h"
+#include "../../level/tile/WoodPlanks.h"
+#include "../../level/tile/StoneVariantTile.h"
+#include "../../level/tile/StoneSlabTile2.h"
 
 /*static*/
 Recipes* Recipes::instance = NULL;
@@ -321,6 +324,54 @@ Recipes::Recipes()
 
 		definition('#', Tile::wood));
 
+	// Spruce stairs (from spruce planks data=1)
+	addShapedRecipe(ItemInstance(Tile::stairs_spruce, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	// Birch stairs (from birch planks data=2)
+	addShapedRecipe(ItemInstance(Tile::stairs_birch, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	// Jungle stairs (from jungle planks data=3)
+	addShapedRecipe(ItemInstance(Tile::stairs_jungle, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
+
+	// Granite stairs
+	addShapedRecipe(ItemInstance(Tile::stairs_granite, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+	// Diorite stairs
+	addShapedRecipe(ItemInstance(Tile::stairs_diorite, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+	// Andesite stairs
+	addShapedRecipe(ItemInstance(Tile::stairs_andesite, 4), //
+		"#  ", //
+		"## ", //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
 	//addShapedRecipe(ItemInstance(Item::fishingRod, 1), //
 	//	"  #", //
 	//	" #X", //
@@ -466,6 +517,184 @@ Recipes::Recipes()
 		"X#X", //
 
 		definition('#', Item::emerald, 'X', Item::ironIngot));
+
+	//
+	// New block & item crafting recipes
+	//
+
+	// Spruce fence (from spruce planks + sticks)
+	addShapedRecipe(ItemInstance(Tile::fence_spruce, 2), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE), 'W', Item::stick));
+
+	// Birch fence
+	addShapedRecipe(ItemInstance(Tile::fence_birch, 2), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH), 'W', Item::stick));
+
+	// Jungle fence
+	addShapedRecipe(ItemInstance(Tile::fence_jungle, 2), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE), 'W', Item::stick));
+
+	// Nether brick fence
+	addShapedRecipe(ItemInstance(Tile::netherBrickFence, 6), //
+		"###", //
+		"###", //
+
+		definition('#', Item::netherbrick));
+
+	// Spruce fence gate
+	addShapedRecipe(ItemInstance(Tile::fenceGate_spruce, 1), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', Item::stick, 'W', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	// Birch fence gate
+	addShapedRecipe(ItemInstance(Tile::fenceGate_birch, 1), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', Item::stick, 'W', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	// Jungle fence gate
+	addShapedRecipe(ItemInstance(Tile::fenceGate_jungle, 1), //
+		"#W#", //
+		"#W#", //
+
+		definition('#', Item::stick, 'W', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
+
+	// Spruce door
+	addShapedRecipe(ItemInstance(Item::door_spruce, 1), //
+		"##", //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
+
+	// Birch door
+	addShapedRecipe(ItemInstance(Item::door_birch, 1), //
+		"##", //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
+
+	// Jungle door
+	addShapedRecipe(ItemInstance(Item::door_jungle, 1), //
+		"##", //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
+
+	// Stone variant polishing recipes (4 base -> 4 polished)
+	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_GRANITE), //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_DIORITE), //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_ANDESITE), //
+		"##", //
+		"##", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
+	// Coal block (9 coal -> 1 block)
+	addShapedRecipe(ItemInstance(Tile::coalBlock, 1), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::coal));
+
+	// Coal from coal block (1 block -> 9 coal)
+	addShapelessRecipe(ItemInstance(Item::coal, 9), //
+		definition(0, Tile::coalBlock));
+
+	// Hay bale (9 wheat -> 1 hay)
+	addShapedRecipe(ItemInstance(Tile::hayBale, 1), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::wheat));
+
+	// Wheat from hay bale
+	addShapelessRecipe(ItemInstance(Item::wheat, 9), //
+		definition(0, Tile::hayBale));
+
+	// Green emerald block (9 emeralds -> 1 block)
+	addShapedRecipe(ItemInstance(Tile::greenEmeraldBlock, 1), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::greenEmerald));
+
+	// Green emeralds from emerald block
+	addShapelessRecipe(ItemInstance(Item::greenEmerald, 9), //
+		definition(0, Tile::greenEmeraldBlock));
+
+	// Redstone block (9 redstone -> 1 block)
+	addShapedRecipe(ItemInstance(Tile::redStoneBlock, 1), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::redStone));
+
+	// Redstone from redstone block
+	addShapelessRecipe(ItemInstance(Item::redStone, 9), //
+		definition(0, Tile::redStoneBlock));
+
+	// Slime block (9 slimeballs -> 1 slime block)
+	addShapedRecipe(ItemInstance(Tile::slimeBlock, 1), //
+		"###", //
+		"###", //
+		"###", //
+
+		definition('#', Item::slimeBall));
+
+	// Slimeballs from slime block
+	addShapelessRecipe(ItemInstance(Item::slimeBall, 9), //
+		definition(0, Tile::slimeBlock));
+
+	// Cookie recipe (wheat + cocoa beans + wheat)
+	addShapedRecipe(ItemInstance(Item::cookie, 8), //
+		"#X#", //
+
+		definition('X', ItemInstance(Item::dye_powder, 1, 3), '#', Item::wheat));
+
+	// Book recipe (3 paper + 1 leather)
+	addShapedRecipe(ItemInstance(Item::book, 1), //
+		"#", //
+		"#", //
+		"X", //
+
+		definition('#', Item::paper, 'X', Item::leather));
+
+	// Redstone lamp
+	addShapedRecipe(ItemInstance(Tile::redstoneLamp, 1), //
+		" R ", //
+		"RGR", //
+		" R ", //
+
+		definition('R', Item::redStone, 'G', Tile::lightGem));
 
 	LOGI("%d recipes\n", (int)recipes.size());
 }

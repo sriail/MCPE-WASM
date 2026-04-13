@@ -235,6 +235,64 @@ public:
 	static Tile* info_updateGame2;
 	static Tile* info_reserved6;
 
+	// New blocks
+	static Tile* stoneVariant;     // granite, diorite, andesite + polished variants (ID 19)
+	static Tile* hellSand;         // soul sand (ID 88)
+	static Tile* redStoneBlock;    // redstone block (ID 152)
+	static Tile* redstoneLamp;     // redstone lamp (ID 123)
+	static Tile* coalBlock;        // coal block (ID 173)
+	static Tile* hayBale;          // hay bale (ID 170)
+	static Tile* slimeBlock;       // slime block (ID 165)
+	static Tile* smoothStone;      // smooth stone (ID 174)
+	static Tile* greenEmeraldOre;  // green emerald ore (ID 137)
+	static Tile* greenEmeraldBlock;// green emerald block (ID 138)
+	static Tile* netherQuartzOre;  // nether quartz ore (ID 153)
+
+	// Wood variant fences
+	static Tile* fence_spruce;     // (ID 188)
+	static Tile* fence_birch;      // (ID 189)
+	static Tile* fence_jungle;     // (ID 190)
+
+	// Wood variant fence gates
+	static Tile* fenceGate_spruce; // (ID 183)
+	static Tile* fenceGate_birch;  // (ID 184)
+	static Tile* fenceGate_jungle; // (ID 185)
+
+	// Wood variant stairs
+	static Tile* stairs_spruce;    // (ID 134)
+	static Tile* stairs_birch;     // (ID 135)
+	static Tile* stairs_jungle;    // (ID 136)
+
+	// Stone variant stairs
+	static Tile* stairs_granite;   // (ID 139)
+	static Tile* stairs_diorite;   // (ID 140)
+	static Tile* stairs_andesite;  // (ID 141)
+	static Tile* stairs_sandStone2;// sandstone stairs alias
+
+	// Nether brick extras
+	static Tile* netherBrickFence; // (ID 113)
+
+	// Walls
+	static Tile* wall_granite;     // (ID 142)
+	static Tile* wall_diorite;     // (ID 143)
+	static Tile* wall_andesite;    // (ID 144)
+	static Tile* wall_sandstone;   // (ID 145)
+	static Tile* wall_netherBrick; // (ID 146)
+
+	// Second slab pair
+	static Tile* stoneSlab2;       // full (ID 181)
+	static Tile* stoneSlabHalf2;   // half (ID 182)
+
+	// Wood variant doors
+	static Tile* door_spruce;      // (ID 193)
+	static Tile* door_birch;       // (ID 194)
+	static Tile* door_jungle;      // (ID 195)
+
+	// Wood variant trapdoors
+	static Tile* trapdoor_spruce;  // (ID 196)
+	static Tile* trapdoor_birch;   // (ID 197)
+	static Tile* trapdoor_jungle;  // (ID 198)
+
 	static void initTiles();
 	static void teardownTiles();
 

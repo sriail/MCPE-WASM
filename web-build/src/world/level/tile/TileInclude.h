@@ -58,5 +58,12 @@
 #include "TntTile.h"
 #include "WebTile.h"
 #include "WorkbenchTile.h"
+#include "WoodPlanks.h"
+#include "StoneVariantTile.h"
+#include "HayBaleTile.h"
+#include "SoulSandTile.h"
+#include "SlimeBlockTile.h"
+#include "WallTile.h"
+#include "StoneSlabTile2.h"
 
 #endif /* TILE_INCLUDE_H__ */
