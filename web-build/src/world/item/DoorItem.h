@@ -16,10 +16,21 @@ class DoorItem: public Item
 {
 	typedef Item super;
     const Material* material;
+	Tile* doorTile;  // specific door tile to place (NULL = auto-detect from material)
 public:
     DoorItem(int id, const Material* material)
     :   super(id),
-        material(material)
+        material(material),
+		doorTile(NULL)
+    {
+        maxDamage = 64;
+        maxStackSize = 1;
+    }
+
+	DoorItem(int id, const Material* material, Tile* specificDoorTile)
+    :   super(id),
+        material(material),
+		doorTile(specificDoorTile)
     {
         maxDamage = 64;
         maxStackSize = 1;
@@ -31,7 +42,8 @@ public:
 
 		Tile* tile;
 
-		if (material == Material::wood) tile = Tile::door_wood;
+		if (doorTile != NULL) tile = doorTile;
+		else if (material == Material::wood) tile = Tile::door_wood;
 		else tile = Tile::door_iron;
 		//if (!player->mayUseItemAt(x, y, z, face, instance) || !player->mayUseItemAt(x, y + 1, z, face, instance)) return false;
 		if (!tile->mayPlace(level, x, y, z)) return false;

@@ -13,6 +13,7 @@
 #include "../CoalItem.h"
 #include "../../level/tile/StoneSlabTile.h"
 #include "../../level/tile/WoodPlanks.h"
+#include "../../level/tile/StoneVariantTile.h"
 
 /*static*/
 Recipes* Recipes::instance = NULL;
@@ -176,21 +177,21 @@ Recipes::Recipes()
 
 		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK)));
 
-	addShapedRecipe(ItemInstance(Item::door_wood, 3), //
+	addShapedRecipe(ItemInstance(Item::door_spruce, 3), //
 		"##", //
 		"##", //
 		"##", //
 
 		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE)));
 
-	addShapedRecipe(ItemInstance(Item::door_wood, 3), //
+	addShapedRecipe(ItemInstance(Item::door_birch, 3), //
 		"##", //
 		"##", //
 		"##", //
 
 		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH)));
 
-	addShapedRecipe(ItemInstance(Item::door_wood, 3), //
+	addShapedRecipe(ItemInstance(Item::door_jungle, 3), //
 		"##", //
 		"##", //
 		"##", //
@@ -235,21 +236,21 @@ Recipes::Recipes()
 
 		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::OAK), 'X', Item::stick));
 
-	addShapedRecipe(ItemInstance(Item::sign, 3), //
+	addShapedRecipe(ItemInstance(Item::sign_spruce, 3), //
 		"###", //
 		"###", //
 		" X ", //
 
 		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE), 'X', Item::stick));
 
-	addShapedRecipe(ItemInstance(Item::sign, 3), //
+	addShapedRecipe(ItemInstance(Item::sign_birch, 3), //
 		"###", //
 		"###", //
 		" X ", //
 
 		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH), 'X', Item::stick));
 
-	addShapedRecipe(ItemInstance(Item::sign, 3), //
+	addShapedRecipe(ItemInstance(Item::sign_jungle, 3), //
 		"###", //
 		"###", //
 		" X ", //
@@ -622,6 +623,160 @@ Recipes::Recipes()
 		"###", //
 
 		definition('#', ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE)));
+
+	// --- World & Block System Overhaul: new crafting recipes ---
+
+	// Stone variant stairs
+	addShapedRecipe(ItemInstance(Tile::stairs_granite, 4),
+		"#  ", "## ", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_polishedGranite, 4),
+		"#  ", "## ", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_GRANITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_diorite, 4),
+		"#  ", "## ", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_polishedDiorite, 4),
+		"#  ", "## ", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_DIORITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_andesite, 4),
+		"#  ", "## ", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_polishedAndesite, 4),
+		"#  ", "## ", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_ANDESITE)));
+
+	// Stone variant slabs
+	addShapedRecipe(ItemInstance(Tile::graniteSlabHalf, 6),
+		"###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+	addShapedRecipe(ItemInstance(Tile::polishedGraniteSlabHalf, 6),
+		"###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_GRANITE)));
+
+	addShapedRecipe(ItemInstance(Tile::dioriteSlabHalf, 6),
+		"###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+	addShapedRecipe(ItemInstance(Tile::polishedDioriteSlabHalf, 6),
+		"###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_DIORITE)));
+
+	addShapedRecipe(ItemInstance(Tile::andesiteSlabHalf, 6),
+		"###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
+	addShapedRecipe(ItemInstance(Tile::polishedAndesiteSlabHalf, 6),
+		"###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_ANDESITE)));
+
+	// Stone variant walls
+	addShapedRecipe(ItemInstance(Tile::wall_granite, 6),
+		"###", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+	addShapedRecipe(ItemInstance(Tile::wall_diorite, 6),
+		"###", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+	addShapedRecipe(ItemInstance(Tile::wall_andesite, 6),
+		"###", "###",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
+	// Polished stone recipes (4 base → 4 polished in 2x2)
+	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_GRANITE),
+		"##", "##",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_DIORITE),
+		"##", "##",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+	addShapedRecipe(ItemInstance(Tile::stoneVariant, 4, StoneVariantTile::POLISHED_ANDESITE),
+		"##", "##",
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
+	// Sandstone slabs & wall
+	addShapedRecipe(ItemInstance(Tile::sandstoneSlabHalf, 6),
+		"###",
+		definition('#', Tile::sandStone));
+
+	addShapedRecipe(ItemInstance(Tile::wall_sandstone, 6),
+		"###", "###",
+		definition('#', Tile::sandStone));
+
+	addShapedRecipe(ItemInstance(Tile::polishedSandstone, 4),
+		"##", "##",
+		definition('#', Tile::sandStone));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_polishedSandstone, 4),
+		"#  ", "## ", "###",
+		definition('#', Tile::polishedSandstone));
+
+	addShapedRecipe(ItemInstance(Tile::polishedSandstoneSlabHalf, 6),
+		"###",
+		definition('#', Tile::polishedSandstone));
+
+	// Nether brick extras
+	addShapedRecipe(ItemInstance(Tile::netherBrickFence, 6),
+		"###", "###",
+		definition('#', Tile::netherBrick));
+
+	addShapedRecipe(ItemInstance(Tile::wall_netherBrick, 6),
+		"###", "###",
+		definition('#', Item::netherbrick));
+
+	addShapedRecipe(ItemInstance(Tile::netherBrickSlabHalf, 6),
+		"###",
+		definition('#', Tile::netherBrick));
+
+	addShapedRecipe(ItemInstance(Tile::stairs_netherBricks, 4),
+		"#  ", "## ", "###",
+		definition('#', Tile::netherBrick));
+
+	// Smooth stone slab
+	addShapedRecipe(ItemInstance(Tile::smoothStoneSlabHalf, 6),
+		"###",
+		definition('#', Tile::smoothStone));
+
+	// Ore blocks
+	addShapedRecipe(ItemInstance(Tile::greenEmeraldBlock, 1),
+		"###", "###", "###",
+		definition('#', Item::greenEmerald));
+
+	addShapedRecipe(ItemInstance(Tile::redstoneBlock, 1),
+		"###", "###", "###",
+		definition('#', Item::redStone));
+
+	addShapedRecipe(ItemInstance(Tile::coalBlock, 1),
+		"###", "###", "###",
+		definition('#', Item::coal));
+
+	// Redstone lamp
+	addShapedRecipe(ItemInstance(Tile::redstoneLamp, 1),
+		" R ", "RGR", " R ",
+		definition('R', Item::redStone, 'G', Tile::lightGem));
+
+	// Slime block
+	addShapedRecipe(ItemInstance(Tile::slimeBlock, 1),
+		"###", "###", "###",
+		definition('#', Item::slimeBall));
+
+	// Hay bale
+	addShapedRecipe(ItemInstance(Tile::hayBale, 1),
+		"###", "###", "###",
+		definition('#', Item::wheat));
+
+	// Cookie
+	addShapedRecipe(ItemInstance(Item::cookie, 8),
+		"#X#",
+		definition('#', Item::wheat, 'X', Item::cocoaBeans));
 
 	LOGI("%d recipes\n", (int)recipes.size());
 }

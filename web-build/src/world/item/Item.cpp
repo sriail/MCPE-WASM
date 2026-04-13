@@ -158,6 +158,14 @@ Item* Item::mutton_cooked = NULL;
 Item* Item::cookie = NULL;
 Item* Item::cocoaBeans = NULL;
 
+// Wood variant doors and signs
+Item* Item::door_spruce = NULL;
+Item* Item::door_birch = NULL;
+Item* Item::door_jungle = NULL;
+Item* Item::sign_spruce = NULL;
+Item* Item::sign_birch = NULL;
+Item* Item::sign_jungle = NULL;
+
 //Item* Item::record_01 = NULL;
 //Item* Item::record_02 = NULL;
 
@@ -296,6 +304,16 @@ void Item::initItems() {
 	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
 	Item::cookie = (new FoodItem(155, 2, false))->setIcon(12, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cookie");
 	Item::cocoaBeans = (new Item(156))->setIcon(14, 5)->setCategory(ItemCategory::Decorations)->setDescriptionId("cocoaBeans");
+
+	// Wood variant door items (IDs 157-159)
+	Item::door_spruce = (new DoorItem(157, Material::wood, Tile::door_spruce))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	Item::door_birch  = (new DoorItem(158, Material::wood, Tile::door_birch))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	Item::door_jungle = (new DoorItem(159, Material::wood, Tile::door_jungle))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
+
+	// Wood variant sign items (IDs 160-162)
+	Item::sign_spruce = (new SignItem(160, Tile::sign_spruce, Tile::wallSign_spruce))->setIcon(10, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("signSpruce");
+	Item::sign_birch  = (new SignItem(161, Tile::sign_birch, Tile::wallSign_birch))->setIcon(10, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("signBirch");
+	Item::sign_jungle = (new SignItem(162, Tile::sign_jungle, Tile::wallSign_jungle))->setIcon(10, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("signJungle");
 
 	//Item::record_01 = (new RecordingItem(2000, "13"))->setIcon(0, 15)->setCategory(ItemCategory::Decorations)->setDescriptionId("record");
 	//Item::record_02 = (new RecordingItem(2001, "cat"))->setIcon(1, 15)->setCategory(ItemCategory::Decorations)->setDescriptionId("record");
