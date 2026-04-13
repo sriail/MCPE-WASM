@@ -17,7 +17,7 @@ public:
 	static const int AXIS_Z = 8;
 
 	HayBaleTile(int id, int tex)
-	:	super(id, tex, Material::grass)
+	:	super(id, tex, Material::plant)
 	{
 	}
 

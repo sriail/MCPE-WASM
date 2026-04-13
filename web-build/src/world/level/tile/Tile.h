@@ -237,7 +237,6 @@ public:
 
 	// New blocks
 	static Tile* stoneVariant;     // granite, diorite, andesite + polished variants (ID 19)
-	static Tile* hellSand;         // soul sand (ID 88)
 	static Tile* redStoneBlock;    // redstone block (ID 152)
 	static Tile* redstoneLamp;     // redstone lamp (ID 123)
 	static Tile* coalBlock;        // coal block (ID 173)

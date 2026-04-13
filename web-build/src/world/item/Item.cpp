@@ -108,7 +108,7 @@ Item* Item::door_wood = NULL;
 //Item* Item::minecart = NULL;
 //Item* Item::saddle = NULL;
 Item* Item::door_iron = NULL;
-//Item* Item::redStone = NULL;
+Item* Item::redStone = NULL;
 Item* Item::snowBall = NULL;
 
 //Item* Item::boat = NULL;
@@ -141,7 +141,7 @@ Item* Item::sugar = NULL;
 
 Item* Item::bed = NULL;
 
-//Item* Item::diode = NULL;
+Item* Item::diode = NULL;
 ShearsItem* Item::shears = NULL;
 Item* Item::beef_raw = NULL;
 Item* Item::beef_cooked = NULL;
@@ -152,8 +152,6 @@ Item* Item::netherbrick = NULL;
 Item* Item::netherQuartz = NULL;
 
 // New item static pointers
-Item* Item::redStone = NULL;
-Item* Item::diode = NULL;
 Item* Item::greenEmerald = NULL;
 Item* Item::cookie = NULL;
 Item* Item::mutton_raw = NULL;
@@ -305,9 +303,9 @@ void Item::initItems() {
 	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(9, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
 	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
 	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 10)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
-	Item::door_spruce = (new DoorItem(156, Material::wood))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
-	Item::door_birch  = (new DoorItem(157, Material::wood))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
-	Item::door_jungle = (new DoorItem(158, Material::wood))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
+	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	Item::door_jungle = (new WoodDoorItem(158, Tile::door_jungle))->setIcon(11, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)

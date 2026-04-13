@@ -6,6 +6,7 @@
 #include "CameraItem.h"
 #include "CoalItem.h"
 #include "DoorItem.h"
+#include "WoodDoorItem.h"
 #include "EggItem.h"
 #include "FlintAndSteelItem.h"
 #include "SnowballItem.h"

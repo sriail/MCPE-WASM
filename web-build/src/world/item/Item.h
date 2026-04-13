@@ -202,8 +202,6 @@ public:
 	static Item* netherQuartz;
 
 	// New items
-	static Item* redStone;         // redstone dust item
-	static Item* diode;            // repeater item
 	static Item* greenEmerald;     // green emerald item (not diamond)
 	static Item* cookie;           // cookie item
 	static Item* mutton_raw;       // raw mutton

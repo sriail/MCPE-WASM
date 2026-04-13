@@ -1,5 +1,6 @@
 #include "Sheep.h"
 #include "../../item/DyePowderItem.h"
+#include "../../item/Item.h"
 #include "../../level/tile/LevelEvent.h"
 
 const float Sheep::COLOR[][3] = {
@@ -173,6 +174,12 @@ void Sheep::dropDeathLoot(/* bool wasKilledByPlayer, int playerBonusLevel*/ )
 	if (!isSheared()) {
 		// killing a non-sheared sheep will drop a single block of cloth
 		spawnAtLocation(new ItemInstance(Tile::cloth->id, 1, getColor()), 0);
+	}
+
+	// Drop 1-2 raw mutton
+	int muttonCount = 1 + random.nextInt(2);
+	for (int i = 0; i < muttonCount; i++) {
+		spawnAtLocation(Item::mutton_raw->id, 1);
 	}
 }
 

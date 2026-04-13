@@ -41,8 +41,8 @@ Biome::Biome()
     _enemies.insert(_enemies.end(), MobSpawnerData(MobTypes::Zombie, 12, 2, 4));
     _enemies.insert(_enemies.end(), MobSpawnerData(MobTypes::Skeleton, 6, 1, 3));
     _enemies.insert(_enemies.end(), MobSpawnerData(MobTypes::Creeper, 4, 1, 1));
-    //_enemies.insert(_enemies.end(), MobSpawnerData(Slime.class, 10, 4, 4));
-    //_enemies.insert(_enemies.end(), MobSpawnerData(EnderMan.class, 1, 1, 4));
+    _enemies.insert(_enemies.end(), MobSpawnerData(MobTypes::Slime, 10, 4, 4));
+    _enemies.insert(_enemies.end(), MobSpawnerData(MobTypes::Enderman, 1, 1, 4));
 
     // wolves are added to forests and taigas
     // _friendlies.insert(_friendlies.end(), new MobSpawnerData(Wolf.class, 2));

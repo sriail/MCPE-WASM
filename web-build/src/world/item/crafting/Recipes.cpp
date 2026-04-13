@@ -15,6 +15,7 @@
 #include "../../level/tile/WoodPlanks.h"
 #include "../../level/tile/StoneVariantTile.h"
 #include "../../level/tile/StoneSlabTile2.h"
+#include "../../level/tile/TreeTile.h"
 
 /*static*/
 Recipes* Recipes::instance = NULL;
@@ -194,10 +195,20 @@ Recipes::Recipes()
 
 		definition('#', Item::reeds));
 
-	addShapedRecipe(ItemInstance(Tile::wood, 4), //
+	addShapedRecipe(ItemInstance(Tile::wood, 4, WoodPlanks::OAK), //
 		"#", //
 
-		definition('#', Tile::treeTrunk));
+		definition('#', ItemInstance(Tile::treeTrunk, 1, TreeTile::NORMAL_TRUNK)));
+
+	addShapedRecipe(ItemInstance(Tile::wood, 4, WoodPlanks::SPRUCE), //
+		"#", //
+
+		definition('#', ItemInstance(Tile::treeTrunk, 1, TreeTile::DARK_TRUNK)));
+
+	addShapedRecipe(ItemInstance(Tile::wood, 4, WoodPlanks::BIRCH), //
+		"#", //
+
+		definition('#', ItemInstance(Tile::treeTrunk, 1, TreeTile::BIRCH_TRUNK)));
 
 	addShapedRecipe(ItemInstance(Item::stick, 4), //
 		"#", //
@@ -695,6 +706,36 @@ Recipes::Recipes()
 		" R ", //
 
 		definition('R', Item::redStone, 'G', Tile::lightGem));
+
+	// Granite slab
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf2, 6, StoneSlabTile2::GRANITE_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE)));
+
+	// Diorite slab
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf2, 6, StoneSlabTile2::DIORITE_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE)));
+
+	// Andesite slab
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf2, 6, StoneSlabTile2::ANDESITE_SLAB), //
+		"###", //
+
+		definition('#', ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE)));
+
+	// Nether brick slab
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf2, 6, StoneSlabTile2::NETHER_BRICK_SLAB), //
+		"###", //
+
+		definition('#', Tile::netherBrick));
+
+	// Smooth stone slab
+	addShapedRecipe(ItemInstance(Tile::stoneSlabHalf2, 6, StoneSlabTile2::SMOOTH_STONE_SLAB), //
+		"###", //
+
+		definition('#', Tile::smoothStone));
 
 	LOGI("%d recipes\n", (int)recipes.size());
 }

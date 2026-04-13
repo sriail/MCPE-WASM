@@ -1,6 +1,7 @@
 #include "RandomLevelSource.h"
 
 #include "feature/FeatureInclude.h"
+#include "feature/OreFeatureWithData.h"
 #include "../Level.h"
 #include "../ChunkPos.h"
 #include "../MobSpawner.h"
@@ -9,6 +10,7 @@
 #include "../chunk/LevelChunk.h"
 #include "../material/Material.h"
 #include "../tile/Tile.h"
+#include "../tile/StoneVariantTile.h"
 #include "../tile/HeavyTile.h"
 #include "../../../util/Random.h"
 
@@ -335,6 +337,43 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
         OreFeature feature(Tile::lapisOre->id, 6);
 		feature.place(level, &random, x, y, z);
     }
+
+	// Stone variant veins (granite, diorite, andesite)
+	for (int i = 0; i < 10; i++) {
+		int x = xo + random.nextInt(16);
+		int y = random.nextInt(80);
+		int z = zo + random.nextInt(16);
+		OreFeatureWithData feature(Tile::stoneVariant->id, 0, 32); // granite
+		feature.place(level, &random, x, y, z);
+	}
+
+	for (int i = 0; i < 10; i++) {
+		int x = xo + random.nextInt(16);
+		int y = random.nextInt(80);
+		int z = zo + random.nextInt(16);
+		OreFeatureWithData feature(Tile::stoneVariant->id, 2, 32); // diorite
+		feature.place(level, &random, x, y, z);
+	}
+
+	for (int i = 0; i < 10; i++) {
+		int x = xo + random.nextInt(16);
+		int y = random.nextInt(80);
+		int z = zo + random.nextInt(16);
+		OreFeatureWithData feature(Tile::stoneVariant->id, 4, 32); // andesite
+		feature.place(level, &random, x, y, z);
+	}
+
+	// Green emerald ore (single-block spawning, layers 4-32)
+	if (biome == Biome::savanna || biome == Biome::tundra) {
+		for (int i = 0; i < 3; i++) {
+			int x = xo + random.nextInt(16);
+			int y = 4 + random.nextInt(28);
+			int z = zo + random.nextInt(16);
+			if (level->getTile(x, y, z) == Tile::rock->id) {
+				level->setTileNoUpdate(x, y, z, Tile::greenEmeraldOre->id);
+			}
+		}
+	}
 
     const float ss = 0.5f;
     int oFor = (int) ((forestNoise.getValue(xo * ss, zo * ss) / 8 + random.nextFloat() * 4 + 4) / 3);

@@ -67,8 +67,9 @@ public:
 	void die(Entity* source) {
 		if (!level->isClientSide) {
 			// Drop 0-1 Ender Pearl
-			// Since ender pearl item may not exist yet, drop nothing for now
-			// (Item will be added in Phase 4)
+			if (random.nextInt(2) == 0) {
+				spawnAtLocation(Item::enderPearl->id, 1);
+			}
 		}
 		super::die(source);
 	}
