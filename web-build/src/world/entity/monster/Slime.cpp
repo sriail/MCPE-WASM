@@ -105,8 +105,7 @@ bool Slime::canSpawn() {
 }
 
 int Slime::getDeathLoot() {
-	if (slimeSize == 1)
-		return Item::slimeBall->id;
+	// Return 0 since dropDeathLoot() handles slime ball drops directly
 	return 0;
 }
 

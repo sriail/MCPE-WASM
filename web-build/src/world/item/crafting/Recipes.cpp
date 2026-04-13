@@ -720,11 +720,6 @@ Recipes::Recipes()
 		"###",
 		definition('#', Tile::smoothStone));
 
-	// Cookie
-	addShapedRecipe(ItemInstance(Item::cookie, 8),
-		"#X#",
-		definition('#', Item::wheat, 'X', Item::cocoaBeans));
-
 	LOGI("%d recipes\n", (int)recipes.size());
 }
 
