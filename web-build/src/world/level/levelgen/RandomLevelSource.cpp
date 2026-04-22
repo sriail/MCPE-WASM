@@ -10,6 +10,7 @@
 #include "../material/Material.h"
 #include "../tile/Tile.h"
 #include "../tile/HeavyTile.h"
+#include "../tile/StoneVariantTile.h"
 #include "../../../util/Random.h"
 
 const float RandomLevelSource::SNOW_CUTOFF = 0.5f;
@@ -287,6 +288,31 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 		feature.place(level, &random, x, y, z);
     }
 
+    // Stone variant veins (granite, diorite, andesite)
+    for (int i = 0; i < 10; i++) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(80);
+        int z = zo + random.nextInt(16);
+        OreFeature feature(Tile::stoneVariant->id, StoneVariantTile::GRANITE, 33);
+		feature.place(level, &random, x, y, z);
+    }
+
+    for (int i = 0; i < 10; i++) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(80);
+        int z = zo + random.nextInt(16);
+        OreFeature feature(Tile::stoneVariant->id, StoneVariantTile::DIORITE, 33);
+		feature.place(level, &random, x, y, z);
+    }
+
+    for (int i = 0; i < 10; i++) {
+        int x = xo + random.nextInt(16);
+        int y = random.nextInt(80);
+        int z = zo + random.nextInt(16);
+        OreFeature feature(Tile::stoneVariant->id, StoneVariantTile::ANDESITE, 33);
+		feature.place(level, &random, x, y, z);
+    }
+
     for (int i = 0; i < 20; i++) {
         int x = xo + random.nextInt(16);
         int y = random.nextInt(128);
@@ -319,11 +345,12 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 		feature.place(level, &random, x, y, z);
     }
 
-    for (int i = 0; i < 1; i++) {
+    // Green emerald ore: 1-2 per chunk, cluster size 3-5, Y 4-32
+    for (int i = 0; i < 1 + random.nextInt(2); i++) {
         int x = xo + random.nextInt(16);
-        int y = random.nextInt(16);
+        int y = 4 + random.nextInt(28);
         int z = zo + random.nextInt(16);
-        OreFeature feature(Tile::emeraldOre->id, 7);
+        OreFeature feature(Tile::emeraldOre->id, 3 + random.nextInt(3));
 		feature.place(level, &random, x, y, z);
     }
 

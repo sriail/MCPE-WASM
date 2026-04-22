@@ -59,4 +59,14 @@
 #include "WebTile.h"
 #include "WorkbenchTile.h"
 
+// World & Block System Overhaul
+#include "StoneVariantTile.h"
+#include "WoodPlanks.h"
+#include "WallTile.h"
+#include "HayBaleTile.h"
+#include "SoulSandTile.h"
+#include "RedstoneLampTile.h"
+#include "SlimeBlockTile.h"
+#include "SmoothStoneTile.h"
+
 #endif /* TILE_INCLUDE_H__ */

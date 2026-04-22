@@ -15,10 +15,10 @@ public:
         r->addShapelessRecipe(ItemInstance(Item::mushroomStew), //
                 definition(0, Tile::mushroom1, 0, Tile::mushroom2, 0, Item::bowl));
 
-        //r->addShapedRecipe(/*new*/ ItemInstance(Item::cookie, 8), //
-        //        "#X#", //
+        r->addShapedRecipe(/*new*/ ItemInstance(Item::cookie, 8), //
+                "#X#", //
 
-        //        definition('X', /*new*/ ItemInstance(Item::dye_powder, 1, DyePowderItem::BROWN), '#', Item::wheat));
+                definition('X', Item::cocoaBeans, '#', Item::wheat));
 
         r->addShapedRecipe(/*new*/ ItemInstance(Tile::melon), //
                 "MMM", //

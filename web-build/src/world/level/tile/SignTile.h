@@ -82,6 +82,10 @@ public:
 
     /*@Override*/
     int getResource(int data, Random* random/*, int playerBonusLevel*/) {
+		// Return correct wood variant sign item
+		if (this == Tile::sign_spruce || this == Tile::wallSign_spruce) return Item::sign_spruce->id;
+		if (this == Tile::sign_birch || this == Tile::wallSign_birch) return Item::sign_birch->id;
+		if (this == Tile::sign_jungle || this == Tile::wallSign_jungle) return Item::sign_jungle->id;
         return Item::sign->id;
     }
 

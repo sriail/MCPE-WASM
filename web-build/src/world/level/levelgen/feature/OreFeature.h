@@ -12,11 +12,19 @@
 
 class OreFeature: public Feature {
     int tile;
+    int data;
     int count;
 
 public:
 	OreFeature(int tile, int count) {
         this->tile = tile;
+        this->data = 0;
+        this->count = count;
+    }
+
+	OreFeature(int tile, int data, int count) {
+        this->tile = tile;
+        this->data = data;
         this->count = count;
     }
 
@@ -60,7 +68,12 @@ public:
                             for (int z2 = zt0; z2 <= zt1; z2++) {
                                 float zd = ((z2 + 0.5f) - zz) / (r / 2);
                                 if (xd * xd + yd * yd + zd * zd < 1) {
-                                    if (level->getTile(x2, y2, z2) == Tile::rock->id) level->setTileNoUpdate(x2, y2, z2, tile);
+                                    if (level->getTile(x2, y2, z2) == Tile::rock->id) {
+                                        if (data != 0)
+                                            level->setTileAndDataNoUpdate(x2, y2, z2, tile, data);
+                                        else
+                                            level->setTileNoUpdate(x2, y2, z2, tile);
+                                    }
                                 }
                             }
                         }

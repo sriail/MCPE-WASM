@@ -11,9 +11,21 @@
 class SignItem: public Item
 {
 	typedef Item super;
+	Tile* signStanding;  // standing sign tile (NULL = default oak)
+	Tile* signWall;      // wall sign tile (NULL = default oak)
 public:
     SignItem(int id)
-    :   super(id)
+    :   super(id),
+		signStanding(NULL),
+		signWall(NULL)
+    {
+        maxStackSize = 16;
+    }
+
+	SignItem(int id, Tile* standingSign, Tile* wallSign)
+    :   super(id),
+		signStanding(standingSign),
+		signWall(wallSign)
     {
         maxStackSize = 16;
     }
@@ -30,14 +42,17 @@ public:
         if (face == 4) x--;
         if (face == 5) x++;
 
+		Tile* standTile = signStanding ? signStanding : Tile::sign;
+		Tile* wallTile  = signWall ? signWall : Tile::wallSign;
+
         //if (!player->mayUseItemAt(x, y, z, face, instance)) return false;
-        if (!Tile::sign->mayPlace(level, x, y, z)) return false;
+        if (!standTile->mayPlace(level, x, y, z)) return false;
 
         if (face == 1) {
             int rot = Mth::floor(((player->yRot + 180) * 16) / 360 + 0.5f) & 15;
-            level->setTileAndData(x, y, z, Tile::sign->id, rot);
+            level->setTileAndData(x, y, z, standTile->id, rot);
         } else {
-            level->setTileAndData(x, y, z, Tile::wallSign->id, face);
+            level->setTileAndData(x, y, z, wallTile->id, face);
         }
 
         instance->count--;

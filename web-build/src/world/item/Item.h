@@ -201,6 +201,21 @@ public:
 	static Item* netherbrick;
 	static Item* netherQuartz;
 
+	static Item* greenEmerald;
+	static Item* enderPearl;
+	static Item* mutton_raw;
+	static Item* mutton_cooked;
+	static Item* cookie;
+	static Item* cocoaBeans;
+
+	// Wood variant doors and signs
+	static Item* door_spruce;
+	static Item* door_birch;
+	static Item* door_jungle;
+	static Item* sign_spruce;
+	static Item* sign_birch;
+	static Item* sign_jungle;
+
     static Item* record_01;
     static Item* record_02;
 

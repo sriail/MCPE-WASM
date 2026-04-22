@@ -3,6 +3,8 @@
 #include "../../level/tile/QuartzBlockTile.h"
 #include "../../level/tile/TreeTile.h"
 #include "../../level/tile/StoneSlabTile.h"
+#include "../../level/tile/StoneVariantTile.h"
+#include "../../level/tile/WoodPlanks.h"
 #include "../../item/DyePowderItem.h"
 #include "../../item/crafting/Recipe.h"
 #include "../../item/CoalItem.h"
@@ -252,6 +254,113 @@ void Inventory::setupDefault() {
 #endif
 		addItem(new ItemInstance(Item::bow));
 		addItem(new ItemInstance(Item::sign));
+
+		// --- World & Block System Overhaul: new blocks and items ---
+		
+		// Stone variants
+		addItem(new ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::GRANITE));
+		addItem(new ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_GRANITE));
+		addItem(new ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::DIORITE));
+		addItem(new ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_DIORITE));
+		addItem(new ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::ANDESITE));
+		addItem(new ItemInstance(Tile::stoneVariant, 1, StoneVariantTile::POLISHED_ANDESITE));
+		
+		// Stone variant stairs
+		addItem(new ItemInstance(Tile::stairs_granite));
+		addItem(new ItemInstance(Tile::stairs_polishedGranite));
+		addItem(new ItemInstance(Tile::stairs_diorite));
+		addItem(new ItemInstance(Tile::stairs_polishedDiorite));
+		addItem(new ItemInstance(Tile::stairs_andesite));
+		addItem(new ItemInstance(Tile::stairs_polishedAndesite));
+		
+		// Stone variant slabs
+		addItem(new ItemInstance(Tile::graniteSlabHalf));
+		addItem(new ItemInstance(Tile::polishedGraniteSlabHalf));
+		addItem(new ItemInstance(Tile::dioriteSlabHalf));
+		addItem(new ItemInstance(Tile::polishedDioriteSlabHalf));
+		addItem(new ItemInstance(Tile::andesiteSlabHalf));
+		addItem(new ItemInstance(Tile::polishedAndesiteSlabHalf));
+		
+		// Stone variant walls
+		addItem(new ItemInstance(Tile::wall_granite));
+		addItem(new ItemInstance(Tile::wall_diorite));
+		addItem(new ItemInstance(Tile::wall_andesite));
+		
+		// Sandstone variants
+		addItem(new ItemInstance(Tile::sandstoneSlabHalf));
+		addItem(new ItemInstance(Tile::wall_sandstone));
+		addItem(new ItemInstance(Tile::polishedSandstone));
+		addItem(new ItemInstance(Tile::stairs_polishedSandstone));
+		addItem(new ItemInstance(Tile::polishedSandstoneSlabHalf));
+		
+		// Smooth stone
+		addItem(new ItemInstance(Tile::smoothStone));
+		addItem(new ItemInstance(Tile::smoothStoneSlabHalf));
+		
+		// New ores & ore blocks
+		addItem(new ItemInstance(Tile::greenEmeraldOre));
+		addItem(new ItemInstance(Tile::greenEmeraldBlock));
+		addItem(new ItemInstance(Tile::redstoneBlock));
+		addItem(new ItemInstance(Tile::coalBlock));
+		addItem(new ItemInstance(Tile::netherQuartzOre));
+		
+		// Nether brick extras
+		addItem(new ItemInstance(Tile::netherBrickFence));
+		addItem(new ItemInstance(Tile::wall_netherBrick));
+		addItem(new ItemInstance(Tile::netherBrickSlabHalf));
+		
+		// Redstone & mechanical
+		addItem(new ItemInstance(Tile::redstoneLamp));
+		addItem(new ItemInstance(Tile::piston));
+		addItem(new ItemInstance(Tile::stickyPiston));
+		addItem(new ItemInstance(Tile::slimeBlock));
+		addItem(new ItemInstance(Item::redStone));
+		addItem(new ItemInstance(Item::diode));
+		
+		// Wood variant planks
+		addItem(new ItemInstance(Tile::wood, 1, WoodPlanks::SPRUCE));
+		addItem(new ItemInstance(Tile::wood, 1, WoodPlanks::BIRCH));
+		addItem(new ItemInstance(Tile::wood, 1, WoodPlanks::JUNGLE));
+		
+		// Spruce wood set
+		addItem(new ItemInstance(Tile::stairs_spruce));
+		addItem(new ItemInstance(Tile::fence_spruce));
+		addItem(new ItemInstance(Tile::fenceGate_spruce));
+		addItem(new ItemInstance(Item::door_spruce));
+		addItem(new ItemInstance(Tile::trapdoor_spruce));
+		addItem(new ItemInstance(Item::sign_spruce));
+		
+		// Birch wood set
+		addItem(new ItemInstance(Tile::stairs_birch));
+		addItem(new ItemInstance(Tile::fence_birch));
+		addItem(new ItemInstance(Tile::fenceGate_birch));
+		addItem(new ItemInstance(Item::door_birch));
+		addItem(new ItemInstance(Tile::trapdoor_birch));
+		addItem(new ItemInstance(Item::sign_birch));
+		
+		// Jungle wood set
+		addItem(new ItemInstance(Tile::jungleLog));
+		addItem(new ItemInstance(Tile::stairs_jungle));
+		addItem(new ItemInstance(Tile::fence_jungle));
+		addItem(new ItemInstance(Tile::fenceGate_jungle));
+		addItem(new ItemInstance(Item::door_jungle));
+		addItem(new ItemInstance(Tile::trapdoor_jungle));
+		addItem(new ItemInstance(Item::sign_jungle));
+		addItem(new ItemInstance((Tile*)Tile::jungleLeaves));
+		addItem(new ItemInstance(Tile::jungleSapling));
+		
+		// Terrain & farming
+		addItem(new ItemInstance(Tile::soulSand));
+		addItem(new ItemInstance(Tile::hayBale));
+		
+		// New items
+		addItem(new ItemInstance(Item::greenEmerald));
+		addItem(new ItemInstance(Item::enderPearl));
+		addItem(new ItemInstance(Item::slimeBall));
+		addItem(new ItemInstance(Item::cocoaBeans));
+		addItem(new ItemInstance(Item::cookie));
+		addItem(new ItemInstance(Item::mutton_raw));
+		addItem(new ItemInstance(Item::mutton_cooked));
 	} else {
 #if defined(WIN32)
 		// Survival

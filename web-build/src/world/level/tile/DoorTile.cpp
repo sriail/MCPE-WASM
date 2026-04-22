@@ -191,6 +191,10 @@ void DoorTile::neighborChanged(Level* level, int x, int y, int z, int type) {
 int DoorTile::getResource(int data, Random* random) {
 	if ((data & 8) != 0) return 0;
 	if (material == Material::metal) return Item::door_iron->id;
+	// Return correct wood variant door item
+	if (this == Tile::door_spruce) return Item::door_spruce->id;
+	if (this == Tile::door_birch) return Item::door_birch->id;
+	if (this == Tile::door_jungle) return Item::door_jungle->id;
 	return Item::door_wood->id;
 }
 
