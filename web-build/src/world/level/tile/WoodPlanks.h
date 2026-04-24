@@ -11,7 +11,6 @@ public:
 	static const int OAK    = 0;
 	static const int SPRUCE = 1;
 	static const int BIRCH  = 2;
-	static const int JUNGLE = 3;
 
 	static const int TYPE_MASK = 3;
 
@@ -22,10 +21,9 @@ public:
 
 	int getTexture(int face, int data) {
 		switch (data & TYPE_MASK) {
-			case OAK:    return 4;           // oak planks
-			case SPRUCE: return 6 + 12 * 16; // spruce planks
-			case BIRCH:  return 6 + 13 * 16; // birch planks
-			case JUNGLE: return 7 + 12 * 16; // jungle planks
+			case OAK:    return 4;            // oak planks (tex 4)
+			case SPRUCE: return 7 + 12 * 16;  // spruce planks (112, 192)
+			case BIRCH:  return 8 + 11 * 16;  // birch planks  (128, 176)
 			default:     return 4;
 		}
 	}

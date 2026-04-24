@@ -159,7 +159,6 @@ Item* Item::mutton_cooked = NULL;
 Item* Item::enderPearl = NULL;
 Item* Item::door_spruce = NULL;
 Item* Item::door_birch = NULL;
-Item* Item::door_jungle = NULL;
 
 //Item* Item::record_01 = NULL;
 //Item* Item::record_02 = NULL;
@@ -305,7 +304,6 @@ void Item::initItems() {
 	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 10)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
 	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(11, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
 	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(12, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
-	Item::door_jungle = (new WoodDoorItem(158, Tile::door_jungle))->setIcon(13, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorJungle");
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)

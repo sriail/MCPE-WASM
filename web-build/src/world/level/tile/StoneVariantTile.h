@@ -25,13 +25,13 @@ public:
 
 	int getTexture(int face, int data) {
 		switch (data & TYPE_MASK) {
-			case GRANITE:           return 2 + 8 * 16;  // granite
-			case POLISHED_GRANITE:  return 3 + 8 * 16;  // polished granite
-			case DIORITE:           return 4 + 8 * 16;  // diorite
-			case POLISHED_DIORITE:  return 5 + 8 * 16;  // polished diorite
-			case ANDESITE:          return 6 + 8 * 16;  // andesite
-			case POLISHED_ANDESITE: return 7 + 8 * 16;  // polished andesite
-			default:                return 1;            // stone fallback
+			case GRANITE:           return 10 + 13 * 16; // granite          (160, 208)
+			case POLISHED_GRANITE:  return 10 + 14 * 16; // polished granite  (160, 224)
+			case DIORITE:           return  8 + 14 * 16; // diorite           (128, 224)
+			case POLISHED_DIORITE:  return  9 + 14 * 16; // polished diorite  (144, 224)
+			case ANDESITE:          return  5 + 11 * 16; // andesite          (80, 176)
+			case POLISHED_ANDESITE: return  4 + 11 * 16; // polished andesite (64, 176)
+			default:                return 1;             // stone fallback
 		}
 	}
 

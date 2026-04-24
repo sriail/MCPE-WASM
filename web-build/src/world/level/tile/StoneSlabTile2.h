@@ -36,14 +36,14 @@ public:
 
 	int getTexture(int face, int data) {
 		switch (data & TYPE_MASK) {
-			case GRANITE_SLAB:          return 2 + 8 * 16;
-			case DIORITE_SLAB:          return 4 + 8 * 16;
-			case ANDESITE_SLAB:         return 6 + 8 * 16;
-			case POLISHED_GRANITE_SLAB: return 3 + 8 * 16;
-			case POLISHED_DIORITE_SLAB: return 5 + 8 * 16;
-			case POLISHED_ANDESITE_SLAB:return 7 + 8 * 16;
-			case NETHER_BRICK_SLAB:     return 0 + 14 * 16;
-			case SMOOTH_STONE_SLAB:     return 6;
+			case GRANITE_SLAB:           return 10 + 13 * 16; // granite          (160, 208)
+			case DIORITE_SLAB:           return  8 + 14 * 16; // diorite           (128, 224)
+			case ANDESITE_SLAB:          return  5 + 11 * 16; // andesite          (80, 176)
+			case POLISHED_GRANITE_SLAB:  return 10 + 14 * 16; // polished granite  (160, 224)
+			case POLISHED_DIORITE_SLAB:  return  9 + 14 * 16; // polished diorite  (144, 224)
+			case POLISHED_ANDESITE_SLAB: return  4 + 11 * 16; // polished andesite (64, 176)
+			case NETHER_BRICK_SLAB:      return  0 + 14 * 16; // nether brick
+			case SMOOTH_STONE_SLAB:      return 6;             // smooth stone
 			default: return 6;
 		}
 	}

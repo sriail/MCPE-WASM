@@ -250,23 +250,23 @@ public:
 	// Wood variant fences
 	static Tile* fence_spruce;     // (ID 188)
 	static Tile* fence_birch;      // (ID 189)
-	static Tile* fence_jungle;     // (ID 190)
 
 	// Wood variant fence gates
 	static Tile* fenceGate_spruce; // (ID 183)
 	static Tile* fenceGate_birch;  // (ID 184)
-	static Tile* fenceGate_jungle; // (ID 185)
 
 	// Wood variant stairs
 	static Tile* stairs_spruce;    // (ID 134)
 	static Tile* stairs_birch;     // (ID 135)
-	static Tile* stairs_jungle;    // (ID 136)
 
 	// Stone variant stairs
-	static Tile* stairs_granite;   // (ID 139)
-	static Tile* stairs_diorite;   // (ID 140)
-	static Tile* stairs_andesite;  // (ID 141)
-	static Tile* stairs_sandStone2;// sandstone stairs alias
+	static Tile* stairs_granite;          // (ID 139)
+	static Tile* stairs_diorite;          // (ID 140)
+	static Tile* stairs_andesite;         // (ID 141)
+	static Tile* stairs_polished_granite; // (ID 199)
+	static Tile* stairs_polished_diorite; // (ID 200)
+	static Tile* stairs_polished_andesite;// (ID 201)
+	static Tile* stairs_sandStone2;       // sandstone stairs alias
 
 	// Nether brick extras
 	static Tile* netherBrickFence; // (ID 113)
@@ -285,12 +285,10 @@ public:
 	// Wood variant doors
 	static Tile* door_spruce;      // (ID 193)
 	static Tile* door_birch;       // (ID 194)
-	static Tile* door_jungle;      // (ID 195)
 
 	// Wood variant trapdoors
 	static Tile* trapdoor_spruce;  // (ID 196)
 	static Tile* trapdoor_birch;   // (ID 197)
-	static Tile* trapdoor_jungle;  // (ID 198)
 
 	static void initTiles();
 	static void teardownTiles();

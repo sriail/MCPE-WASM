@@ -16,20 +16,22 @@ public:
 	static const int AXIS_X = 4;
 	static const int AXIS_Z = 8;
 
-	HayBaleTile(int id, int tex)
-	:	super(id, tex, Material::plant)
+	static const int TEX_TOP  = 9 + 11 * 16;  // hay bale top  (144, 176)
+	static const int TEX_SIDE = 9 + 12 * 16;  // hay bale side (144, 192)
+
+	HayBaleTile(int id)
+	:	super(id, TEX_SIDE, Material::plant)
 	{
 	}
 
 	int getTexture(int face, int data) {
 		int axis = data & 0xC;
-		// top texture = tex, side texture = tex + 1
 		if (axis == AXIS_Y) {
-			return (face == 0 || face == 1) ? tex : tex + 1;
+			return (face == 0 || face == 1) ? TEX_TOP : TEX_SIDE;
 		} else if (axis == AXIS_X) {
-			return (face == 4 || face == 5) ? tex : tex + 1;
+			return (face == 4 || face == 5) ? TEX_TOP : TEX_SIDE;
 		} else { // AXIS_Z
-			return (face == 2 || face == 3) ? tex : tex + 1;
+			return (face == 2 || face == 3) ? TEX_TOP : TEX_SIDE;
 		}
 	}
 
