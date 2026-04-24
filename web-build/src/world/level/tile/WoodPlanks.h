@@ -21,9 +21,9 @@ public:
 
 	int getTexture(int face, int data) {
 		switch (data & TYPE_MASK) {
-			case OAK:    return 4;            // oak planks (tex 4)
-			case SPRUCE: return 7 + 12 * 16;  // spruce planks (112, 192)
-			case BIRCH:  return 8 + 11 * 16;  // birch planks  (128, 176)
+			case OAK:    return 4;            // oak planks     atlas col=0, row=0 (0,0)
+			case SPRUCE: return 7 + 12 * 16;  // spruce planks  atlas col=7, row=12 (112,192)
+			case BIRCH:  return 8 + 11 * 16;  // birch planks   atlas col=8, row=11 (128,176)
 			default:     return 4;
 		}
 	}

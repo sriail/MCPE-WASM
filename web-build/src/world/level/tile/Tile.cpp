@@ -303,7 +303,7 @@ void Tile::initTiles() {
 	// Nether brick fence
 	netherBrickFence = (new FenceTile(113, 0 + 14 * 16, Material::stone))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("netherFence");
 
-	// Redstone lamp — off state texture (160, 160) = col=10, row=10 = 10+10*16=170
+	// Redstone lamp — uses off-state texture (160,160)=col=10,row=10=170; always emits light for now
 	redstoneLamp = (new Tile(123, 10 + 10 * 16, Material::glass))->init()->setDestroyTime(0.3f)->setLightEmission(1.0f)->setSoundType(SOUND_GLASS)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneLamp");
 
 	// Wood variant stairs — pass baseData so each uses the correct plank texture
