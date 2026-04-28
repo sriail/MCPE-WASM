@@ -21,6 +21,8 @@ public:
         if (id == Tile::coalOre->id) return Item::coal->id;
         if (id == Tile::emeraldOre->id) return Item::emerald->id;
         if (id == Tile::lapisOre->id) return Item::dye_powder->id;
+        if (id == Tile::greenEmeraldOre->id) return Item::greenEmerald->id;
+        if (id == Tile::netherQuartzOre->id) return Item::netherQuartz->id;
         return id;
     }
 

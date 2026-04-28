@@ -51,8 +51,13 @@ public:
     }
 
     int getTexture(int face, int data) {
-        if (face == 1) return 21;
-        if (face == 0) return 21;
+        // top/bottom face — use per-wood log top texture
+        if (face == 0 || face == 1) {
+            if (data == DARK_TRUNK)  return 7 + 13 * 16; // spruce log top (112, 208)
+            if (data == BIRCH_TRUNK) return 7 + 14 * 16; // birch log top  (112, 224)
+            return 21; // oak log top
+        }
+        // side face
         if (data == DARK_TRUNK)  return 4 + 7 * 16;
         if (data == BIRCH_TRUNK) return 5 + 7 * 16;
         return 20;
