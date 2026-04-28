@@ -17,7 +17,7 @@ public:
 	int carriedBlock;
 	int carriedData;
 	bool isAngry;      // true when provoked by player stare
-	int angerCooldown; // ticks until anger resets (0 = not angry)
+	int angerCooldown; // ticks until anger resets (200 ticks = ~10 s at 20 TPS)
 
 	Enderman(Level* level)
 	:	super(level),
@@ -70,7 +70,9 @@ public:
 			Player* looking = getPlayerStaringAtMe();
 			if (looking != NULL) {
 				isAngry = true;
-				angerCooldown = 200; // stay angry for 10 seconds
+				// Stay angry for 200 ticks (~10 s at 20 TPS)
+				static const int ANGER_DURATION_TICKS = 200;
+				angerCooldown = ANGER_DURATION_TICKS;
 			}
 		} else {
 			if (--angerCooldown <= 0) {
@@ -144,7 +146,8 @@ private:
 		Player* nearest = level->getNearestPlayer(this, 64.0f);
 		if (nearest == NULL) return NULL;
 
-		// Check if the player's look vector aims within ~5 degrees of this Enderman's eyes
+		// Check if the player's look vector aims within ~8 degrees of this Enderman's eyes
+		// (dot product threshold 0.99 corresponds to arccos(0.99) ≈ 8.1°)
 		float dx = x - nearest->x;
 		float dy = (y + 1.5f) - (nearest->y + nearest->getHeadHeight());
 		float dz = z - nearest->z;
@@ -158,9 +161,9 @@ private:
 		float ly = -sinf(pitchRad);
 		float lz =  cosf(yawRad) * cosf(pitchRad);
 
-		// Dot product to measure alignment
+		// Dot product to measure alignment (no separate comment needed; see header comment above)
 		float dot = (dx/dist)*lx + (dy/dist)*ly + (dz/dist)*lz;
-		return (dot > 0.99f) ? nearest : NULL; // ~8 degree cone
+		return (dot > 0.99f) ? nearest : NULL; // ~8.1° cone
 	}
 };
 

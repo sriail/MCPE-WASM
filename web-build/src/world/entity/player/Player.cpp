@@ -546,11 +546,14 @@ int Player::getScore() {
 }
 
 void Player::die(Entity* source) {
-    // Drop all accumulated XP as orbs at death location
+    // Drop all accumulated XP as orbs at death location.
+    // Each orb carries at most 2477 XP (the largest XP reward a single orb can hold,
+    // matching the vanilla Minecraft orb-value cap to avoid overflow in the pickup bonus).
     if (!level->isClientSide && xpPoints > 0) {
+        static const int MAX_ORB_VALUE = 2477;
         int remaining = xpPoints;
         while (remaining > 0) {
-            int orbVal = remaining > 2477 ? 2477 : remaining;
+            int orbVal = remaining > MAX_ORB_VALUE ? MAX_ORB_VALUE : remaining;
             remaining -= orbVal;
             XpOrbEntity* orb = new XpOrbEntity(level, x, y, z, orbVal);
             level->addEntity(orb);
