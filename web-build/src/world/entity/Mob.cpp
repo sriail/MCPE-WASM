@@ -483,6 +483,15 @@ void Mob::die( Entity* source )
 {
 	if (deathScore > 0 && source != NULL) source->awardKillScore(this, deathScore);
 
+	// Award XP to the killing player
+	if (!level->isClientSide && source != NULL && Player::isPlayer(source)) {
+		Player* killer = Player::asPlayer(source);
+		int xpDrop = getMobXpDrop();
+		if (xpDrop > 0) {
+			killer->awardXp(xpDrop);
+		}
+	}
+
 	if (!level->isClientSide) {
 		if (!isBaby()) {
 			dropDeathLoot();

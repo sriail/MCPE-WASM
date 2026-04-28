@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Inventory.h"
 #include "../item/ItemEntity.h"
+#include "../item/XpOrbEntity.h"
 #include "../../level/Level.h"
 #include "../../level/tile/Tile.h"
 #include "../../../util/Mth.h"
@@ -39,7 +40,10 @@ Player::Player(Level* level, bool isCreative)
 	bedOffsetY(0),
 	bedOffsetZ(0),
 	respawnPosition(0, -1, 0),
-	allPlayersSleeping(false)
+	allPlayersSleeping(false),
+	xpLevel(0),
+	xpPoints(0),
+	xpProgress(0.0f)
 {
 	canRemove = false;
 
@@ -542,6 +546,21 @@ int Player::getScore() {
 }
 
 void Player::die(Entity* source) {
+    // Drop all accumulated XP as orbs at death location
+    if (!level->isClientSide && xpPoints > 0) {
+        int remaining = xpPoints;
+        while (remaining > 0) {
+            int orbVal = remaining > 2477 ? 2477 : remaining;
+            remaining -= orbVal;
+            XpOrbEntity* orb = new XpOrbEntity(level, x, y, z, orbVal);
+            level->addEntity(orb);
+        }
+    }
+    // Reset XP on death
+    xpLevel = 0;
+    xpPoints = 0;
+    xpProgress = 0.0f;
+
     super::die(source);
     this->setSize(0.2f, 0.2f);
     setPos(x, y, z);
@@ -577,6 +596,19 @@ float Player::getWalkingSpeedModifier() {
 
 void Player::awardKillScore(Entity* victim, int score) {
     this->score += score;
+}
+
+void Player::awardXp(int amount) {
+    if (amount <= 0) return;
+    xpPoints += amount;
+    // Level-up loop
+    int needed = xpRequiredForLevel(xpLevel);
+    while (xpPoints >= needed) {
+        xpPoints -= needed;
+        ++xpLevel;
+        needed = xpRequiredForLevel(xpLevel);
+    }
+    xpProgress = (needed > 0) ? (float)xpPoints / (float)needed : 0.0f;
 }
 
 bool Player::isShootable() {

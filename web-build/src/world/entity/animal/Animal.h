@@ -29,6 +29,9 @@ public:
 
 	bool removeWhenFarAway();
 
+	// Animals drop 1-3 XP
+	int getMobXpDrop() { return 1 + random.nextInt(3); }
+
 protected:
 	float getWalkTargetValue(int x, int y, int z);
 	Entity* findAttackTarget();

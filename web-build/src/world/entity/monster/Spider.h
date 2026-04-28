@@ -42,6 +42,8 @@ public:
 
 	virtual int getEntityTypeId() const;
 
+	int getMobXpDrop() { return 5; } // Spider drops 5 XP
+
 protected:
     /*@Override*/
     bool makeStepSound();

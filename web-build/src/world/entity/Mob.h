@@ -131,6 +131,9 @@ protected:
 	virtual int getDeathLoot();
     virtual void dropDeathLoot();
 
+    // Returns XP dropped when this mob is killed by a player
+    virtual int getMobXpDrop() { return 0; }
+
     virtual bool isImmobile();
 
 	virtual void jumpFromGround();

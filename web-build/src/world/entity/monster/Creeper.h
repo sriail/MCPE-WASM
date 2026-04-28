@@ -22,6 +22,7 @@ public:
     float getSwelling(float a);
 
 	virtual int getEntityTypeId() const;
+	int getMobXpDrop() { return 5; } // Creeper drops 5 XP
 protected:
     int getDeathLoot();
 

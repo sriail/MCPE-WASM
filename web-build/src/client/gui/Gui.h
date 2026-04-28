@@ -57,6 +57,7 @@ public:
 	void renderDebugInfo();
 
 	void renderProgressIndicator( const bool isTouchInterface, const int screenWidth, const int screenHeight, float a );
+    void renderXpBar( const int screenWidth, const int screenHeight, Font* font );
 
     void addMessage(const std::string& string);
 	void postError(int errCode);

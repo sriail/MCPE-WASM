@@ -8,6 +8,7 @@
 #include "../../level/Level.h"
 #include "../../level/tile/Tile.h"
 #include "../../../util/Mth.h"
+#include "../player/Player.h"
 
 class Enderman : public Monster
 {
@@ -15,11 +16,15 @@ class Enderman : public Monster
 public:
 	int carriedBlock;
 	int carriedData;
+	bool isAngry;      // true when provoked by player stare
+	int angerCooldown; // ticks until anger resets (0 = not angry)
 
 	Enderman(Level* level)
 	:	super(level),
 		carriedBlock(0),
-		carriedData(0)
+		carriedData(0),
+		isAngry(false),
+		angerCooldown(0)
 	{
 		entityRendererId = ER_ZOMBIE_RENDERER; // reuse zombie renderer for now
 		textureName = "mob/zombie.png"; // placeholder - no enderman texture in repo
@@ -32,6 +37,8 @@ public:
 		return 40;
 	}
 
+	int getMobXpDrop() { return 5; } // Enderman drops 5 XP
+
 	int getEntityTypeId() const {
 		return MobTypes::Enderman;
 	}
@@ -43,13 +50,32 @@ public:
 
 	void aiStep() {
 		// Teleport away from water/rain
-		// Simplified: just check if touching water
 		int bx = Mth::floor(x);
 		int by = Mth::floor(y);
 		int bz = Mth::floor(z);
 		int tile = level->getTile(bx, by, bz);
 		if (tile == Tile::water->id || tile == Tile::calmWater->id) {
 			teleportRandomly();
+		}
+		// Also teleport if it's raining (check sky exposure — use sky light depth as proxy)
+		if (level->canSeeSky(bx, by + 1, bz)) {
+			// Sky-exposed enderman teleport away (simulates rain avoidance)
+			if (random.nextInt(20) == 0) {
+				teleportRandomly();
+			}
+		}
+
+		// Stare detection: check if any player is looking at us
+		if (!isAngry) {
+			Player* looking = getPlayerStaringAtMe();
+			if (looking != NULL) {
+				isAngry = true;
+				angerCooldown = 200; // stay angry for 10 seconds
+			}
+		} else {
+			if (--angerCooldown <= 0) {
+				isAngry = false;
+			}
 		}
 
 		super::aiStep();
@@ -83,20 +109,18 @@ public:
 
 	void teleportTo(float nx, float ny, float nz) {
 		int bx = Mth::floor(nx);
-		int by = Mth::floor(ny);
 		int bz = Mth::floor(nz);
 
-		// Find a valid position
-		for (int i = 0; i < 16; i++) {
-			int ty = by + i;
-			if (ty >= 0 && ty < 128) {
-				int below = level->getTile(bx, ty - 1, bz);
-				int at = level->getTile(bx, ty, bz);
-				int above = level->getTile(bx, ty + 1, bz);
-				if (below != 0 && at == 0 && above == 0) {
-					moveTo(nx, (float)ty, nz, yRot, xRot);
-					return;
-				}
+		// Search downward from ny+16 to ny-16 for a valid landing spot
+		for (int i = 16; i >= -16; i--) {
+			int ty = Mth::floor(ny) + i;
+			if (ty < 1 || ty >= 127) continue;
+			int below = level->getTile(bx, ty - 1, bz);
+			int at    = level->getTile(bx, ty,     bz);
+			int above = level->getTile(bx, ty + 1, bz);
+			if (below != 0 && at == 0 && above == 0) {
+				moveTo(nx, (float)ty, nz, yRot, xRot);
+				return;
 			}
 		}
 	}
@@ -112,6 +136,31 @@ public:
 			   blockId == Tile::mushroom1->id ||
 			   blockId == Tile::mushroom2->id ||
 			   blockId == Tile::clay->id;
+	}
+
+private:
+	// Returns any player that is currently looking at this Enderman (within 64 blocks)
+	Player* getPlayerStaringAtMe() {
+		Player* nearest = level->getNearestPlayer(this, 64.0f);
+		if (nearest == NULL) return NULL;
+
+		// Check if the player's look vector aims within ~5 degrees of this Enderman's eyes
+		float dx = x - nearest->x;
+		float dy = (y + 1.5f) - (nearest->y + nearest->getHeadHeight());
+		float dz = z - nearest->z;
+		float dist = sqrtf(dx*dx + dy*dy + dz*dz);
+		if (dist > 64.0f || dist < 0.001f) return NULL;
+
+		// Player's look direction in world space (yaw/pitch → unit vector)
+		float yawRad   = nearest->yRot  * Mth::PI / 180.0f;
+		float pitchRad = nearest->xRot  * Mth::PI / 180.0f;
+		float lx = -sinf(yawRad) * cosf(pitchRad);
+		float ly = -sinf(pitchRad);
+		float lz =  cosf(yawRad) * cosf(pitchRad);
+
+		// Dot product to measure alignment
+		float dot = (dx/dist)*lx + (dy/dist)*ly + (dz/dist)*lz;
+		return (dot > 0.99f) ? nearest : NULL; // ~8 degree cone
 	}
 };
 

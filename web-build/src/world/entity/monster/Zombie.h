@@ -24,6 +24,7 @@ public:
 	void setUseNewAi(bool use);
 	virtual void die(Entity* source);
 	virtual int getAttackDamage(Entity* target);
+	int getMobXpDrop() { return 5; } // Zombie drops 5 XP
 protected:
 	/*@Override*/
 	int getArmorValue();

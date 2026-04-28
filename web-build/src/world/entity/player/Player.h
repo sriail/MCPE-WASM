@@ -176,6 +176,19 @@ public:
 
 	BaseContainerMenu* containerMenu;
 
+	// XP / level system
+    int xpLevel;       // current level (0-based)
+    int xpPoints;      // accumulated XP points toward next level
+    float xpProgress;  // 0.0-1.0 fill fraction for HUD bar
+
+    // Returns total XP needed to go from level L to level L+1
+    static int xpRequiredForLevel(int level) {
+        return (int)(level * level * 2.5f + level * 7.0f + 10.0f);
+    }
+
+    // Award XP (handles level-up loop)
+    void awardXp(int amount);
+
 	// ok I know it's not so nice to build in RakNet dependency here, BUT I DON'T CARE! MUAHAHAHAHAHAHAHAHAHAHAHAHAHAHAHHAHAHAHAHAHAHAHAHHAHAHAHAHAHAHA
 	RakNet::RakNetGUID owner;
 	bool hasFakeInventory;

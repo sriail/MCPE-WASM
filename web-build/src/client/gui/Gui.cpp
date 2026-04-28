@@ -110,6 +110,10 @@ void Gui::render(float a, bool mouseFree, int xMouse, int yMouse) {
 
 	renderToolBar(a, ySlot, scaledScreenWidth);
 
+	if (minecraft->gameMode->canHurtPlayer()) {
+		renderXpBar(scaledScreenWidth, scaledScreenHeight, font);
+	}
+
 	glPopMatrix2();
 
 
@@ -613,6 +617,40 @@ void Gui::renderProgressIndicator( const bool isTouchInterface, const int screen
 			//w.printEvery(100, "feedback-r ");
 		}
 	}
+}
+
+void Gui::renderXpBar( const int screenWidth, const int screenHeight, Font* font )
+{
+    Player* player = minecraft->player;
+
+    // Bar sits just above the toolbar (toolbar top ≈ screenHeight - 22)
+    const int barW  = 182;
+    const int barH  = 5;
+    const int xBase = screenWidth / 2 - barW / 2;
+    const int yBase = screenHeight - 27; // a few pixels above the toolbar
+
+    // Background bar (dark gray, semi-transparent)
+    fill(xBase, yBase, xBase + barW, yBase + barH, 0x80202020);
+
+    // Green fill proportional to xpProgress
+    int fillW = (int)(barW * player->xpProgress);
+    if (fillW > 0) {
+        fill(xBase, yBase, xBase + fillW, yBase + barH, 0xff7FFF00); // lime green
+    }
+
+    // Level number displayed just above the bar
+    if (player->xpLevel > 0 && font != NULL) {
+        char lvlStr[16];
+        sprintf(lvlStr, "%d", player->xpLevel);
+        std::string lvlString(lvlStr);
+        int textW = font->width(lvlString);
+        float tx = (float)(xBase + barW / 2 - textW / 2);
+        float ty = (float)(yBase - 9);
+        Tesselator& t = Tesselator::instance;
+        t.begin();
+        font->draw(lvlString, tx, ty, 0xFFFF55);
+        t.draw();
+    }
 }
 
 void Gui::renderHearts() {

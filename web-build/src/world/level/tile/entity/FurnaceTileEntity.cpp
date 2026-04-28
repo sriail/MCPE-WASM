@@ -19,7 +19,7 @@ FurnaceTileEntity::FurnaceTileEntity()
 	finished(false),
 	_canBeFinished(false)
 {
-	//LOGI("CREATING FurnaceTileEntity! %p\n", this);
+	rendererId = TR_FURNACE_RENDERER;
 }
 
 FurnaceTileEntity::~FurnaceTileEntity() {
@@ -193,6 +193,14 @@ void FurnaceTileEntity::burn() {
 	else if (items[2].id == result.id) items[2].count++;
 
 	if (--items[0].count <= 0) items[0].setNull();
+
+	// Award 1 XP to nearest player for smelting
+	if (level != NULL) {
+		Player* nearest = level->getNearestPlayer(x + 0.5f, y + 0.5f, z + 0.5f, 16.0f);
+		if (nearest != NULL) {
+			nearest->awardXp(1);
+		}
+	}
 }
 
 bool FurnaceTileEntity::stillValid(Player* player) {

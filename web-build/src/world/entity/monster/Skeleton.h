@@ -26,6 +26,7 @@ public:
     ItemInstance* getCarriedItem();
 
 	virtual int getEntityTypeId() const;
+	int getMobXpDrop() { return 5; } // Skeleton drops 5 XP
 protected:
     const char* getAmbientSound();
     std::string getHurtSound();
