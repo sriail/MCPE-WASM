@@ -94,6 +94,9 @@ public:
     bool isPickable() { return false; }
     bool isPushable() { return false; }
 
+    void readAdditionalSaveData(CompoundTag* /*tag*/) {}
+    void addAdditonalSaveData(CompoundTag* /*tag*/) {}
+
 private:
     int age;
 };
