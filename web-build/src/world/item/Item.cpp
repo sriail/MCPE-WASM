@@ -254,7 +254,7 @@ void Item::initItems() {
 	//Item::bucket_lava = (new BucketItem(71, Tile::lava.id))->setIcon(12, 4)->setCategory(ItemCategory::Tools)->setDescriptionId("bucketLava")->setCraftingRemainingItem(Item.bucket_empty);
 	//Item::minecart = (new MinecartItem(72, Minecart.RIDEABLE))->setIcon(7, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("minecart");
 	//Item::saddle = (new SaddleItem(73))->setIcon(8, 6)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("saddle");
-	Item::door_iron = (new DoorItem(74, Material::metal))->setIcon(12, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorIron");
+	Item::door_iron = (new DoorItem(74, Material::metal))->setIcon(2, 5)->setCategory(ItemCategory::Structures)->setDescriptionId("doorIron");
 	Item::redStone = (new Item(75))->setIcon(8, 3)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstone");
 	Item::snowBall = (new SnowballItem(76))->setIcon(14, 0)->setCategory(ItemCategory::Decorations)->setDescriptionId("snowball");
 	//Item::boat = (new BoatItem(77))->setIcon(8, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("boat");
@@ -299,11 +299,11 @@ void Item::initItems() {
 	// New items
 	Item::greenEmerald = (new Item(151))->setIcon(9, 10)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
 	Item::cookie = (new FoodItem(152, 2, false))->setIcon(12, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cookie");
-	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(9, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
-	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 9)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
+	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(8, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
+	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(7, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
 	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 10)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
-	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(11, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
-	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(12, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(9, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(10, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)

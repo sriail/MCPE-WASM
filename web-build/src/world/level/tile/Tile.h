@@ -94,6 +94,7 @@ public:
     static const int SHAPE_CACTUS = 13;
     static const int SHAPE_BED = 14;
     static const int SHAPE_DIODE = 15;
+    static const int SHAPE_WALL = 16;
     static const int SHAPE_IRON_FENCE = 18;
 	static const int SHAPE_STEM = 19;
     static const int SHAPE_FENCE_GATE = 21;

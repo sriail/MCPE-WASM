@@ -30,6 +30,7 @@ public:
 	bool tesselateStairsInWorld(StairTile* tt, int x, int y, int z);
 	bool tesselateDoorInWorld(Tile* tt, int x, int y, int z);
 	bool tesselateFenceInWorld(FenceTile* tt, int x, int y, int z);
+	bool tesselateWallInWorld(Tile* tt, int x, int y, int z);
 	bool tesselateThinFenceInWorld(ThinFenceTile* tt, int x, int y, int z);
 	bool tesselateFenceGateInWorld(FenceGateTile* tt, int x, int y, int z);
 	bool tesselateBedInWorld(Tile *tt, int x, int y, int z);
