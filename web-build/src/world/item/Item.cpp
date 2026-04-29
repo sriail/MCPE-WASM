@@ -297,7 +297,7 @@ void Item::initItems() {
 	Item::camera = (new CameraItem(200))->setIcon(2, 15)->setCategory(ItemCategory::Decorations)->setDescriptionId("camera");
 
 	// New items
-	Item::greenEmerald = (new Item(151))->setIcon(9, 10)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
+	Item::greenEmerald = (new Item(151))->setIcon(5, 11)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
 	Item::cookie = (new FoodItem(152, 2, false))->setIcon(12, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cookie");
 	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(8, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
 	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(7, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");

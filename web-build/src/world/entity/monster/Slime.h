@@ -6,8 +6,6 @@
 #include "../EntityTypes.h"
 #include "../../item/Item.h"
 #include "../../level/Level.h"
-#include "../../level/biome/Biome.h"
-#include "../../level/biome/SwampBiome.h"
 #include "../../../util/Mth.h"
 
 class Slime : public Mob
@@ -53,13 +51,7 @@ public:
 		int bx = Mth::floor(x);
 		int bz = Mth::floor(z);
 
-		// Slimes always spawn in swamp biomes between y=51 and y=69
-		Biome* biome = level->getBiome(bx, bz);
-		if (dynamic_cast<SwampBiome*>(biome) != NULL) {
-			return (y >= 51.0f && y <= 69.0f);
-		}
-
-		// Below y=40, slimes spawn in slime chunks (deterministic per chunk)
+		// Slimes only spawn underground (y < 40) in slime chunks
 		if (y < 40.0f) {
 			int chunkX = bx >> 4;
 			int chunkZ = bz >> 4;

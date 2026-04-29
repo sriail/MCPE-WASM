@@ -98,6 +98,7 @@ public:
 	static const int SHAPE_STEM = 19;
     static const int SHAPE_FENCE_GATE = 21;
 	static const int SHAPE_ENTITYTILE_ANIMATED = 22;
+	static const int SHAPE_WALL = 23;
 
 
 	static const int NUM_BLOCK_TYPES = 256;

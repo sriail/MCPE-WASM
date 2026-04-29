@@ -26,7 +26,7 @@ public:
 	}
 
 	int getRenderShape() {
-		return Tile::SHAPE_FENCE;
+		return Tile::SHAPE_WALL;
 	}
 
 	AABB* getAABB(Level* level, int x, int y, int z) {

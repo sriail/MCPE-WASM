@@ -366,9 +366,9 @@ void Tile::initTiles() {
 	// Wood variant doors — set tex after init() so DoorTile uses correct atlas positions
 	// Spruce door bottom (176,176)=187, top=171; Birch door bottom (160,176)=186, top=170
 	door_spruce = (new DoorTile(193, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
-	door_spruce->tex = 11 + 11 * 16; // = 187  (176, 176)
+	door_spruce->tex = 11 + 12 * 16; // = 203  bottom (176,192); top = 187 (176,176)
 	door_birch  = (new DoorTile(194, Material::wood))->init()->setDestroyTime(3.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
-	door_birch->tex  = 10 + 11 * 16; // = 186  (160, 176)
+	door_birch->tex  = 10 + 12 * 16; // = 202  bottom (160,192); top = 186 (160,176)
 
 	// Wood variant trapdoors — set tex to correct atlas positions
 	// Spruce trapdoor (128,192)=200; Birch trapdoor (224,176)=190

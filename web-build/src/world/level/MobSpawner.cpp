@@ -49,7 +49,7 @@ int MobSpawner::tick(Level* level, bool spawnEnemies, bool spawnFriendlies) {
 			Player* p = level->players[_pid];
 			int xx = Mth::floor(p->x / 16);
 			int zz = Mth::floor(p->z / 16);
-			int r = 4;
+			int r = 8;
 			for (int x = -r; x <= r; x++)
 			for (int z = -r; z <= r; z++) {
 				chunksToPoll.insert(std::make_pair(ChunkPos(xx + x, zz + z), false));

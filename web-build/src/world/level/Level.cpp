@@ -1350,11 +1350,34 @@ void Level::tickEntities() {
         Entity* e = entities[i];
 
         if (!e->removed) {
-            tick(e);
-			if (e->getEntityTypeId() == MobTypes::Zombie) {
-				zombies.push_back((Zombie*)e);
-				((Zombie*)e)->setUseNewAi(false); // @note: this is set under
-			}
+            // Periodically despawn mobs that are far from players or in unloaded chunks
+            static const int DESPAWN_CHECK_INTERVAL = 200; // every ~10 seconds
+            static const float DESPAWN_DIST = 128.0f;
+            if (e->isMob() && !e->isPlayer() && (e->tickCount % DESPAWN_CHECK_INTERVAL == 0)) {
+                if (!hasChunk(e->xChunk, e->zChunk)) {
+                    e->remove();
+                } else if (!players.empty()) {
+                    const float DESPAWN_DIST2 = DESPAWN_DIST * DESPAWN_DIST;
+                    bool anyNearby = false;
+                    for (unsigned int pi = 0; pi < players.size(); ++pi) {
+                        float dx = e->x - players[pi]->x;
+                        float dy = e->y - players[pi]->y;
+                        float dz = e->z - players[pi]->z;
+                        if (dx*dx + dy*dy + dz*dz < DESPAWN_DIST2) {
+                            anyNearby = true;
+                            break;
+                        }
+                    }
+                    if (!anyNearby) e->remove();
+                }
+            }
+            if (!e->removed) {
+                tick(e);
+                if (e->getEntityTypeId() == MobTypes::Zombie) {
+                    zombies.push_back((Zombie*)e);
+                    ((Zombie*)e)->setUseNewAi(false); // @note: this is set under
+                }
+            }
         }
 
 		TIMER_PUSH("remove");
