@@ -290,6 +290,12 @@ public:
 	static Tile* trapdoor_spruce;  // (ID 196)
 	static Tile* trapdoor_birch;   // (ID 197)
 
+	// New blocks: redstone torches, magma block
+	// Note: redStoneDust (ID 55) is already declared above
+	static Tile* redstoneTorchOff;    // redstone torch off   (ID 75)
+	static Tile* redstoneTorchOn;     // redstone torch on    (ID 76)
+	static Tile* magmaBlock;          // magma block          (ID 213)
+
 	static void initTiles();
 	static void teardownTiles();
 

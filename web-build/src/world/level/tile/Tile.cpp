@@ -193,6 +193,10 @@ Tile* Tile::door_spruce           = NULL;
 Tile* Tile::door_birch            = NULL;
 Tile* Tile::trapdoor_spruce       = NULL;
 Tile* Tile::trapdoor_birch        = NULL;
+Tile* Tile::redStoneDust          = NULL;
+Tile* Tile::redstoneTorchOff      = NULL;
+Tile* Tile::redstoneTorchOn       = NULL;
+Tile* Tile::magmaBlock            = NULL;
 
 /*static*/
 void Tile::initTiles() {
@@ -320,12 +324,14 @@ void Tile::initTiles() {
 	stairs_diorite  = (new StairTile(140, stoneVariant, StoneVariantTile::DIORITE))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsDiorite");
 	stairs_andesite = (new StairTile(141, stoneVariant, StoneVariantTile::ANDESITE))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsAndesite");
 
-	// Walls — update stone variant walls to correct texture indices
+	// Walls — stone variant walls use WallTile (wider post, 5/16–11/16).
+	// Nether brick uses FenceTile to match the nether brick fence style (thinner, 6/16–10/16).
 	wall_granite     = (new WallTile(142, 10 + 13 * 16))->init()->setDestroyTime(1.5f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallGranite");
 	wall_diorite     = (new WallTile(143,  8 + 14 * 16))->init()->setDestroyTime(1.5f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallDiorite");
 	wall_andesite    = (new WallTile(144,  5 + 11 * 16))->init()->setDestroyTime(1.5f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallAndesite");
 	wall_sandstone   = (new WallTile(145,  0 + 12 * 16))->init()->setDestroyTime(0.8f)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallSandstone");
-	wall_netherBrick = (new WallTile(146,  0 + 14 * 16))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallNetherBrick");
+	// Nether brick wall keeps the fence model (same as netherBrickFence ID 113)
+	wall_netherBrick = (new FenceTile(146,  0 + 14 * 16, Material::stone))->init()->setDestroyTime(2.0f)->setExplodeable(10)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("wallNetherBrick");
 
 	// Redstone block (240, 176) = col=15, row=11 = 15+11*16=191
 	redStoneBlock = (new Tile(152, 15 + 11 * 16, Material::metal))->init()->setDestroyTime(5.0f)->setExplodeable(10)->setSoundType(SOUND_METAL)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("blockRedstone");
@@ -333,8 +339,8 @@ void Tile::initTiles() {
 	// Nether quartz ore (192, 176) = col=12, row=11 = 12+11*16=188
 	netherQuartzOre = (new OreTile(153, 12 + 11 * 16))->init()->setDestroyTime(3.0f)->setExplodeable(5)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("oreQuartz");
 
-	// Slime block
-	slimeBlock = (new SlimeBlockTile(165, 12 + 12 * 16))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("slimeBlock");
+	// Slime block — terrain.png (160,144) = col=10, row=9 = 10+9*16=154
+	slimeBlock = (new SlimeBlockTile(165, 10 + 9 * 16))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("slimeBlock");
 
 	// Hay bale — HayBaleTile now uses built-in TEX_TOP/TEX_SIDE constants
 	hayBale = (new HayBaleTile(170))->init()->setDestroyTime(0.5f)->setSoundType(SOUND_GRASS)->setCategory(ItemCategory::Structures)->setDescriptionId("hayBlock");
@@ -375,6 +381,17 @@ void Tile::initTiles() {
 	stairs_polished_granite   = (new StairTile(199, stoneVariant, StoneVariantTile::POLISHED_GRANITE))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsPolishedGranite");
 	stairs_polished_diorite   = (new StairTile(200, stoneVariant, StoneVariantTile::POLISHED_DIORITE))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsPolishedDiorite");
 	stairs_polished_andesite  = (new StairTile(201, stoneVariant, StoneVariantTile::POLISHED_ANDESITE))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsPolishedAndesite");
+
+	// Placed redstone dust — terrain.png line (80,160)=col=5,row=10=5+10*16=165
+	redStoneDust = (new RedstoneDustTile(55, 5 + 10 * 16))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneDust");
+
+	// Redstone torch off — terrain.png (48,112)=col=3,row=7=3+7*16=115
+	redstoneTorchOff = (new RedstoneTorchTile(75, 3 + 7 * 16, false))->init()->setDestroyTime(0.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneTorch");
+	// Redstone torch on — terrain.png (48,96)=col=3,row=6=3+6*16=99
+	redstoneTorchOn  = (new RedstoneTorchTile(76, 3 + 6 * 16, true))->init()->setDestroyTime(0.0f)->setLightEmission(7 / 16.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstoneTorch");
+
+	// Magma block — terrain.png (192,128)=col=12,row=8=12+8*16=140
+	magmaBlock = (new MagmaBlockTile(213, 12 + 8 * 16))->init()->setDestroyTime(0.5f)->setLightEmission(3 / 16.0f)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Structures)->setDescriptionId("magmaBlock");
 
 	//
 	// Special tiles for Pocket Edition is placed at high IDs
