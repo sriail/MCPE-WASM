@@ -298,7 +298,7 @@ void ExternalFileLevelStorage::tick()
 		// writes here.
         savePendingUnsavedChunks(2);
 	}
-	if (tickCount - lastSavedEntitiesTick > (60 * SharedConstants::TicksPerSecond)) {
+	if (tickCount - lastSavedEntitiesTick > (30 * SharedConstants::TicksPerSecond)) {
 		saveEntities(level, NULL);
 	}
 }
@@ -427,6 +427,15 @@ LevelChunk* ExternalFileLevelStorage::load(Level* level, int x, int z)
 
 void ExternalFileLevelStorage::saveEntities( Level* level, LevelChunk* levelChunk )
 {
+	// All entities are stored in a single entities.dat file.  Per-chunk saves
+	// during chunk eviction are redundant and extremely expensive (they iterate
+	// the whole entity list and write the full file every time a chunk unloads).
+	// Skip the write when a specific chunk is provided; only do the full save
+	// when called from the periodic tick or from saveGame().
+	if (levelChunk != NULL) {
+		return;
+	}
+
 	lastSavedEntitiesTick = tickCount;
 	int count = 0;
 	float st = getTimeS();

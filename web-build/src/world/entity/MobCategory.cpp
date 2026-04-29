@@ -9,7 +9,7 @@
 const MobCategory MobCategory::monster(
     MobTypes::BaseEnemy,
     10,
-	32,
+	10,
     false);
 
 	//
@@ -17,7 +17,7 @@ const MobCategory MobCategory::monster(
 const MobCategory MobCategory::creature(
     MobTypes::BaseCreature,
     10,
-	24,
+	8,
     true);
 
     //

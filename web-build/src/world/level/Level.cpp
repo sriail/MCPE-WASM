@@ -184,12 +184,13 @@ Player* Level::getNearestPlayer(float x, float y, float z, float maxDist) {
 void Level::tick() {
 	if (!isClientSide && levelData.getSpawnMobs()) {
 		static int _mobSpawnTick = 0;
-		const int MobSpawnInterval = 2;
+		// Spawn check runs once every 400 ticks (~20 s) to keep CPU use low.
+		const int MobSpawnInterval = 400;
 		if (++_mobSpawnTick >= MobSpawnInterval) {
 			_mobSpawnTick = 0;
 			TIMER_PUSH("mobSpawner");
 			MobSpawner::tick(this,	_spawnEnemies && difficulty > Difficulty::PEACEFUL,
-									_spawnFriendlies && (levelData.getTime() % 400) < MobSpawnInterval);
+									_spawnFriendlies);
 			TIMER_POP();
 		}
 	}
@@ -1350,10 +1351,13 @@ void Level::tickEntities() {
         Entity* e = entities[i];
 
         if (!e->removed) {
-            // Periodically despawn mobs that are far from players or in unloaded chunks
-            static const int DESPAWN_CHECK_INTERVAL = 200; // every ~10 seconds
-            static const float DESPAWN_DIST = 128.0f;
-            if (e->isMob() && !e->isPlayer() && (e->tickCount % DESPAWN_CHECK_INTERVAL == 0)) {
+            // Periodically despawn mobs that are far from players or in unloaded chunks.
+            // Use a staggered offset per entity (tickCount + entityId) to spread the
+            // check across many ticks and avoid a single-frame spike.
+            static const int DESPAWN_CHECK_INTERVAL = 400; // every ~20 s at 20 TPS
+            static const float DESPAWN_DIST = 96.0f;       // 6 chunks away
+            if (e->isMob() && !e->isPlayer() &&
+                ((e->tickCount + e->entityId) % DESPAWN_CHECK_INTERVAL == 0)) {
                 if (!hasChunk(e->xChunk, e->zChunk)) {
                     e->remove();
                 } else if (!players.empty()) {
