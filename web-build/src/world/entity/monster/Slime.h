@@ -64,7 +64,7 @@ public:
 			int chunkX = bx >> 4;
 			int chunkZ = bz >> 4;
 			long seed = level->getSeed();
-			// Vanilla slime chunk formula
+			// Vanilla Minecraft slime chunk algorithm constants (from MC source)
 			long hash = seed
 				+ (long)(chunkX * chunkX * 0x4c1906L)
 				+ (long)(chunkX * 0x5ac0dbL)
