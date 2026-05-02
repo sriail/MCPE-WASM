@@ -1288,7 +1288,7 @@ bool TileRenderer::tesselateWallInWorld(WallTile* tt, int x, int y, int z) {
     return changed;
 }
 
-
+bool TileRenderer::tesselateFenceGateInWorld(FenceGateTile* tt, int x, int y, int z) {
 	bool changed = true;
 
 	int data = level->getData(x, y, z);
