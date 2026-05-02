@@ -69,8 +69,8 @@ public:
 				xd = Mth::cos(angle) * horizSpeed;
 				zd = Mth::sin(angle) * horizSpeed;
 				yd = jumpStrength;
-				// Cooldown between jumps: smaller slimes jump more often
-				jumpTick = 20 + random.nextInt(20) * (3 - slimeSize);
+				// Cooldown between jumps: smaller slimes jump more often (lower size = smaller multiplier)
+				jumpTick = 20 + random.nextInt(20) * (1 + slimeSize);
 			} else {
 				jumpTick--;
 			}
