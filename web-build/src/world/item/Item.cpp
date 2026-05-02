@@ -159,6 +159,7 @@ Item* Item::mutton_cooked = NULL;
 Item* Item::enderPearl = NULL;
 Item* Item::door_spruce = NULL;
 Item* Item::door_birch = NULL;
+Item* Item::rottenFlesh = NULL;
 
 //Item* Item::record_01 = NULL;
 //Item* Item::record_02 = NULL;
@@ -182,7 +183,7 @@ void Item::initItems() {
 	Item::bow = (new BowItem(5))->setIcon(5, 1)->setCategory(ItemCategory::Tools)->setDescriptionId("bow");
 	Item::arrow = (new Item(6))->setIcon(5, 2)->setCategory(ItemCategory::Tools)->setDescriptionId("arrow");
 	Item::coal = (new CoalItem(7))->setIcon(7, 0)->setCategory(ItemCategory::Tools)->setDescriptionId("coal");
-	Item::emerald = (new Item(8))->setIcon(7, 3)->setCategory(ItemCategory::Decorations)->setDescriptionId("emerald");
+	Item::emerald = (new Item(8))->setIcon(5, 11)->setCategory(ItemCategory::Decorations)->setDescriptionId("emerald");
 	Item::ironIngot = (new Item(9))->setIcon(7, 1)->setCategory(ItemCategory::Decorations)->setDescriptionId("ingotIron");
 	Item::goldIngot = (new Item(10))->setIcon(7, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("ingotGold");
 	Item::sword_iron = (new WeaponItem(11, Tier::IRON))->setIcon(2, 4)->setCategory(ItemCategory::Tools)->setDescriptionId("swordIron");
@@ -304,6 +305,8 @@ void Item::initItems() {
 	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 10)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
 	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(9, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
 	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(10, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	// Rotten flesh — zombie drop; (176,80) on items.png = col=11, row=5
+	Item::rottenFlesh = (new FoodItem(158, 4, true))->setIcon(11, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("rottenFlesh");
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)

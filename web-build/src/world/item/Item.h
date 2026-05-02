@@ -209,6 +209,7 @@ public:
 	static Item* enderPearl;       // ender pearl
 	static Item* door_spruce;      // spruce door item
 	static Item* door_birch;       // birch door item
+	static Item* rottenFlesh;      // rotten flesh (zombie drop)
 
     static Item* record_01;
     static Item* record_02;

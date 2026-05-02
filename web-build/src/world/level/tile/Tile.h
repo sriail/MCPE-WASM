@@ -278,6 +278,7 @@ public:
 	static Tile* wall_andesite;    // (ID 144)
 	static Tile* wall_sandstone;   // (ID 145)
 	static Tile* wall_netherBrick; // (ID 146)
+	static Tile* wall_cobblestone; // (ID 147)
 
 	// Second slab pair
 	static Tile* stoneSlab2;       // full (ID 181)
@@ -290,6 +291,8 @@ public:
 	// Wood variant trapdoors
 	static Tile* trapdoor_spruce;  // (ID 196)
 	static Tile* trapdoor_birch;   // (ID 197)
+
+	static Tile* magma;            // magma block (ID 202)
 
 	static void initTiles();
 	static void teardownTiles();

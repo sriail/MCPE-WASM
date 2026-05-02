@@ -109,9 +109,8 @@ bool Zombie::useNewAi() {
 void Zombie::die( Entity* source ) {
 	super::die(source);
 	if(!level->isClientSide) {
-		if(random.nextInt(4) == 0) {
-			spawnAtLocation(Item::feather->id, random.nextInt(1) + 1);
-		}
+		int drops = random.nextInt(3) + 1;
+		spawnAtLocation(Item::rottenFlesh->id, drops);
 	}	
 }
 

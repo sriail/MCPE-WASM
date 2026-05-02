@@ -491,6 +491,31 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 		feature.place(level, &random, x, y, z);
     }
 
+	// Magma blocks: replace stone adjacent to lava pockets at low Y levels
+	for (int mx = xo; mx < xo + 16; mx++) {
+		for (int mz = zo; mz < zo + 16; mz++) {
+			for (int my = 1; my <= 10; my++) {
+				if (level->getTile(mx, my, mz) == Tile::rock->id) {
+					int nb0 = level->getTile(mx - 1, my, mz);
+					int nb1 = level->getTile(mx + 1, my, mz);
+					int nb2 = level->getTile(mx, my - 1, mz);
+					int nb3 = level->getTile(mx, my + 1, mz);
+					int nb4 = level->getTile(mx, my, mz - 1);
+					int nb5 = level->getTile(mx, my, mz + 1);
+					bool nearLava = (nb0 == Tile::lava->id || nb0 == Tile::calmLava->id ||
+					                 nb1 == Tile::lava->id || nb1 == Tile::calmLava->id ||
+					                 nb2 == Tile::lava->id || nb2 == Tile::calmLava->id ||
+					                 nb3 == Tile::lava->id || nb3 == Tile::calmLava->id ||
+					                 nb4 == Tile::lava->id || nb4 == Tile::calmLava->id ||
+					                 nb5 == Tile::lava->id || nb5 == Tile::calmLava->id);
+					if (nearLava && random.nextInt(4) == 0) {
+						level->setTileNoUpdate(mx, my, mz, Tile::magma->id);
+					}
+				}
+			}
+		}
+	}
+
 	if (spawnMobs && !level->isClientSide)
 		MobSpawner::postProcessSpawnMobs(level, biome, xo + 8, zo + 8, 16, 16, &random);
 

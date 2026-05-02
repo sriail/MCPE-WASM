@@ -227,9 +227,15 @@ void MobSpawner::postProcessSpawnMobs(Level* level, Biome* biome, int xo, int zo
 /*static*/
 TilePos MobSpawner::getRandomPosWithin(Level* level, int xo, int zo) {
     int x = xo + level->random.nextInt(16);
-	int y = level->random.nextInt(Level::DEPTH); //@note: level->depth);
     int z = zo + level->random.nextInt(16);
-
+    int y;
+    if (!level->isDay() && level->random.nextInt(4) == 0) {
+        // At night, try the surface so monsters can spawn in the open
+        int surfaceY = level->getTopSolidBlock(x, z);
+        y = (surfaceY > 0) ? surfaceY : level->random.nextInt(Level::DEPTH);
+    } else {
+        y = level->random.nextInt(Level::DEPTH);
+    }
     return TilePos(x, y, z);
 }
 
