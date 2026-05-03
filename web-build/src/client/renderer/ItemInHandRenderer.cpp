@@ -20,6 +20,7 @@
 #include "../../world/item/UseAnim.h"
 #include "../../world/item/BowItem.h"
 #include "../../world/level/tile/LeafTile.h"
+#include "../../world/level/tile/StoneVariantTile.h"
 #include "entity/HumanoidMobRenderer.h"
 
 //static StopwatchHandler handler;
@@ -85,6 +86,8 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 		itemId = 224 + item->getAuxValue(); // 224 to 231 @stoneslab
 	} else if (itemId == ((Tile*)Tile::leaves)->id) {
 		itemId = 232 + (item->getAuxValue() & LeafTile::LEAF_TYPE_MASK); // 232 to 235 @leaves
+	} else if (itemId == Tile::stoneVariant->id) {
+		itemId = 236 + (item->getAuxValue() & StoneVariantTile::TYPE_MASK); // 236 to 241 @stoneVariant
 	}
 
 	RenderCall& renderObject = renderObjects[itemId];

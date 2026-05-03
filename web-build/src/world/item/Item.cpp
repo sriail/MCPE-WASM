@@ -159,6 +159,7 @@ Item* Item::mutton_cooked = NULL;
 Item* Item::enderPearl = NULL;
 Item* Item::door_spruce = NULL;
 Item* Item::door_birch = NULL;
+Item* Item::rottenFlesh = NULL;
 
 //Item* Item::record_01 = NULL;
 //Item* Item::record_02 = NULL;
@@ -182,7 +183,7 @@ void Item::initItems() {
 	Item::bow = (new BowItem(5))->setIcon(5, 1)->setCategory(ItemCategory::Tools)->setDescriptionId("bow");
 	Item::arrow = (new Item(6))->setIcon(5, 2)->setCategory(ItemCategory::Tools)->setDescriptionId("arrow");
 	Item::coal = (new CoalItem(7))->setIcon(7, 0)->setCategory(ItemCategory::Tools)->setDescriptionId("coal");
-	Item::emerald = (new Item(8))->setIcon(7, 3)->setCategory(ItemCategory::Decorations)->setDescriptionId("emerald");
+	Item::emerald = (new Item(8))->setIcon(5, 11)->setCategory(ItemCategory::Decorations)->setDescriptionId("emerald");
 	Item::ironIngot = (new Item(9))->setIcon(7, 1)->setCategory(ItemCategory::Decorations)->setDescriptionId("ingotIron");
 	Item::goldIngot = (new Item(10))->setIcon(7, 2)->setCategory(ItemCategory::Decorations)->setDescriptionId("ingotGold");
 	Item::sword_iron = (new WeaponItem(11, Tier::IRON))->setIcon(2, 4)->setCategory(ItemCategory::Tools)->setDescriptionId("swordIron");
@@ -254,7 +255,7 @@ void Item::initItems() {
 	//Item::bucket_lava = (new BucketItem(71, Tile::lava.id))->setIcon(12, 4)->setCategory(ItemCategory::Tools)->setDescriptionId("bucketLava")->setCraftingRemainingItem(Item.bucket_empty);
 	//Item::minecart = (new MinecartItem(72, Minecart.RIDEABLE))->setIcon(7, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("minecart");
 	//Item::saddle = (new SaddleItem(73))->setIcon(8, 6)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("saddle");
-	Item::door_iron = (new DoorItem(74, Material::metal))->setIcon(12, 2)->setCategory(ItemCategory::Structures)->setDescriptionId("doorIron");
+	Item::door_iron = (new DoorItem(74, Material::metal))->setIcon(2, 5)->setCategory(ItemCategory::Structures)->setDescriptionId("doorIron");
 	Item::redStone = (new Item(75))->setIcon(8, 3)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("redstone");
 	Item::snowBall = (new SnowballItem(76))->setIcon(14, 0)->setCategory(ItemCategory::Decorations)->setDescriptionId("snowball");
 	//Item::boat = (new BoatItem(77))->setIcon(8, 8)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("boat");
@@ -299,11 +300,13 @@ void Item::initItems() {
 	// New items
 	Item::greenEmerald = (new Item(151))->setIcon(9, 10)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
 	Item::cookie = (new FoodItem(152, 2, false))->setIcon(12, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cookie");
-	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(9, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
-	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 9)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
+	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(8, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
+	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(7, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
 	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 10)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
-	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(11, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
-	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(12, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(9, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(10, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	// Rotten flesh — zombie drop; (176,80) on items.png = col=11, row=5
+	Item::rottenFlesh = (new FoodItem(158, 4, true))->setIcon(11, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("rottenFlesh");
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)

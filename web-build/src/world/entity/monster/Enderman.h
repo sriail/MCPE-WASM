@@ -86,12 +86,25 @@ public:
 		int by = Mth::floor(ny);
 		int bz = Mth::floor(nz);
 
-		// Find a valid position
-		for (int i = 0; i < 16; i++) {
+		// Search upward from target Y for a valid two-block-tall air gap above solid ground
+		for (int i = 0; i < 32; i++) {
 			int ty = by + i;
-			if (ty >= 0 && ty < 128) {
+			if (ty >= 0 && ty < 127) {
 				int below = level->getTile(bx, ty - 1, bz);
-				int at = level->getTile(bx, ty, bz);
+				int at    = level->getTile(bx, ty,     bz);
+				int above = level->getTile(bx, ty + 1, bz);
+				if (below != 0 && at == 0 && above == 0) {
+					moveTo(nx, (float)ty, nz, yRot, xRot);
+					return;
+				}
+			}
+		}
+		// Fallback: search downward from original Y
+		for (int i = 1; i < 32; i++) {
+			int ty = by - i;
+			if (ty > 0 && ty < 127) {
+				int below = level->getTile(bx, ty - 1, bz);
+				int at    = level->getTile(bx, ty,     bz);
 				int above = level->getTile(bx, ty + 1, bz);
 				if (below != 0 && at == 0 && above == 0) {
 					moveTo(nx, (float)ty, nz, yRot, xRot);

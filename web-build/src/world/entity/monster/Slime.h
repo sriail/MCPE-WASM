@@ -13,10 +13,12 @@ class Slime : public Mob
 	typedef Mob super;
 public:
 	int slimeSize; // 0=small, 1=medium, 2=large
+	int jumpTick;  // countdown timer before next jump
 
 	Slime(Level* level)
 	:	super(level),
-		slimeSize(2) // default large
+		slimeSize(2), // default large
+		jumpTick(0)
 	{
 		entityRendererId = ER_ZOMBIE_RENDERER; // reuse zombie renderer for now
 		textureName = "mob/zombie.png"; // placeholder - no slime texture in repo
@@ -51,6 +53,28 @@ public:
 		// Slimes spawn in swamp biome or below layer 40 in slime chunks
 		if (y < 40.0f) return true;
 		return false;
+	}
+
+	void aiStep() {
+		super::aiStep();
+
+		if (onGround) {
+			if (jumpTick <= 0) {
+				// Choose a random direction and jump
+				float angle = random.nextFloat() * 6.2831853f; // 2*PI
+				// Jump velocity scales by size: small=0.42, medium=0.52, large=0.62
+				float jumpStrength = 0.42f + slimeSize * 0.1f;
+				// Horizontal speed decreases with size (bigger slimes are slower)
+				float horizSpeed = 0.2f / (1 + slimeSize);
+				xd = Mth::cos(angle) * horizSpeed;
+				zd = Mth::sin(angle) * horizSpeed;
+				yd = jumpStrength;
+				// Cooldown between jumps: smaller slimes jump more often (lower size = smaller multiplier)
+				jumpTick = 20 + random.nextInt(20) * (1 + slimeSize);
+			} else {
+				jumpTick--;
+			}
+		}
 	}
 
 	void die(Entity* source) {
