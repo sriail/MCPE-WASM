@@ -85,6 +85,8 @@ void ItemInHandRenderer::renderItem(Mob* mob,  ItemInstance* item )
 		itemId = 224 + item->getAuxValue(); // 224 to 231 @stoneslab
 	} else if (itemId == ((Tile*)Tile::leaves)->id) {
 		itemId = 232 + (item->getAuxValue() & LeafTile::LEAF_TYPE_MASK); // 232 to 235 @leaves
+	} else if (itemId == Tile::stoneVariant->id) {
+		itemId = 236 + item->getAuxValue(); // 236 to 241 @stoneVariant (6 variants)
 	}
 
 	RenderCall& renderObject = renderObjects[itemId];

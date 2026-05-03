@@ -297,13 +297,13 @@ void Item::initItems() {
 	Item::camera = (new CameraItem(200))->setIcon(2, 15)->setCategory(ItemCategory::Decorations)->setDescriptionId("camera");
 
 	// New items
-	Item::greenEmerald = (new Item(151))->setIcon(9, 10)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
+	Item::greenEmerald = (new Item(151))->setIcon(5, 11)->setCategory(ItemCategory::Decorations)->setDescriptionId("greenEmerald");
 	Item::cookie = (new FoodItem(152, 2, false))->setIcon(12, 5)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("cookie");
-	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(9, 8)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
-	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(10, 9)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
-	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 10)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
-	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(11, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
-	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(12, 8)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
+	Item::mutton_raw = (new FoodItem(153, 2, true))->setIcon(8, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonRaw");
+	Item::mutton_cooked = (new FoodItem(154, 6, true))->setIcon(7, 7)->setCategory(ItemCategory::FoodArmor)->setDescriptionId("muttonCooked");
+	Item::enderPearl = (new Item(155))->setMaxStackSize(16)->setIcon(11, 6)->setCategory(ItemCategory::Tools)->setDescriptionId("enderPearl");
+	Item::door_spruce = (new WoodDoorItem(156, Tile::door_spruce))->setIcon(9, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorSpruce");
+	Item::door_birch  = (new WoodDoorItem(157, Tile::door_birch))->setIcon(10, 10)->setCategory(ItemCategory::Structures)->setDescriptionId("doorBirch");
 
 	for (int i = 256; i < MAX_ITEMS; ++i) {
 		if (items[i] && items[i]->category == -1)

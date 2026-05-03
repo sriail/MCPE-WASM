@@ -491,6 +491,34 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 		feature.place(level, &random, x, y, z);
     }
 
+	// Magma blocks form naturally around lava pools (y < 40)
+	for (int i = 0; i < 4; i++) {
+		int x = xo + random.nextInt(16) + 8;
+		int y = 10 + random.nextInt(28);
+		int z = zo + random.nextInt(16) + 8;
+		// Check proximity to lava and replace stone with magma
+		for (int dx = -2; dx <= 2; dx++)
+		for (int dz = -2; dz <= 2; dz++) {
+			int lx = x + dx, lz = z + dz;
+			int lavaY = -1;
+			// Find a lava block in the column between y-4 and y+4
+			for (int dy = -4; dy <= 4; dy++) {
+				int t = level->getTile(lx, y + dy, lz);
+				if (t == Tile::lava->id || t == Tile::calmLava->id) {
+					lavaY = y + dy;
+					break;
+				}
+			}
+			if (lavaY >= 0) {
+				// Replace the solid block directly above lava with magma
+				int aboveId = level->getTile(lx, lavaY + 1, lz);
+				if (aboveId == Tile::rock->id) {
+					level->setTileNoUpdate(lx, lavaY + 1, lz, Tile::magmaBlock->id);
+				}
+			}
+		}
+	}
+
 	if (spawnMobs && !level->isClientSide)
 		MobSpawner::postProcessSpawnMobs(level, biome, xo + 8, zo + 8, 16, 16, &random);
 

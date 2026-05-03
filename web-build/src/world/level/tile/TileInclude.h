@@ -65,5 +65,8 @@
 #include "SlimeBlockTile.h"
 #include "WallTile.h"
 #include "StoneSlabTile2.h"
+#include "MagmaBlockTile.h"
+#include "RedstoneDustTile.h"
+#include "RedstoneTorchTile.h"
 
 #endif /* TILE_INCLUDE_H__ */

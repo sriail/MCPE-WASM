@@ -37,8 +37,15 @@ public:
 	}
 
 	bool canSpawn() {
-		// Spawns at night in overworld
-		return !level->isDay();
+		// Endermen spawn at night or in low-light areas (light level < 8)
+		if (level->isDay()) {
+			// During daytime only spawn in very low light (caves, deep areas)
+			int bx = Mth::floor(x);
+			int by = Mth::floor(y);
+			int bz = Mth::floor(z);
+			return level->getRawBrightness(bx, by, bz) < 8;
+		}
+		return true;
 	}
 
 	void aiStep() {

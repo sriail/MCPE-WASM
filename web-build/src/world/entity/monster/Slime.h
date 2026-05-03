@@ -18,8 +18,8 @@ public:
 	:	super(level),
 		slimeSize(2) // default large
 	{
-		entityRendererId = ER_ZOMBIE_RENDERER; // reuse zombie renderer for now
-		textureName = "mob/zombie.png"; // placeholder - no slime texture in repo
+		entityRendererId = ER_ZOMBIE_RENDERER;
+		textureName = "mob/slime.png";
 		setSlimeSize(2);
 	}
 
@@ -48,8 +48,25 @@ public:
 	}
 
 	bool canSpawn() {
-		// Slimes spawn in swamp biome or below layer 40 in slime chunks
-		if (y < 40.0f) return true;
+		int bx = Mth::floor(x);
+		int bz = Mth::floor(z);
+
+		// Slimes only spawn underground (y < 40) in slime chunks
+		if (y < 40.0f) {
+			int chunkX = bx >> 4;
+			int chunkZ = bz >> 4;
+			long seed = level->getSeed();
+			// Vanilla Minecraft slime chunk algorithm constants (from MC source)
+			long hash = seed
+				+ (long)(chunkX * chunkX * 0x4c1906L)
+				+ (long)(chunkX * 0x5ac0dbL)
+				+ (long)(chunkZ * chunkZ) * 0x4307a7L
+				+ (long)(chunkZ * 0x5f24fL)
+				^ 987234911L;
+			Random chunkRng(hash);
+			return chunkRng.nextInt(10) == 0;
+		}
+
 		return false;
 	}
 
