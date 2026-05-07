@@ -21,6 +21,7 @@
 #include "CreeperRenderer.h"
 #include "SpiderRenderer.h"
 #include "CaveSpiderRenderer.h"
+#include "ChickenRenderer.h"
 #include "ArrowRenderer.h"
 #include "SheepRenderer.h"
 #include "PaintingRenderer.h"
