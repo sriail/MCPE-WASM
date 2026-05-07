@@ -52,7 +52,7 @@ void MobSpawnerTileEntity::tick()
 
     // Always spin the display entity regardless of server/client side
     oSpin = spin;
-    spin  += 1.0 / (double)(level->isClientSide ? 1 : 1);
+    spin += 1.0;
 
     if (level->isClientSide) return;
 

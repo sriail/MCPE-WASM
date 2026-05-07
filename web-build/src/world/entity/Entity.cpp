@@ -527,7 +527,6 @@ void Entity::baseTick()
 	if (!level->isClientSide && poisonTicks > 0) {
 	    --poisonTicks;
 	    if (poisonTicks % 25 == 0 && isAlive()) {
-	        // Poison cannot kill (stop damaging at 1 HP)
 	        hurt(NULL, 1);
 	    }
 	}

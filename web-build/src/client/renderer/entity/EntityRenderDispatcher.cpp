@@ -23,9 +23,7 @@
 #include "CaveSpiderRenderer.h"
 #include "ArrowRenderer.h"
 #include "SheepRenderer.h"
-#include "ArrowRenderer.h"
 #include "PaintingRenderer.h"
-
 
 /*static*/
 EntityRenderDispatcher* EntityRenderDispatcher::instance = NULL;

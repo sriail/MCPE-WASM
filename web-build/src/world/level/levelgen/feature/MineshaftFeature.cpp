@@ -105,10 +105,10 @@ void MineshaftFeature::carveCorridor(Level* level, Random* random,
                     placeBlock(level, bx, webY, bz, Tile::web->id);
             }
 
-            // Fence-post pillars every 4 blocks, only on floor blocks
+            // Fence-post pillars every 4 blocks, only on solid floor blocks
             if (seg % 4 == 2 && side != 0) {
                 int floorTile = level->getTile(bx, sy - 1, bz);
-                if (floorTile != 0 && floorTile != 0) {
+                if (floorTile != 0 && floorTile != Tile::web->id) {
                     // Oak fence pillar
                     placeBlock(level, bx, sy,     bz, Tile::fence->id);
                     placeBlock(level, bx, sy + 1, bz, Tile::fence->id);
