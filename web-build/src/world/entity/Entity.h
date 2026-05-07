@@ -144,6 +144,12 @@ protected:
 	virtual void burn(int dmg);
 	virtual void lavaHurt();
 
+public:
+	// Apply poison for the given number of ticks (cave-spider mechanic)
+	virtual void addPoison(int ticks);
+
+protected:
+
 	virtual void readAdditionalSaveData(CompoundTag* tag) = 0;
 	virtual void addAdditonalSaveData(CompoundTag* tag) = 0;
 
@@ -183,6 +189,9 @@ public:
 	int airSupply;
 	int onFire;
 	int flameTime;
+
+	// Poison effect: ticks remaining while poisoned (cave-spider mechanic)
+	int poisonTicks;
 
 	EntityRendererId entityRendererId;
 

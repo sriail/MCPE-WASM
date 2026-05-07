@@ -20,8 +20,8 @@
 
 #include "CreeperRenderer.h"
 #include "SpiderRenderer.h"
-
-#include "ChickenRenderer.h"
+#include "CaveSpiderRenderer.h"
+#include "ArrowRenderer.h"
 #include "SheepRenderer.h"
 #include "ArrowRenderer.h"
 #include "PaintingRenderer.h"
@@ -49,6 +49,7 @@ EntityRenderDispatcher::EntityRenderDispatcher()
 	assign(	ER_ZOMBIE_RENDERER,		new HumanoidMobRenderer(new ZombieModel(), 0.5f));
 	assign(	ER_CREEPER_RENDERER,	new CreeperRenderer());
 	assign(	ER_SPIDER_RENDERER,		new SpiderRenderer());
+	assign(	ER_CAVE_SPIDER_RENDERER,new CaveSpiderRenderer());
 	assign(	ER_TNT_RENDERER,		new TntRenderer());
 	assign(	ER_ARROW_RENDERER,		new ArrowRenderer());
 	assign( ER_PLAYER_RENDERER,		new PlayerRenderer(new HumanoidModel(), 0));

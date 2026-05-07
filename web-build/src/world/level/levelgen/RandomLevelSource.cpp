@@ -2,6 +2,8 @@
 
 #include "feature/FeatureInclude.h"
 #include "feature/OreFeatureWithData.h"
+#include "feature/MonsterRoomFeature.h"
+#include "feature/MineshaftFeature.h"
 #include "../Level.h"
 #include "../ChunkPos.h"
 #include "../MobSpawner.h"
@@ -258,12 +260,21 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 	static float totalTime = 0;
 	const float st = getTimeS();
 
-    //for (int i = 0; i < 8; i++) {
-    //    int x = xo + random.nextInt(16) + 8;
-    //    int y = random.nextInt(128);
-    //    int z = zo + random.nextInt(16) + 8;
-    //    MonsterRoomFeature().place(level, random, x, y, z);
-    //}
+    // Monster rooms (dungeons) - 8 attempts per chunk, small chance
+    for (int i = 0; i < 8; i++) {
+        int x = xo + random.nextInt(16) + 8;
+        int y = 10 + random.nextInt(50);
+        int z = zo + random.nextInt(16) + 8;
+        MonsterRoomFeature().place(level, &random, x, y, z);
+    }
+
+    // Mineshaft - 1 attempt per chunk at low probability
+    if (random.nextInt(100) < 1) {
+        int x = xo + random.nextInt(16) + 8;
+        int y = 10 + random.nextInt(30);
+        int z = zo + random.nextInt(16) + 8;
+        MineshaftFeature().place(level, &random, x, y, z);
+    }
 
     for (int i = 0; i < 10; i++) {
         int x = xo + random.nextInt(16);

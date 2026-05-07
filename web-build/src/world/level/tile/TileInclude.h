@@ -64,6 +64,7 @@
 #include "SoulSandTile.h"
 #include "SlimeBlockTile.h"
 #include "WallTile.h"
+#include "MobSpawnerTile.h"
 #include "StoneSlabTile2.h"
 
 #endif /* TILE_INCLUDE_H__ */
