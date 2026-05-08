@@ -25,7 +25,7 @@ public:
     bool isSolidRender() { return false; }
 
     /*@Override*/
-    int getRenderShape() { return SHAPE_ENTITYTILE_ANIMATED; }
+    int getRenderShape() { return SHAPE_BLOCK; }
 
     /*@Override*/
     bool blocksLight() { return false; }
