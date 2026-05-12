@@ -28,23 +28,38 @@ void MineshaftFeature::fillLootChest(Level* level, int cx, int cy, int cz, Rando
     FillingContainer* inv = dynamic_cast<FillingContainer*>(te);
     if (!inv) return;
 
-    struct LootEntry { int itemId; int maxCount; };
+    // Common loot
+    struct LootEntry { int itemId; int maxCount; int weight; };
     static const LootEntry table[] = {
-        { Item::ironIngot->id,       4 },
-        { Item::goldIngot->id,       4 },
-        { Item::emerald->id,         2 },
-        { Item::bread->id,           2 },
-        { Item::coal->id,            4 },
-        { Item::redStone->id,        4 },
-        { Item::pickAxe_iron->id,    1 },
-        { Item::bone->id,            3 },
-        { Item::string->id,          3 },
+        { Item::ironIngot->id,       4, 10 },
+        { Item::bread->id,           2, 10 },
+        { Item::coal->id,            4, 10 },
+        { Item::redStone->id,        4, 10 },
+        { Item::pickAxe_iron->id,    1, 10 },
+        { Item::bone->id,            3, 10 },
+        { Item::string->id,          3, 10 },
+        { Tile::torch->id,           8,  8 },  // torches (common)
+        { Item::goldIngot->id,       1,  3 },  // gold (rare, max 1)
+        { Item::emerald->id,         1,  2 },  // emerald (rare)
     };
     static const int tableSize = (int)(sizeof(table) / sizeof(table[0]));
 
-    int rolls = 2 + random->nextInt(5);
+    // Calculate total weight
+    static int totalWeight = 0;
+    if (totalWeight == 0) {
+        for (int i = 0; i < tableSize; ++i) totalWeight += table[i].weight;
+    }
+
+    int rolls = 3 + random->nextInt(4);
     for (int i = 0; i < rolls; ++i) {
-        const LootEntry& e = table[random->nextInt(tableSize)];
+        // Weighted random pick
+        int w = random->nextInt(totalWeight);
+        int idx = 0;
+        for (idx = 0; idx < tableSize - 1; ++idx) {
+            w -= table[idx].weight;
+            if (w < 0) break;
+        }
+        const LootEntry& e = table[idx];
         int count = 1 + random->nextInt(e.maxCount);
         int slot  = random->nextInt(inv->getContainerSize());
         ItemInstance* inst = new ItemInstance(Item::items[e.itemId], count, 0);
@@ -160,16 +175,16 @@ void MineshaftFeature::carveCorridor(Level* level, Random* random,
 
     // Branch: recurse in up to 2 perpendicular directions
     if (depth < MAX_DEPTH) {
-        // Branch left
-        if (random->nextInt(3) != 0) {
+        // Branch left (~50% chance)
+        if (random->nextInt(2) == 0) {
             int newDir = (dir + 1) & 3;
             int newLen = MIN_LENGTH + random->nextInt(MAX_LENGTH - MIN_LENGTH);
             int nx = sx + ddx * (length / 2) + DX[newDir];
             int nz = sz + ddz * (length / 2) + DZ[newDir];
             carveCorridor(level, random, nx, sy, nz, newDir, newLen, depth + 1);
         }
-        // Branch right
-        if (random->nextInt(3) != 0) {
+        // Branch right (~50% chance)
+        if (random->nextInt(2) == 0) {
             int newDir = (dir + 3) & 3;
             int newLen = MIN_LENGTH + random->nextInt(MAX_LENGTH - MIN_LENGTH);
             int nx = sx + ddx * (length / 2) + DX[newDir];
@@ -203,8 +218,11 @@ bool MineshaftFeature::place(Level* level, Random* random, int x, int y, int z)
             placeBlock(level, x + dx, y + dy, z + dz, 0);
     }
 
-    // Carve corridors in all 4 directions from the starting room
-    for (int dir = 0; dir < 4; ++dir) {
+    // Carve corridors in 2 opposite directions (chosen randomly) to avoid dense clumps
+    int primaryDir = random->nextInt(4);
+    int oppositeDir = (primaryDir + 2) & 3;
+    for (int pass = 0; pass < 2; ++pass) {
+        int dir = (pass == 0) ? primaryDir : oppositeDir;
         int len = MIN_LENGTH + random->nextInt(MAX_LENGTH - MIN_LENGTH);
         carveCorridor(level, random, x + DX[dir] * 3, y, z + DZ[dir] * 3, dir, len, 0);
     }

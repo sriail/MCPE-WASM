@@ -29,9 +29,9 @@ private:
     // Fill a loot chest with mineshaft loot
     void fillLootChest(Level* level, int cx, int cy, int cz, Random* random);
 
-    static const int MAX_DEPTH = 4;
-    static const int MIN_LENGTH = 5;
-    static const int MAX_LENGTH = 10;
+    static const int MAX_DEPTH = 2;
+    static const int MIN_LENGTH = 8;
+    static const int MAX_LENGTH = 20;
 };
 
 #endif /*NET_MINECRAFT_WORLD_LEVEL_LEVELGEN_FEATURE__MineshaftFeature_H__*/

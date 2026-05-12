@@ -260,16 +260,16 @@ void RandomLevelSource::postProcess(ChunkSource* parent, int xt, int zt) {
 	static float totalTime = 0;
 	const float st = getTimeS();
 
-    // Monster rooms (dungeons) - 1 attempt, ~1-in-8 chunks
-    if (random.nextInt(8) == 0) {
+    // Monster rooms (dungeons) - 1 attempt, ~1-in-16 chunks
+    if (random.nextInt(16) == 0) {
         int x = xo + random.nextInt(16) + 8;
         int y = 10 + random.nextInt(50);
         int z = zo + random.nextInt(16) + 8;
         MonsterRoomFeature().place(level, &random, x, y, z);
     }
 
-    // Mineshaft - ~4% chance per chunk
-    if (random.nextInt(100) < 4) {
+    // Mineshaft - ~2% chance per chunk
+    if (random.nextInt(100) < 2) {
         int x = xo + random.nextInt(16) + 8;
         int y = 10 + random.nextInt(30);
         int z = zo + random.nextInt(16) + 8;
