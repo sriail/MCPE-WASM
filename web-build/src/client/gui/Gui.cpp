@@ -622,6 +622,12 @@ void Gui::renderHearts() {
 	int oh = minecraft->player->lastHealth;
 	random.setSeed(tickCount * 312871);
 
+	// When poisoned, tint hearts green
+	bool poisoned = (minecraft->player->poisonTicks > 0);
+	if (poisoned) {
+		glColor4f2(0.5f, 1.0f, 0.0f, 1.0f);
+	}
+
 	int xx = 2;//screenWidth / 2 - getNumSlots() * 10;
 
 	int armor = minecraft->player->getArmorValue();
@@ -649,6 +655,10 @@ void Gui::renderHearts() {
 		}
 		if (ip2 < h) blit(xo, yo, 16 + 4 * 9, 9 * 0, 9, 9);
 		else if (ip2 == h) blit(xo, yo, 16 + 5 * 9, 9 * 0, 9, 9);
+	}
+
+	if (poisoned) {
+		glColor4f2(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 }
 

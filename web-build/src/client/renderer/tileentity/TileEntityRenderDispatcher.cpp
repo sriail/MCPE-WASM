@@ -1,5 +1,6 @@
 #include "TileEntityRenderDispatcher.h"
 #include "ChestRenderer.h"
+#include "MobSpawnerRenderer.h"
 #include "../Textures.h"
 #include "../../gui/Font.h"
 #include "../../../SharedConstants.h"
@@ -124,6 +125,7 @@ TileEntityRenderDispatcher::TileEntityRenderDispatcher()
 {
 	_renderers.insert(std::make_pair(TR_CHEST_RENDERER, new ChestRenderer()));
     _renderers.insert(std::make_pair(TR_SIGN_RENDERER, new SignRenderer()));
+    _renderers.insert(std::make_pair(TR_MOB_SPAWNER_RENDERER, new MobSpawnerRenderer()));
 
 	for (RendererCIterator cit = _renderers.begin(); cit != _renderers.end(); ++cit)
 		cit->second->init(this);

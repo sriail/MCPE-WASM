@@ -9,6 +9,7 @@ TileEntity::MapTypeId TileEntity::classIdMap;
 #include "../../Level.h"
 #include "../../../../nbt/CompoundTag.h"
 #include "SignTileEntity.h"
+#include "MobSpawnerTileEntity.h"
 
 int TileEntity::_runningId = 0;
 
@@ -22,6 +23,7 @@ TileEntity* TileEntityFactory::createTileEntity( int type )
 	case TileEntityType::Chest:	    return new ChestTileEntity();
     case TileEntityType::Sign:		return new SignTileEntity();
     case TileEntityType::NetherReactor:	return new NetherReactorTileEntity();
+	case TileEntityType::MobSpawner: return new MobSpawnerTileEntity();
 	default:
 		LOGE("Can't find TileEntity of type: %d\n", type);
 		return NULL;
@@ -37,16 +39,8 @@ void TileEntity::initTileEntities()
 	setId(TileEntityType::Furnace, "Furnace");
 	setId(TileEntityType::Chest,   "Chest");
 	setId(TileEntityType::NetherReactor, "NetherReactor");
-	//         setId(ChestTileEntity.class, "Chest");
-	//         setId(RecordPlayerTile.Entity.class, "RecordPlayer");
-	//         setId(DispenserTileEntity.class, "Trap");
 	setId(TileEntityType::Sign, "Sign");
-	//         setId(MobSpawnerTileEntity.class, "MobSpawner");
-	//         setId(MusicTileEntity.class, "Music");
-	//         setId(PistonPieceEntity.class, "Piston");
-	//         setId(BrewingStandTileEntity.class, "Cauldron");
-	//         setId(EnchantmentTableEntity.class, "EnchantTable");
-	//         setId(TheEndPortalTileEntity.class, "Airportal");
+	setId(TileEntityType::MobSpawner, "MobSpawner");
 }
 
 void TileEntity::teardownTileEntities()

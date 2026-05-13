@@ -56,6 +56,7 @@ Entity::Entity( Level* level )
 	fireImmune(false),
 	onFire(0),
 	flameTime(1),
+	poisonTicks(0),
 	walkDist(0), walkDistO(0),
 	tickCount(0),
 	entityRendererId(ER_DEFAULT_RENDERER),
@@ -522,6 +523,14 @@ void Entity::baseTick()
 	    lavaHurt();
 	}
 
+	// Poison effect: deal 1 damage every 25 ticks, then decrement
+	if (!level->isClientSide && poisonTicks > 0) {
+	    --poisonTicks;
+	    if (poisonTicks % 25 == 0 && isAlive()) {
+	        hurt(NULL, 1);
+	    }
+	}
+
 	if (y < -64) {
 		outOfWorld();
 	}
@@ -537,6 +546,13 @@ void Entity::baseTick()
 void Entity::outOfWorld()
 {
 	remove();
+}
+
+void Entity::addPoison(int ticks)
+{
+	// Extend or apply poison duration
+	if (ticks > poisonTicks)
+		poisonTicks = ticks;
 }
 
 void Entity::checkFallDamage( float ya, bool onGround )

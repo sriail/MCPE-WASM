@@ -39,6 +39,9 @@ public:
 			case MobTypes::Spider:
 				mob = new Spider(level);
 				break;
+			case MobTypes::CaveSpider:
+				mob = new CaveSpider(level);
+				break;
 			case MobTypes::PigZombie:
 				mob = new PigZombie(level);
 				break;

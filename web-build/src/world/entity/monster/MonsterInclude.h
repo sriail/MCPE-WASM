@@ -7,6 +7,7 @@
 #include "Skeleton.h"
 #include "Slime.h"
 #include "Spider.h"
+#include "CaveSpider.h"
 #include "Zombie.h"
 #include "PigZombie.h"
 #endif /*NET_MINECRAFT_WORLD_ENTITY_MONSTER__MonsterInclude_H__*/

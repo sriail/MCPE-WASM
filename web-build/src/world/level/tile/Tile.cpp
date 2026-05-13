@@ -195,6 +195,7 @@ Tile* Tile::door_birch            = NULL;
 Tile* Tile::trapdoor_spruce       = NULL;
 Tile* Tile::trapdoor_birch        = NULL;
 Tile* Tile::magma                 = NULL;
+Tile* Tile::mobSpawner            = NULL;
 
 /*static*/
 void Tile::initTiles() {
@@ -242,6 +243,7 @@ void Tile::initTiles() {
 	torch       = (new TorchTile(50, 5 * 16))->init()->setDestroyTime(0.0f)->setLightEmission(15 / 16.0f)->setSoundType(SOUND_WOOD)->setCategory(ItemCategory::Tools)->setDescriptionId("torch");
 
 	stairs_wood = (new StairTile(53, wood))->init()->setCategory(ItemCategory::Structures)->setDescriptionId("stairsWood");
+	mobSpawner  = (new MobSpawnerTile(52))->init()->setDestroyTime(5.0f)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Mechanisms)->setDescriptionId("mobSpawner");
 	chest		= (new ChestTile(54))->init()->setCategory(ItemCategory::Structures)->setDestroyTime(2.5f)->setSoundType(SOUND_WOOD)->setDescriptionId("chest");//->sendTileData();
 
 	emeraldOre  = (new OreTile(56, 16 * 3 + 2))->init()->setDestroyTime(3.0f)->setExplodeable(5)->setSoundType(SOUND_STONE)->setCategory(ItemCategory::Decorations)->setDescriptionId("oreDiamond");
