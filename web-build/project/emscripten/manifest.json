@@ -1,7 +1,7 @@
 {
-    "name": "Minecraft Web",
-    "short_name": "Minecraft",
-    "description": "Minecraft in the browser, powered by Emscripten",
+    "name": "Lightcraft",
+    "short_name": "Lightcraft",
+    "description": "Modern PE Minecraft in the browser, powered by Emscripten",
     "start_url": "./index.html",
     "display": "fullscreen",
     "background_color": "#000000",
